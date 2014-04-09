@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Web.Http;
+﻿using System.Collections.Generic;
 using EventHub1._1.Controllers;
 using EventHub1._1.DAL.Services;
 using EventHub1._1.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using EventHub;
 using Moq;
 
 namespace EventHub.Tests.Controllers
@@ -30,12 +24,12 @@ namespace EventHub.Tests.Controllers
             };
 
             var mockService = new Mock<ILocationService>();
-            mockService.Setup(x => x.GetActiveLocations()).Returns(resultFromGet);
+            mockService.Setup(x => x.GetAllActiveLocations()).Returns(resultFromGet);
 
             var controllerUnderTest = new LocationController(mockService.Object);
 
             // Act
-            IEnumerable<Location> actualResult = controllerUnderTest.GetActiveLocations();
+            IEnumerable<Location> actualResult = controllerUnderTest.GetAllActiveLocations();
 
             // Assert
             foreach (var location in actualResult)
