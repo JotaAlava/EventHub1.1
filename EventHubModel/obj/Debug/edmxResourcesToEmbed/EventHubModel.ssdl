@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EventHubModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="EventHubModelStoreContainer">
+    <EntitySet Name="Activities" EntityType="EventHubModel.Store.Activities" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Locations" EntityType="EventHubModel.Store.Locations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Events" EntityType="EventHubModel.Store.Events" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="EventHubModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PlusOnes" EntityType="EventHubModel.Store.PlusOnes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Messages" EntityType="EventHubModel.Store.Messages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Activities_Sport" EntityType="EventHubModel.Store.Activities_Sport" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserEvent" EntityType="EventHubModel.Store.UserEvent" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ActivityLocation" Association="EventHubModel.Store.ActivityLocation">
+      <End Role="Activity" EntitySet="Activities" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserEvent_User" Association="EventHubModel.Store.FK_UserEvent_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserEvent" EntitySet="UserEvent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserEvent_Event" Association="EventHubModel.Store.FK_UserEvent_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="UserEvent" EntitySet="UserEvent" />
+    </AssociationSet>
+    <AssociationSet Name="UserPlusOne" Association="EventHubModel.Store.UserPlusOne">
+      <End Role="User" EntitySet="Users" />
+      <End Role="PlusOne" EntitySet="PlusOnes" />
+    </AssociationSet>
+    <AssociationSet Name="EventPlusOne" Association="EventHubModel.Store.EventPlusOne">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="PlusOne" EntitySet="PlusOnes" />
+    </AssociationSet>
+    <AssociationSet Name="UserMessage" Association="EventHubModel.Store.UserMessage">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="EventMessage" Association="EventHubModel.Store.EventMessage">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="ActivityEvent" Association="EventHubModel.Store.ActivityEvent">
+      <End Role="Activity" EntitySet="Activities" />
+      <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sport_inherits_Activity" Association="EventHubModel.Store.FK_Sport_inherits_Activity">
+      <End Role="Activity" EntitySet="Activities" />
+      <End Role="Sport" EntitySet="Activities_Sport" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Activities">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="ActivityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DayOfWeek" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Time" Type="datetime" Nullable="false" />
+    <Property Name="LocationId" Type="int" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Locations">
+    <Key>
+      <PropertyRef Name="LocationId" />
+    </Key>
+    <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Events">
+    <Key>
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ActivityId" Type="int" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="EMail" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsAdmin" Type="bit" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PlusOnes">
+    <Key>
+      <PropertyRef Name="PlusOneId" />
+    </Key>
+    <Property Name="PlusOneId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="EventId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Messages">
+    <Key>
+      <PropertyRef Name="MessageId" />
+    </Key>
+    <Property Name="MessageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="EventId" Type="int" Nullable="false" />
+    <Property Name="Deleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Activities_Sport">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="PreferredNumberOfPlayers" Type="int" Nullable="false" />
+    <Property Name="RequiredNumberOfPlayers" Type="int" Nullable="false" />
+    <Property Name="ActivityId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserEvent">
+    <Key>
+      <PropertyRef Name="Users_UserId" />
+      <PropertyRef Name="Events_EventId" />
+    </Key>
+    <Property Name="Users_UserId" Type="int" Nullable="false" />
+    <Property Name="Events_EventId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="ActivityLocation">
+    <End Role="Activity" Type="EventHubModel.Store.Activities" Multiplicity="*" />
+    <End Role="Location" Type="EventHubModel.Store.Locations" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="LocationId" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserPlusOne">
+    <End Role="User" Type="EventHubModel.Store.Users" Multiplicity="1" />
+    <End Role="PlusOne" Type="EventHubModel.Store.PlusOnes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="PlusOne">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EventPlusOne">
+    <End Role="Event" Type="EventHubModel.Store.Events" Multiplicity="1" />
+    <End Role="PlusOne" Type="EventHubModel.Store.PlusOnes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="PlusOne">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserMessage">
+    <End Role="User" Type="EventHubModel.Store.Users" Multiplicity="1" />
+    <End Role="Message" Type="EventHubModel.Store.Messages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EventMessage">
+    <End Role="Event" Type="EventHubModel.Store.Events" Multiplicity="1" />
+    <End Role="Message" Type="EventHubModel.Store.Messages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ActivityEvent">
+    <End Role="Activity" Type="EventHubModel.Store.Activities" Multiplicity="1" />
+    <End Role="Event" Type="EventHubModel.Store.Events" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activity">
+        <PropertyRef Name="ActivityId" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserEvent_User">
+    <End Role="User" Type="EventHubModel.Store.Users" Multiplicity="1" />
+    <End Role="UserEvent" Type="EventHubModel.Store.UserEvent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserEvent">
+        <PropertyRef Name="Users_UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserEvent_Event">
+    <End Role="UserEvent" Type="EventHubModel.Store.UserEvent" Multiplicity="*" />
+    <End Role="Event" Type="EventHubModel.Store.Events" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="UserEvent">
+        <PropertyRef Name="Events_EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sport_inherits_Activity">
+    <End Role="Activity" Type="EventHubModel.Store.Activities" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Sport" Type="EventHubModel.Store.Activities_Sport" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Activity">
+        <PropertyRef Name="ActivityId" />
+      </Principal>
+      <Dependent Role="Sport">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

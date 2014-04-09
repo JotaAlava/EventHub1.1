@@ -1,0 +1,10 @@
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\EventHub1.1\EventHubModel\bin\Debug\EventHubModel.dll.config
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\EventHub1.1\EventHubModel\bin\Debug\EventHubModel.dll
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\EventHub1.1\EventHubModel\bin\Debug\EventHubModel.pdb
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\EventHub1.1\EventHubModel\bin\Debug\EntityFramework.dll
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\EventHub1.1\EventHubModel\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\EventHub1.1\EventHubModel\bin\Debug\EntityFramework.xml
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\EventHub1.1\EventHubModel\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\EventHub1.1\EventHubModel\obj\Debug\EventHubModel.csprojResolveAssemblyReference.cache
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\EventHub1.1\EventHubModel\obj\Debug\EventHubModel.dll
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\EventHub1.1\EventHubModel\obj\Debug\EventHubModel.pdb

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5af721ca124440aab47e03fe114bdb7b" Name="Diagram1" >
+        <EntityTypeShape EntityType="EventHubModel.Activity" Width="1.5" PointX="3.875" PointY="0.75" />
+        <EntityTypeShape EntityType="EventHubModel.Location" Width="1.5" PointX="3.875" PointY="4" />
+        <AssociationConnector Association="EventHubModel.ActivityLocation" />
+        <EntityTypeShape EntityType="EventHubModel.Sport" Width="1.5" PointX="1.75" PointY="1.125" />
+        <InheritanceConnector EntityType="EventHubModel.Sport" />
+        <EntityTypeShape EntityType="EventHubModel.Event" Width="1.5" PointX="8.375" PointY="0.5" />
+        <EntityTypeShape EntityType="EventHubModel.User" Width="1.5" PointX="11.375" PointY="3.25" />
+        <AssociationConnector Association="EventHubModel.UserEvent" />
+        <EntityTypeShape EntityType="EventHubModel.PlusOne" Width="1.5" PointX="8.25" PointY="5" />
+        <AssociationConnector Association="EventHubModel.UserPlusOne" />
+        <AssociationConnector Association="EventHubModel.EventPlusOne" />
+        <EntityTypeShape EntityType="EventHubModel.Message" Width="1.5" PointX="11.375" PointY="0.5" />
+        <AssociationConnector Association="EventHubModel.UserMessage" />
+        <AssociationConnector Association="EventHubModel.EventMessage" />
+        <AssociationConnector Association="EventHubModel.ActivityEvent" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

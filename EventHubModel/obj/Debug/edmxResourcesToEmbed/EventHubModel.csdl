@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="EventHubModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="EventHubModelContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Activities" EntityType="EventHubModel.Activity" />
+    <EntitySet Name="Locations" EntityType="EventHubModel.Location" />
+    <AssociationSet Name="ActivityLocation" Association="EventHubModel.ActivityLocation">
+      <End Role="Activity" EntitySet="Activities" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
+    <EntitySet Name="Events" EntityType="EventHubModel.Event" />
+    <EntitySet Name="Users" EntityType="EventHubModel.User" />
+    <AssociationSet Name="UserEvent" Association="EventHubModel.UserEvent">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
+    <EntitySet Name="PlusOnes" EntityType="EventHubModel.PlusOne" />
+    <AssociationSet Name="UserPlusOne" Association="EventHubModel.UserPlusOne">
+      <End Role="User" EntitySet="Users" />
+      <End Role="PlusOne" EntitySet="PlusOnes" />
+    </AssociationSet>
+    <AssociationSet Name="EventPlusOne" Association="EventHubModel.EventPlusOne">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="PlusOne" EntitySet="PlusOnes" />
+    </AssociationSet>
+    <EntitySet Name="Messages" EntityType="EventHubModel.Message" />
+    <AssociationSet Name="UserMessage" Association="EventHubModel.UserMessage">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="EventMessage" Association="EventHubModel.EventMessage">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="ActivityEvent" Association="EventHubModel.ActivityEvent">
+      <End Role="Activity" EntitySet="Activities" />
+      <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="ActivityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" />
+    <Property Name="DayOfWeek" Type="String" Nullable="false" />
+    <Property Name="Time" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="Location" Relationship="EventHubModel.ActivityLocation" FromRole="Activity" ToRole="Location" />
+    <Property Name="LocationId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Events" Relationship="EventHubModel.ActivityEvent" FromRole="Activity" ToRole="Event" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="LocationId" />
+    </Key>
+    <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Address" Type="String" Nullable="false" />
+    <NavigationProperty Name="Activities" Relationship="EventHubModel.ActivityLocation" FromRole="Location" ToRole="Activity" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <Association Name="ActivityLocation">
+    <End Type="EventHubModel.Activity" Role="Activity" Multiplicity="*" />
+    <End Type="EventHubModel.Location" Role="Location" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="LocationId" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Sport" BaseType="EventHubModel.Activity">
+    <Property Name="PreferredNumberOfPlayers" Type="Int32" Nullable="false" />
+    <Property Name="RequiredNumberOfPlayers" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Event">
+    <Key>
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="EventHubModel.UserEvent" FromRole="Event" ToRole="User" />
+    <NavigationProperty Name="PlusOnes" Relationship="EventHubModel.EventPlusOne" FromRole="Event" ToRole="PlusOne" />
+    <NavigationProperty Name="Messages" Relationship="EventHubModel.EventMessage" FromRole="Event" ToRole="Message" />
+    <NavigationProperty Name="Activity" Relationship="EventHubModel.ActivityEvent" FromRole="Event" ToRole="Activity" />
+    <Property Name="ActivityId" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" />
+    <Property Name="EMail" Type="String" Nullable="false" MaxLength="Max" />
+    <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Events" Relationship="EventHubModel.UserEvent" FromRole="User" ToRole="Event" />
+    <NavigationProperty Name="PlusOnes" Relationship="EventHubModel.UserPlusOne" FromRole="User" ToRole="PlusOne" />
+    <NavigationProperty Name="Messages" Relationship="EventHubModel.UserMessage" FromRole="User" ToRole="Message" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <Association Name="UserEvent">
+    <End Type="EventHubModel.User" Role="User" Multiplicity="*" />
+    <End Type="EventHubModel.Event" Role="Event" Multiplicity="*" />
+  </Association>
+  <EntityType Name="PlusOne">
+    <Key>
+      <PropertyRef Name="PlusOneId" />
+    </Key>
+    <Property Name="PlusOneId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="EventHubModel.UserPlusOne" FromRole="PlusOne" ToRole="User" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Event" Relationship="EventHubModel.EventPlusOne" FromRole="PlusOne" ToRole="Event" />
+    <Property Name="EventId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="UserPlusOne">
+    <End Type="EventHubModel.User" Role="User" Multiplicity="1" />
+    <End Type="EventHubModel.PlusOne" Role="PlusOne" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="PlusOne">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EventPlusOne">
+    <End Type="EventHubModel.Event" Role="Event" Multiplicity="1" />
+    <End Type="EventHubModel.PlusOne" Role="PlusOne" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="PlusOne">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="MessageId" />
+    </Key>
+    <Property Name="MessageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Body" Type="String" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="EventHubModel.UserMessage" FromRole="Message" ToRole="User" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Event" Relationship="EventHubModel.EventMessage" FromRole="Message" ToRole="Event" />
+    <Property Name="EventId" Type="Int32" Nullable="false" />
+    <Property Name="Deleted" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <Association Name="UserMessage">
+    <End Type="EventHubModel.User" Role="User" Multiplicity="1" />
+    <End Type="EventHubModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EventMessage">
+    <End Type="EventHubModel.Event" Role="Event" Multiplicity="1" />
+    <End Type="EventHubModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ActivityEvent">
+    <End Type="EventHubModel.Activity" Role="Activity" Multiplicity="1" />
+    <End Type="EventHubModel.Event" Role="Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activity">
+        <PropertyRef Name="ActivityId" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
