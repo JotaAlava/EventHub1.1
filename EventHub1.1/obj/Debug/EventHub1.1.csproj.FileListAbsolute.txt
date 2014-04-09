@@ -30,3 +30,39 @@ c:\users\jose\documents\visual studio 2013\Projects\EventHub1.1\EventHub1.1\bin\
 c:\users\jose\documents\visual studio 2013\Projects\EventHub1.1\EventHub1.1\obj\Debug\EventHub1.1.csprojResolveAssemblyReference.cache
 c:\users\jose\documents\visual studio 2013\Projects\EventHub1.1\EventHub1.1\obj\Debug\EventHub1.1.dll
 c:\users\jose\documents\visual studio 2013\Projects\EventHub1.1\EventHub1.1\obj\Debug\EventHub1.1.pdb
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\EventHub1.1.dll.config
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\EventHub1.1.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\EventHub1.1.pdb
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\Antlr3.Runtime.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\Newtonsoft.Json.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Net.Http.Formatting.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.Helpers.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.Http.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.Http.WebHost.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.Mvc.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.Optimization.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.Razor.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.WebPages.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.WebPages.Razor.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\WebGrease.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\Newtonsoft.Json.xml
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Net.Http.Formatting.xml
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.Helpers.xml
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.Http.xml
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.Http.WebHost.xml
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.Mvc.xml
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.Optimization.xml
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.Razor.xml
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.WebPages.xml
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\System.Web.WebPages.Razor.xml
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\Antlr3.Runtime.pdb
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\obj\Debug\EventHub1.1.csprojResolveAssemblyReference.cache
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\obj\Debug\EventHub1.1.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\obj\Debug\EventHub1.1.pdb
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\EntityFramework.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\EntityFramework.SqlServer.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\EntityFramework.xml
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1\bin\EntityFramework.SqlServer.xml

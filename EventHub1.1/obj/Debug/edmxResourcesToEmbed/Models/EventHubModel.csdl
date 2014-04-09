@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EventHubDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="ActivityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DayOfWeek" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LocationId" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Events" Relationship="Self.FK_ActivityEvent" FromRole="Activities" ToRole="Events" />
+    <NavigationProperty Name="Location" Relationship="Self.FK_ActivityLocation" FromRole="Activities" ToRole="Locations" />
+    <NavigationProperty Name="Activities_Sport" Relationship="Self.FK_Sport_inherits_Activity" FromRole="Activities" ToRole="Activities_Sport" />
+  </EntityType>
+  <EntityType Name="Activities_Sport">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="PreferredNumberOfPlayers" Type="Int32" Nullable="false" />
+    <Property Name="RequiredNumberOfPlayers" Type="Int32" Nullable="false" />
+    <Property Name="ActivityId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Activity" Relationship="Self.FK_Sport_inherits_Activity" FromRole="Activities_Sport" ToRole="Activities" />
+  </EntityType>
+  <EntityType Name="Event">
+    <Key>
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ActivityId" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Activity" Relationship="Self.FK_ActivityEvent" FromRole="Events" ToRole="Activities" />
+    <NavigationProperty Name="Messages" Relationship="Self.FK_EventMessage" FromRole="Events" ToRole="Messages" />
+    <NavigationProperty Name="PlusOnes" Relationship="Self.FK_EventPlusOne" FromRole="Events" ToRole="PlusOnes" />
+    <NavigationProperty Name="Users" Relationship="Self.UserEvent" FromRole="Events" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="LocationId" />
+    </Key>
+    <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Activities" Relationship="Self.FK_ActivityLocation" FromRole="Locations" ToRole="Activities" />
+  </EntityType>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="MessageId" />
+    </Key>
+    <Property Name="MessageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="EventId" Type="Int32" Nullable="false" />
+    <Property Name="Deleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Event" Relationship="Self.FK_EventMessage" FromRole="Messages" ToRole="Events" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserMessage" FromRole="Messages" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="PlusOne">
+    <Key>
+      <PropertyRef Name="PlusOneId" />
+    </Key>
+    <Property Name="PlusOneId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="EventId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Event" Relationship="Self.FK_EventPlusOne" FromRole="PlusOnes" ToRole="Events" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserPlusOne" FromRole="PlusOnes" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EMail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Messages" Relationship="Self.FK_UserMessage" FromRole="Users" ToRole="Messages" />
+    <NavigationProperty Name="PlusOnes" Relationship="Self.FK_UserPlusOne" FromRole="Users" ToRole="PlusOnes" />
+    <NavigationProperty Name="Events" Relationship="Self.UserEvent" FromRole="Users" ToRole="Events" />
+  </EntityType>
+  <Association Name="FK_ActivityEvent">
+    <End Role="Activities" Type="Self.Activity" Multiplicity="1" />
+    <End Role="Events" Type="Self.Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activities">
+        <PropertyRef Name="ActivityId" />
+      </Principal>
+      <Dependent Role="Events">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActivityLocation">
+    <End Role="Locations" Type="Self.Location" Multiplicity="1" />
+    <End Role="Activities" Type="Self.Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="LocationId" />
+      </Principal>
+      <Dependent Role="Activities">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sport_inherits_Activity">
+    <End Role="Activities" Type="Self.Activity" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Activities_Sport" Type="Self.Activities_Sport" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Activities">
+        <PropertyRef Name="ActivityId" />
+      </Principal>
+      <Dependent Role="Activities_Sport">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventMessage">
+    <End Role="Events" Type="Self.Event" Multiplicity="1" />
+    <End Role="Messages" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Events">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="Messages">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventPlusOne">
+    <End Role="Events" Type="Self.Event" Multiplicity="1" />
+    <End Role="PlusOnes" Type="Self.PlusOne" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Events">
+        <PropertyRef Name="EventId" />
+      </Principal>
+      <Dependent Role="PlusOnes">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserMessage">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Messages" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Messages">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserPlusOne">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="PlusOnes" Type="Self.PlusOne" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="PlusOnes">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserEvent">
+    <End Role="Events" Type="Self.Event" Multiplicity="*" />
+    <End Role="Users" Type="Self.User" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="EventHubDbEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Activities" EntityType="Self.Activity" />
+    <EntitySet Name="Activities_Sport" EntityType="Self.Activities_Sport" />
+    <EntitySet Name="Events" EntityType="Self.Event" />
+    <EntitySet Name="Locations" EntityType="Self.Location" />
+    <EntitySet Name="Messages" EntityType="Self.Message" />
+    <EntitySet Name="PlusOnes" EntityType="Self.PlusOne" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_ActivityEvent" Association="Self.FK_ActivityEvent">
+      <End Role="Activities" EntitySet="Activities" />
+      <End Role="Events" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActivityLocation" Association="Self.FK_ActivityLocation">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="Activities" EntitySet="Activities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sport_inherits_Activity" Association="Self.FK_Sport_inherits_Activity">
+      <End Role="Activities" EntitySet="Activities" />
+      <End Role="Activities_Sport" EntitySet="Activities_Sport" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventMessage" Association="Self.FK_EventMessage">
+      <End Role="Events" EntitySet="Events" />
+      <End Role="Messages" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventPlusOne" Association="Self.FK_EventPlusOne">
+      <End Role="Events" EntitySet="Events" />
+      <End Role="PlusOnes" EntitySet="PlusOnes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserMessage" Association="Self.FK_UserMessage">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Messages" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserPlusOne" Association="Self.FK_UserPlusOne">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="PlusOnes" EntitySet="PlusOnes" />
+    </AssociationSet>
+    <AssociationSet Name="UserEvent" Association="Self.UserEvent">
+      <End Role="Events" EntitySet="Events" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
