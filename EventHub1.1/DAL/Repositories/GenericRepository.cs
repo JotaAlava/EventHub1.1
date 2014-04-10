@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using EventHub1._1.Models;
 
 namespace EventHub1._1.DAL.Repositories
 {
     public class GenericRepository<TEntity> where TEntity : class
     {
-        internal EventHubDb context;
+        internal EventHubDbEntities6 context;
         internal DbSet<TEntity> dbSet;
 
-        public GenericRepository(EventHubDb context)
+        public GenericRepository(EventHubDbEntities6 context)
         {
             this.context = context;
             this.dbSet = context.Set<TEntity>();

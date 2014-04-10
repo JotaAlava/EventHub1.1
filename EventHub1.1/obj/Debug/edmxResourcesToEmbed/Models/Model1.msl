@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="EventHubDbModelStoreContainer" CdmEntityContainer="EventHubDbEntities6">
+  <EntityContainerMapping StorageEntityContainer="EventHubDbModelStoreContainer" CdmEntityContainer="EventHubDbEntities4">
     <EntitySetMapping Name="Activities">
       <EntityTypeMapping TypeName="EventHubDbModel.Activity">
         <MappingFragment StoreEntitySet="Activities">

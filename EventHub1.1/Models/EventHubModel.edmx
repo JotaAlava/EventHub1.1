@@ -414,7 +414,7 @@
           <End Role="Events" Type="Self.Event" Multiplicity="*" />
           <End Role="Users" Type="Self.User" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="EventHubDbEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="EventHubDbEntities6" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Activities" EntityType="Self.Activity" />
           <EntitySet Name="Activities_Sport" EntityType="Self.Activities_Sport" />
           <EntitySet Name="Events" EntityType="Self.Event" />
@@ -460,7 +460,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EventHubDbModelStoreContainer" CdmEntityContainer="EventHubDbEntities1">
+        <EntityContainerMapping StorageEntityContainer="EventHubDbModelStoreContainer" CdmEntityContainer="EventHubDbEntities6">
           <EntitySetMapping Name="Activities">
             <EntityTypeMapping TypeName="EventHubDbModel.Activity">
               <MappingFragment StoreEntitySet="Activities">

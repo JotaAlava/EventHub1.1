@@ -157,7 +157,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\LocationController.cs" />
-    <Compile Include="DAL\EventHubDb.cs" />
     <Compile Include="DAL\Repositories\GenericRepository.cs" />
     <Compile Include="DAL\Services\LocationService.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />

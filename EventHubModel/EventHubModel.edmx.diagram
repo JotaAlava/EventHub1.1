@@ -8,7 +8,7 @@
         <EntityTypeShape EntityType="EventHubModel.Activity" Width="1.5" PointX="3.875" PointY="0.75" />
         <EntityTypeShape EntityType="EventHubModel.Location" Width="1.5" PointX="3.875" PointY="4" />
         <AssociationConnector Association="EventHubModel.ActivityLocation" />
-        <EntityTypeShape EntityType="EventHubModel.Sport" Width="1.5" PointX="1.75" PointY="1.125" />
+        <EntityTypeShape EntityType="EventHubModel.Sport" Width="1.5" PointX="1.875" PointY="1.375" />
         <InheritanceConnector EntityType="EventHubModel.Sport" />
         <EntityTypeShape EntityType="EventHubModel.Event" Width="1.5" PointX="8.375" PointY="0.5" />
         <EntityTypeShape EntityType="EventHubModel.User" Width="1.5" PointX="11.375" PointY="3.25" />

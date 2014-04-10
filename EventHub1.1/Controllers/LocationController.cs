@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using EventHub1._1.DAL.Services;
 using EventHub1._1.Models;

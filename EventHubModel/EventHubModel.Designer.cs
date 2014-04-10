@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Jose\Documents\Visual Studio 2013\Projects\EventHub1.1\EventHubModel\EventHubModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHubModel\EventHubModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
