@@ -1,2 +1,3 @@
-EventHub1.1/Models/
-/bin/
+EventHub1.1/Models
+EventHub1.1/bin**
+EventHub1.1/obj**
