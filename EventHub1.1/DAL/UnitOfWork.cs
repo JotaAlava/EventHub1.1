@@ -8,17 +8,29 @@ namespace EventHub1._1.DAL
     {
         private EventHubDbEntities6 context = new EventHubDbEntities6();
         private GenericRepository<Location> locationRepository;
+        private GenericRepository<Activity> activityRepository;
 
         public GenericRepository<Location> LocationRepository
         {
             get
             {
-
                 if (this.locationRepository == null)
                 {
                     this.locationRepository = new GenericRepository<Location>(context);
                 }
                 return locationRepository;
+            }
+        }
+
+        public GenericRepository<Activity> ActivityRepository
+        {
+            get
+            {
+                if (this.activityRepository == null)
+                {
+                    this.activityRepository = new GenericRepository<Activity>(context);
+                }
+                return activityRepository;
             }
         }
 

@@ -2,7 +2,6 @@
 using System.Web.Http;
 using EventHub1._1.DAL.Services;
 using EventHub1._1.Models;
-using System;
 using System.Net.Http;
 using System.Net;
 
@@ -16,20 +15,57 @@ namespace EventHub1._1.Controllers
             this.locationService = locationService;
         }
 
-        public IEnumerable<Location> GetLocations()
+        [HttpGet]
+        [Route("location")]
+        public IEnumerable<Location> GetActiveLocations()
         {
-            return locationService.GetAllActiveLocations();
+            return locationService.GetActiveLocations();
         }
 
-        public Location GetLocationById (int Id)
+        [HttpGet]
+        [Route("location/{id}/")]
+        public Location GetLocationById(int id)
         {
-            return locationService.GetLocationById(Id);
+            return locationService.GetLocationById(id);
         }
 
+        [HttpPost]
+        [Route("location")]
         public HttpResponseMessage PostLocation(Location locationToAdd)
         {
-            locationService.AddLocation(locationToAdd);
+            locationService.CreateLocation(locationToAdd);
             var responnse = Request.CreateResponse<Location>(HttpStatusCode.Created, locationToAdd);
+
+            return responnse;
+        }
+
+        [HttpPost]
+        [Route("location/ToggleActiveById/{id}/")]
+
+        public HttpResponseMessage ToggleActiveById(int id)
+        {
+            locationService.ToggleActiveById(id);
+            var responnse = Request.CreateResponse(HttpStatusCode.OK);
+
+            return responnse;
+        }
+
+        [HttpDelete]
+        [Route("location/{id}/")]
+        public HttpResponseMessage DeleteLocationById(int id)
+        {
+            locationService.DeleteLocationById(id);
+            var responnse = Request.CreateResponse(HttpStatusCode.OK);
+
+            return responnse;
+        }
+
+        [HttpPut]
+        [Route("location")]
+        public HttpResponseMessage UpdateLocation(Location locationToUpdate)
+        {
+            locationService.UpdateLocation(locationToUpdate);
+            var responnse = Request.CreateResponse(HttpStatusCode.OK);
 
             return responnse;
         }

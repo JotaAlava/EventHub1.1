@@ -11,29 +11,58 @@ namespace EventHub1._1.DAL.Services
             this.uow = uow;
         }
 
-        public IEnumerable<Location> GetAllActiveLocations()
+        public IEnumerable<Location> GetActiveLocations()
         {
             return uow.LocationRepository.Get(location => location.Active);
         }
 
-        public Location GetLocationById(int Id)
+        public Location GetLocationById(int id)
         {
-            return uow.LocationRepository.GetByID(Id);
+            return uow.LocationRepository.GetByID(id);
         }
 
-        public void AddLocation(Location locationToAdd)
+        public void CreateLocation(Location locationToAdd)
         {
             uow.LocationRepository.Insert(locationToAdd);
             uow.Save();
-        }        
+        }
+
+        public void ToggleActiveById(int id)
+        {
+            var locationToModify = uow.LocationRepository.GetByID(id);
+
+            locationToModify.Active = !locationToModify.Active;
+
+            uow.LocationRepository.Update(locationToModify);
+            uow.Save();
+        }
+        
+        public void DeleteLocationById(int id)
+        {
+            uow.LocationRepository.Delete(id);
+            uow.Save();
+        }
+
+
+        public void UpdateLocation(Location locationToUpdate)
+        {
+            uow.LocationRepository.Update(locationToUpdate);
+            uow.Save();
+        }
     }
 
     public interface ILocationService
     {
-        IEnumerable<Location> GetAllActiveLocations();
+        IEnumerable<Location> GetActiveLocations();
 
-        void AddLocation(Location locationToAdd);
+        void CreateLocation(Location locationToAdd);
 
-        Location GetLocationById(int Id);
+        Location GetLocationById(int id);
+
+        void ToggleActiveById(int id);
+
+        void DeleteLocationById(int id);
+
+        void UpdateLocation(Location locationToUpdate);
     }
 }

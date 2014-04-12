@@ -70,3 +70,5 @@ C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1.Tests\bin\Debug\System.We
 C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1.Tests\bin\Debug\Ninject.Web.Common.xml
 C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1.Tests\bin\Debug\Ninject.xml
 C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1.Tests\obj\Debug\EventHub1.1.Tests.pdb
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1.Tests\bin\Debug\EventHubModel.dll
+C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHub1.1.Tests\bin\Debug\EventHubModel.pdb

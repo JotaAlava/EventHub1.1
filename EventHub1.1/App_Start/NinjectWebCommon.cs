@@ -1,4 +1,5 @@
 using System.Web.Http;
+using EventHub1._1.Controllers;
 using EventHub1._1.DAL.Services;
 using WebApiContrib.IoC.Ninject;
 
@@ -69,6 +70,7 @@ namespace EventHub1._1.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<ILocationService>().To<LocationService>();
+            kernel.Bind<IActivityService>().To<ActivityService>();
         }        
     }
 }
