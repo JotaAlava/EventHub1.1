@@ -2,6 +2,9 @@
 using System.Web.Http;
 using EventHub1._1.DAL.Services;
 using EventHub1._1.Models;
+using System;
+using System.Net.Http;
+using System.Net;
 
 namespace EventHub1._1.Controllers
 {
@@ -13,9 +16,22 @@ namespace EventHub1._1.Controllers
             this.locationService = locationService;
         }
 
-        public IEnumerable<Location> GetAllActiveLocations()
+        public IEnumerable<Location> GetLocations()
         {
             return locationService.GetAllActiveLocations();
+        }
+
+        public Location GetLocationById (int Id)
+        {
+            return locationService.GetLocationById(Id);
+        }
+
+        public HttpResponseMessage PostLocation(Location locationToAdd)
+        {
+            locationService.AddLocation(locationToAdd);
+            var responnse = Request.CreateResponse<Location>(HttpStatusCode.Created, locationToAdd);
+
+            return responnse;
         }
     }
 }

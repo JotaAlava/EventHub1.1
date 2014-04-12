@@ -15,10 +15,25 @@ namespace EventHub1._1.DAL.Services
         {
             return uow.LocationRepository.Get(location => location.Active);
         }
+
+        public Location GetLocationById(int Id)
+        {
+            return uow.LocationRepository.GetByID(Id);
+        }
+
+        public void AddLocation(Location locationToAdd)
+        {
+            uow.LocationRepository.Insert(locationToAdd);
+            uow.Save();
+        }        
     }
 
     public interface ILocationService
     {
         IEnumerable<Location> GetAllActiveLocations();
+
+        void AddLocation(Location locationToAdd);
+
+        Location GetLocationById(int Id);
     }
 }
