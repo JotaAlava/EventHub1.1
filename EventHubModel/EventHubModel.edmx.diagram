@@ -5,11 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="5af721ca124440aab47e03fe114bdb7b" Name="Diagram1" >
-        <EntityTypeShape EntityType="EventHubModel.Activity" Width="1.5" PointX="3.875" PointY="0.75" />
+        <EntityTypeShape EntityType="EventHubModel.Activity" Width="1.5" PointX="1.625" PointY="1.75" />
         <EntityTypeShape EntityType="EventHubModel.Location" Width="1.5" PointX="3.875" PointY="4" />
         <AssociationConnector Association="EventHubModel.ActivityLocation" />
-        <EntityTypeShape EntityType="EventHubModel.Sport" Width="1.5" PointX="1.875" PointY="1.375" />
-        <InheritanceConnector EntityType="EventHubModel.Sport" />
         <EntityTypeShape EntityType="EventHubModel.Event" Width="1.5" PointX="8.375" PointY="0.5" />
         <EntityTypeShape EntityType="EventHubModel.User" Width="1.5" PointX="11.375" PointY="3.25" />
         <AssociationConnector Association="EventHubModel.UserEvent" />

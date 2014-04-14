@@ -25,9 +25,10 @@ namespace EventHub1._1.Models
         public System.DateTime Time { get; set; }
         public int LocationId { get; set; }
         public bool Active { get; set; }
+        public int PreferredNumberOfPlayers1 { get; set; }
+        public int RequiredNumberOfPlayers1 { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
         public virtual Location Location { get; set; }
-        public virtual Activities_Sport Activities_Sport { get; set; }
     }
 }

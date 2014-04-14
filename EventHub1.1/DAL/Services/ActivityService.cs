@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using EventHub1._1.DAL;
 using EventHub1._1.Models;
 
-namespace EventHub1._1.Controllers
+namespace EventHub1._1.DAL.Services
 {
     public class ActivityService : IActivityService
     {
@@ -25,7 +24,7 @@ namespace EventHub1._1.Controllers
         public void CreateActivity(Activity locationToAdd)
         {
             uow.ActivityRepository.Insert(locationToAdd);
-            uow.Save();
+            uow.Commit();
         }
 
         public void ToggleActiveById(int id)
@@ -35,20 +34,20 @@ namespace EventHub1._1.Controllers
             locationToModify.Active = !locationToModify.Active;
 
             uow.ActivityRepository.Update(locationToModify);
-            uow.Save();
+            uow.Commit();
         }
 
         public void DeleteActivityById(int id)
         {
             uow.ActivityRepository.Delete(id);
-            uow.Save();
+            uow.Commit();
         }
 
 
         public void UpdateActivity(Activity locationToUpdate)
         {
             uow.ActivityRepository.Update(locationToUpdate);
-            uow.Save();
+            uow.Commit();
         }
     }
 

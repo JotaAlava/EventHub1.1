@@ -12,7 +12,6 @@
     <EntitySet Name="Users" EntityType="EventHubModel.Store.Users" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PlusOnes" EntityType="EventHubModel.Store.PlusOnes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Messages" EntityType="EventHubModel.Store.Messages" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Activities_Sport" EntityType="EventHubModel.Store.Activities_Sport" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserEvent" EntityType="EventHubModel.Store.UserEvent" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="ActivityLocation" Association="EventHubModel.Store.ActivityLocation">
       <End Role="Activity" EntitySet="Activities" />
@@ -46,10 +45,6 @@
       <End Role="Activity" EntitySet="Activities" />
       <End Role="Event" EntitySet="Events" />
     </AssociationSet>
-    <AssociationSet Name="FK_Sport_inherits_Activity" Association="EventHubModel.Store.FK_Sport_inherits_Activity">
-      <End Role="Activity" EntitySet="Activities" />
-      <End Role="Sport" EntitySet="Activities_Sport" />
-    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Activities">
     <Key>
@@ -61,6 +56,8 @@
     <Property Name="Time" Type="datetime" Nullable="false" />
     <Property Name="LocationId" Type="int" Nullable="false" />
     <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="PreferredNumberOfPlayers1" Type="int" Nullable="false" />
+    <Property Name="RequiredNumberOfPlayers1" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Locations">
     <Key>
@@ -109,14 +106,6 @@
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="EventId" Type="int" Nullable="false" />
     <Property Name="Deleted" Type="bit" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Activities_Sport">
-    <Key>
-      <PropertyRef Name="ActivityId" />
-    </Key>
-    <Property Name="PreferredNumberOfPlayers" Type="int" Nullable="false" />
-    <Property Name="RequiredNumberOfPlayers" Type="int" Nullable="false" />
-    <Property Name="ActivityId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="UserEvent">
     <Key>
@@ -222,20 +211,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Sport_inherits_Activity">
-    <End Role="Activity" Type="EventHubModel.Store.Activities" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Sport" Type="EventHubModel.Store.Activities_Sport" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Activity">
-        <PropertyRef Name="ActivityId" />
-      </Principal>
-      <Dependent Role="Sport">
-        <PropertyRef Name="ActivityId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -275,7 +250,7 @@
             <End Role="Activity" EntitySet="Activities" />
             <End Role="Event" EntitySet="Events" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Activity">
           <Key>
             <PropertyRef Name="ActivityId" />
@@ -288,6 +263,8 @@
           <Property Name="LocationId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Events" Relationship="EventHubModel.ActivityEvent" FromRole="Activity" ToRole="Event" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="PreferredNumberOfPlayers1" Type="Int32" Nullable="false" />
+          <Property Name="RequiredNumberOfPlayers1" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -311,10 +288,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Sport" BaseType="EventHubModel.Activity" >
-          <Property Name="PreferredNumberOfPlayers" Type="Int32" Nullable="false" />
-          <Property Name="RequiredNumberOfPlayers" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="EventId" />
@@ -444,13 +417,8 @@
           <ScalarProperty Name="Time" ColumnName="Time" />
           <ScalarProperty Name="LocationId" ColumnName="LocationId" />
           <ScalarProperty Name="Active" ColumnName="Active" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(EventHubModel.Sport)">
-        <MappingFragment StoreEntitySet="Activities_Sport">
-          <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
-          <ScalarProperty Name="PreferredNumberOfPlayers" ColumnName="PreferredNumberOfPlayers" />
-          <ScalarProperty Name="RequiredNumberOfPlayers" ColumnName="RequiredNumberOfPlayers" />
+          <ScalarProperty Name="PreferredNumberOfPlayers1" ColumnName="PreferredNumberOfPlayers1" />
+          <ScalarProperty Name="RequiredNumberOfPlayers1" ColumnName="RequiredNumberOfPlayers1" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

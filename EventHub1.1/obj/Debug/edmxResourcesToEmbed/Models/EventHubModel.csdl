@@ -10,18 +10,10 @@
     <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="LocationId" Type="Int32" Nullable="false" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="PreferredNumberOfPlayers1" Type="Int32" Nullable="false" />
+    <Property Name="RequiredNumberOfPlayers1" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Events" Relationship="Self.FK_ActivityEvent" FromRole="Activities" ToRole="Events" />
     <NavigationProperty Name="Location" Relationship="Self.FK_ActivityLocation" FromRole="Activities" ToRole="Locations" />
-    <NavigationProperty Name="Activities_Sport" Relationship="Self.FK_Sport_inherits_Activity" FromRole="Activities" ToRole="Activities_Sport" />
-  </EntityType>
-  <EntityType Name="Activities_Sport">
-    <Key>
-      <PropertyRef Name="ActivityId" />
-    </Key>
-    <Property Name="PreferredNumberOfPlayers" Type="Int32" Nullable="false" />
-    <Property Name="RequiredNumberOfPlayers" Type="Int32" Nullable="false" />
-    <Property Name="ActivityId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Activity" Relationship="Self.FK_Sport_inherits_Activity" FromRole="Activities_Sport" ToRole="Activities" />
   </EntityType>
   <EntityType Name="Event">
     <Key>
@@ -107,20 +99,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Sport_inherits_Activity">
-    <End Role="Activities" Type="Self.Activity" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Activities_Sport" Type="Self.Activities_Sport" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Activities">
-        <PropertyRef Name="ActivityId" />
-      </Principal>
-      <Dependent Role="Activities_Sport">
-        <PropertyRef Name="ActivityId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_EventMessage">
     <End Role="Events" Type="Self.Event" Multiplicity="1" />
     <End Role="Messages" Type="Self.Message" Multiplicity="*" />
@@ -173,9 +151,8 @@
     <End Role="Events" Type="Self.Event" Multiplicity="*" />
     <End Role="Users" Type="Self.User" Multiplicity="*" />
   </Association>
-  <EntityContainer Name="EventHubDbEntities6" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="EventHubDbEntities7" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Activities" EntityType="Self.Activity" />
-    <EntitySet Name="Activities_Sport" EntityType="Self.Activities_Sport" />
     <EntitySet Name="Events" EntityType="Self.Event" />
     <EntitySet Name="Locations" EntityType="Self.Location" />
     <EntitySet Name="Messages" EntityType="Self.Message" />
@@ -188,10 +165,6 @@
     <AssociationSet Name="FK_ActivityLocation" Association="Self.FK_ActivityLocation">
       <End Role="Locations" EntitySet="Locations" />
       <End Role="Activities" EntitySet="Activities" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Sport_inherits_Activity" Association="Self.FK_Sport_inherits_Activity">
-      <End Role="Activities" EntitySet="Activities" />
-      <End Role="Activities_Sport" EntitySet="Activities_Sport" />
     </AssociationSet>
     <AssociationSet Name="FK_EventMessage" Association="Self.FK_EventMessage">
       <End Role="Events" EntitySet="Events" />

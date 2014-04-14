@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/09/2014 20:26:04
+-- Date Created: 04/13/2014 15:52:13
 -- Generated from EDMX file: C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHubModel\EventHubModel.edmx
 -- --------------------------------------------------
 
@@ -18,7 +18,7 @@ GO
 -- --------------------------------------------------
 
 IF OBJECT_ID(N'[dbo].[FK_ActivityLocation]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Activities] DROP CONSTRAINT [FK_ActivityLocation];
+    ALTER TABLE [dbo].[Sports] DROP CONSTRAINT [FK_ActivityLocation];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserEvent_User]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserEvent] DROP CONSTRAINT [FK_UserEvent_User];
@@ -41,16 +41,13 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ActivityEvent]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Events] DROP CONSTRAINT [FK_ActivityEvent];
 GO
-IF OBJECT_ID(N'[dbo].[FK_Sport_inherits_Activity]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Activities_Sport] DROP CONSTRAINT [FK_Sport_inherits_Activity];
-GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[Activities]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Activities];
+IF OBJECT_ID(N'[dbo].[Sports]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Sports];
 GO
 IF OBJECT_ID(N'[dbo].[Locations]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Locations];
@@ -67,9 +64,6 @@ GO
 IF OBJECT_ID(N'[dbo].[Messages]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Messages];
 GO
-IF OBJECT_ID(N'[dbo].[Activities_Sport]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Activities_Sport];
-GO
 IF OBJECT_ID(N'[dbo].[UserEvent]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserEvent];
 GO
@@ -85,7 +79,9 @@ CREATE TABLE [dbo].[Activities] (
     [DayOfWeek] nvarchar(max)  NOT NULL,
     [Time] datetime  NOT NULL,
     [LocationId] int  NOT NULL,
-    [Active] bit  NOT NULL
+    [Active] bit  NOT NULL,
+    [PreferredNumberOfPlayers1] int  NOT NULL,
+    [RequiredNumberOfPlayers1] int  NOT NULL
 );
 GO
 
@@ -137,14 +133,6 @@ CREATE TABLE [dbo].[Messages] (
 );
 GO
 
--- Creating table 'Activities_Sport'
-CREATE TABLE [dbo].[Activities_Sport] (
-    [PreferredNumberOfPlayers] int  NOT NULL,
-    [RequiredNumberOfPlayers] int  NOT NULL,
-    [ActivityId] int  NOT NULL
-);
-GO
-
 -- Creating table 'UserEvent'
 CREATE TABLE [dbo].[UserEvent] (
     [Users_UserId] int  NOT NULL,
@@ -190,12 +178,6 @@ GO
 ALTER TABLE [dbo].[Messages]
 ADD CONSTRAINT [PK_Messages]
     PRIMARY KEY CLUSTERED ([MessageId] ASC);
-GO
-
--- Creating primary key on [ActivityId] in table 'Activities_Sport'
-ALTER TABLE [dbo].[Activities_Sport]
-ADD CONSTRAINT [PK_Activities_Sport]
-    PRIMARY KEY CLUSTERED ([ActivityId] ASC);
 GO
 
 -- Creating primary key on [Users_UserId], [Events_EventId] in table 'UserEvent'
@@ -313,15 +295,6 @@ ADD CONSTRAINT [FK_ActivityEvent]
 CREATE INDEX [IX_FK_ActivityEvent]
 ON [dbo].[Events]
     ([ActivityId]);
-GO
-
--- Creating foreign key on [ActivityId] in table 'Activities_Sport'
-ALTER TABLE [dbo].[Activities_Sport]
-ADD CONSTRAINT [FK_Sport_inherits_Activity]
-    FOREIGN KEY ([ActivityId])
-    REFERENCES [dbo].[Activities]
-        ([ActivityId])
-    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- --------------------------------------------------

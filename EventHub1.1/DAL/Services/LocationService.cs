@@ -24,7 +24,7 @@ namespace EventHub1._1.DAL.Services
         public void CreateLocation(Location locationToAdd)
         {
             uow.LocationRepository.Insert(locationToAdd);
-            uow.Save();
+            uow.Commit();
         }
 
         public void ToggleActiveById(int id)
@@ -34,20 +34,20 @@ namespace EventHub1._1.DAL.Services
             locationToModify.Active = !locationToModify.Active;
 
             uow.LocationRepository.Update(locationToModify);
-            uow.Save();
+            uow.Commit();
         }
         
         public void DeleteLocationById(int id)
         {
             uow.LocationRepository.Delete(id);
-            uow.Save();
+            uow.Commit();
         }
 
 
         public void UpdateLocation(Location locationToUpdate)
         {
             uow.LocationRepository.Update(locationToUpdate);
-            uow.Save();
+            uow.Commit();
         }
     }
 

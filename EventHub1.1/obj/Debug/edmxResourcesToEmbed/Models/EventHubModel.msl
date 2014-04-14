@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="EventHubDbModelStoreContainer" CdmEntityContainer="EventHubDbEntities6">
+  <EntityContainerMapping StorageEntityContainer="EventHubDbModelStoreContainer" CdmEntityContainer="EventHubDbEntities7">
     <EntitySetMapping Name="Activities">
       <EntityTypeMapping TypeName="EventHubDbModel.Activity">
         <MappingFragment StoreEntitySet="Activities">
@@ -10,15 +10,8 @@
           <ScalarProperty Name="Time" ColumnName="Time" />
           <ScalarProperty Name="LocationId" ColumnName="LocationId" />
           <ScalarProperty Name="Active" ColumnName="Active" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Activities_Sport">
-      <EntityTypeMapping TypeName="EventHubDbModel.Activities_Sport">
-        <MappingFragment StoreEntitySet="Activities_Sport">
-          <ScalarProperty Name="PreferredNumberOfPlayers" ColumnName="PreferredNumberOfPlayers" />
-          <ScalarProperty Name="RequiredNumberOfPlayers" ColumnName="RequiredNumberOfPlayers" />
-          <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+          <ScalarProperty Name="PreferredNumberOfPlayers1" ColumnName="PreferredNumberOfPlayers1" />
+          <ScalarProperty Name="RequiredNumberOfPlayers1" ColumnName="RequiredNumberOfPlayers1" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

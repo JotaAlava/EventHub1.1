@@ -6,9 +6,15 @@ namespace EventHub1._1.DAL
 {
     public class UnitOfWork : IDisposable
     {
-        private EventHubDbEntities6 context = new EventHubDbEntities6();
+        private EventHubDbEntities7 context = new EventHubDbEntities7();
         private GenericRepository<Location> locationRepository;
         private GenericRepository<Activity> activityRepository;
+
+        private GenericRepository<Message> messageRepository;
+        private GenericRepository<User> userRepository;
+        private GenericRepository<Event> eventRepository;
+
+        private GenericRepository<PlusOne> plusOneRepository; 
 
         public GenericRepository<Location> LocationRepository
         {
@@ -34,12 +40,60 @@ namespace EventHub1._1.DAL
             }
         }
 
-        public void Save()
+        public GenericRepository<Message> MessageRepository
+        {
+            get
+            {
+                if (this.messageRepository == null)
+                {
+                    this.messageRepository = new GenericRepository<Message>(context);
+                }
+                return messageRepository;
+            }
+        }
+
+        public GenericRepository<User> UserRepository
+        {
+            get
+            {
+                if (this.userRepository == null)
+                {
+                    this.userRepository = new GenericRepository<User>(context);
+                }
+                return userRepository;
+            }
+        }
+
+        public GenericRepository<Event> EventRepository
+        {
+            get
+            {
+                if (this.eventRepository == null)
+                {
+                    this.eventRepository = new GenericRepository<Event>(context);
+                }
+                return eventRepository;
+            }
+        }
+
+        public GenericRepository<PlusOne> PlusOneRepository
+        {
+            get
+            {
+                if (this.plusOneRepository == null)
+                {
+                    this.plusOneRepository = new GenericRepository<PlusOne>(context);
+                }
+                return plusOneRepository;
+            }
+        }
+
+        public void Commit()
         {
             context.SaveChanges();
         }
 
-        private bool disposed = false;
+        private bool disposed;
 
         protected virtual void Dispose(bool disposing)
         {

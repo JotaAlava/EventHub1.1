@@ -160,16 +160,17 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
-    <Compile Include="Controllers\ActivityService.cs" />
+    <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DAL\Services\ActivityService.cs" />
     <Compile Include="Controllers\LocationController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="DAL\Repositories\GenericRepository.cs" />
     <Compile Include="DAL\Services\LocationService.cs" />
+    <Compile Include="DAL\Services\MessageService.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Activities_Sport.cs">
-      <DependentUpon>EventHubModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Activity.cs">
       <DependentUpon>EventHubModel.tt</DependentUpon>

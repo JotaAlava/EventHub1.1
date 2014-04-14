@@ -13,10 +13,10 @@ namespace EventHub1._1.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class EventHubDbEntities6 : DbContext
+    public partial class EventHubDbEntities7 : DbContext
     {
-        public EventHubDbEntities6()
-            : base("name=EventHubDbEntities6")
+        public EventHubDbEntities7()
+            : base("name=EventHubDbEntities7")
         {
         }
     
@@ -26,7 +26,6 @@ namespace EventHub1._1.Models
         }
     
         public virtual DbSet<Activity> Activities { get; set; }
-        public virtual DbSet<Activities_Sport> Activities_Sport { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Message> Messages { get; set; }

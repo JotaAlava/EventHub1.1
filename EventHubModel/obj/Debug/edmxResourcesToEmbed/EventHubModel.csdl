@@ -48,6 +48,8 @@
     <Property Name="LocationId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Events" Relationship="EventHubModel.ActivityEvent" FromRole="Activity" ToRole="Event" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="PreferredNumberOfPlayers1" Type="Int32" Nullable="false" />
+    <Property Name="RequiredNumberOfPlayers1" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="Location">
     <Key>
@@ -71,10 +73,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="Sport" BaseType="EventHubModel.Activity">
-    <Property Name="PreferredNumberOfPlayers" Type="Int32" Nullable="false" />
-    <Property Name="RequiredNumberOfPlayers" Type="Int32" Nullable="false" />
-  </EntityType>
   <EntityType Name="Event">
     <Key>
       <PropertyRef Name="EventId" />

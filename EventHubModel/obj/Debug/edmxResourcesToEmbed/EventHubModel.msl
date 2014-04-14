@@ -10,13 +10,8 @@
           <ScalarProperty Name="Time" ColumnName="Time" />
           <ScalarProperty Name="LocationId" ColumnName="LocationId" />
           <ScalarProperty Name="Active" ColumnName="Active" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(EventHubModel.Sport)">
-        <MappingFragment StoreEntitySet="Activities_Sport">
-          <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
-          <ScalarProperty Name="PreferredNumberOfPlayers" ColumnName="PreferredNumberOfPlayers" />
-          <ScalarProperty Name="RequiredNumberOfPlayers" ColumnName="RequiredNumberOfPlayers" />
+          <ScalarProperty Name="PreferredNumberOfPlayers1" ColumnName="PreferredNumberOfPlayers1" />
+          <ScalarProperty Name="RequiredNumberOfPlayers1" ColumnName="RequiredNumberOfPlayers1" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

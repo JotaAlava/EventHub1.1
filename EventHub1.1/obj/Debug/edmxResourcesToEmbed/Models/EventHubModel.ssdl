@@ -10,14 +10,8 @@
     <Property Name="Time" Type="datetime" Nullable="false" />
     <Property Name="LocationId" Type="int" Nullable="false" />
     <Property Name="Active" Type="bit" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Activities_Sport">
-    <Key>
-      <PropertyRef Name="ActivityId" />
-    </Key>
-    <Property Name="PreferredNumberOfPlayers" Type="int" Nullable="false" />
-    <Property Name="RequiredNumberOfPlayers" Type="int" Nullable="false" />
-    <Property Name="ActivityId" Type="int" Nullable="false" />
+    <Property Name="PreferredNumberOfPlayers1" Type="int" Nullable="false" />
+    <Property Name="RequiredNumberOfPlayers1" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Events">
     <Key>
@@ -123,20 +117,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Sport_inherits_Activity">
-    <End Role="Activities" Type="Self.Activities" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Activities_Sport" Type="Self.Activities_Sport" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Activities">
-        <PropertyRef Name="ActivityId" />
-      </Principal>
-      <Dependent Role="Activities_Sport">
-        <PropertyRef Name="ActivityId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_UserEvent_Event">
     <End Role="Events" Type="Self.Events" Multiplicity="1" />
     <End Role="UserEvent" Type="Self.UserEvent" Multiplicity="*" />
@@ -187,7 +167,6 @@
   </Association>
   <EntityContainer Name="EventHubDbModelStoreContainer">
     <EntitySet Name="Activities" EntityType="Self.Activities" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Activities_Sport" EntityType="Self.Activities_Sport" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
@@ -209,10 +188,6 @@
     <AssociationSet Name="FK_EventPlusOne" Association="Self.FK_EventPlusOne">
       <End Role="Events" EntitySet="Events" />
       <End Role="PlusOnes" EntitySet="PlusOnes" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Sport_inherits_Activity" Association="Self.FK_Sport_inherits_Activity">
-      <End Role="Activities" EntitySet="Activities" />
-      <End Role="Activities_Sport" EntitySet="Activities_Sport" />
     </AssociationSet>
     <AssociationSet Name="FK_UserEvent_Event" Association="Self.FK_UserEvent_Event">
       <End Role="Events" EntitySet="Events" />
