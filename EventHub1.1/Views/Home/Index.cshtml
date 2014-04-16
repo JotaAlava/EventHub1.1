@@ -6,15 +6,18 @@
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
+        <p>
+            ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
+            a broad range of clients, including browsers and mobile devices. ASP.NET Web API
+            is an ideal platform for building RESTful applications on the .NET Framework.
+        </p>
         <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
+        <h2>Testing Knockout View Model</h2>
+        <p>Name: <strong data-bind="text: name"></strong></p>
+        <p>Address: <strong data-bind="text: address"></strong></p>
+        <button id="locationGET" type="button">Get Location</button>
     </div>
     <div class="col-md-4">
         <h2>Web Hosting</h2>
@@ -22,3 +25,34 @@
         <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
     </div>
 </div>
+
+<!-- This will move these codes to ze layout page -->
+@section scripts
+{
+    <script>
+        require(["ViewModels/Location"], function(locationViewModel) {
+            var deferred = $.Deferred();
+            $.ajax({
+                url: "http://localhost:29196/location/3",
+                context: document.body
+            }).done(function (data) {
+                var location = new locationViewModel(data);
+                ko.applyBindings(location);
+                //deferred.resolve(data);
+            });
+
+            //TODO: Get all locations
+            //var listOfLocations;
+            //$.each(request.responseBody, function() {
+            //     new locationViewModel()
+            //});
+
+            //TODO: To lear defferred
+            //deferred.done(function () {
+            //    var location = new locationViewModel(request.responseBody);
+            //    ko.applyBindings(location);
+            //});
+        });
+        //console.log(request);
+    </script>
+}

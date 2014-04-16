@@ -20,9 +20,23 @@ namespace EventHub1._1
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
+                      "~/Scripts/knockout-3.1.0.js",
+                      "~/Scripts/infuser.js",
+                      "~/Scripts/koExternalTemplateEngine.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/require").Include(
+                      "~/Scripts/require.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/Main").Include(
+                      "~/Scripts/Main.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/App")
+                    .IncludeDirectory("~/Scripts/App/", "*.js"));
         }
     }
 }

@@ -1,10 +1,4 @@
-﻿using System.Collections.Generic;
-using EventHub1._1.Controllers;
-using EventHub1._1.DAL;
-using EventHub1._1.DAL.Services;
-using EventHub1._1.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EventHub.Tests.Controllers
 {
