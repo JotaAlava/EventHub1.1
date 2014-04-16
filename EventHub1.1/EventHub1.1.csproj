@@ -161,13 +161,18 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PlusOneController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\Services\ActivityService.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="DAL\Repositories\GenericRepository.cs" />
+    <Compile Include="DAL\Services\EventService.cs" />
     <Compile Include="DAL\Services\LocationService.cs" />
     <Compile Include="DAL\Services\MessageService.cs" />
+    <Compile Include="DAL\Services\PlusOneService.cs" />
+    <Compile Include="DAL\Services\UserService.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

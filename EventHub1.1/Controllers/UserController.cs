@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using EventHub1._1.DAL;
 using EventHub1._1.DAL.Services;
 using EventHub1._1.Models;
 

@@ -72,6 +72,11 @@ namespace EventHub1._1.App_Start
             kernel.Bind<ILocationService>().To<LocationService>();
             kernel.Bind<IActivityService>().To<ActivityService>();
             kernel.Bind<IMessageService>().To<MessageService>();
+
+            kernel.Bind<IPlusOneService>().To<PlusOneService>();
+            kernel.Bind<IEventService>().To<EventService>();
+            kernel.Bind<IUserService>().To<UserService>();
+
         }        
     }
 }
