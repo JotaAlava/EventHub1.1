@@ -14,15 +14,24 @@
         <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Testing Knockout View Model</h2>
+        <h2>Testing Knockout View Model - One Item</h2>
         <p>Name: <strong data-bind="text: name"></strong></p>
         <p>Address: <strong data-bind="text: address"></strong></p>
         <button id="locationGET" type="button">Get Location</button>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+        <h2>Testing Knockout View Model - An Observable Array!</h2>
+
+        <ul data-bind="template: { name: 'tagsTempl' }"></ul>
+
+        <button id="locationGETActive" type="button">Get Active Locations</button>
+
+        <script id="tagsTempl" type="text/html">
+            <li class="tagItem">
+                <p>Name: <strong data-bind="text: name"></strong></p>
+                <p>Address: <strong data-bind="text: address"></strong></p>
+            </li>
+        </script>
     </div>
 </div>
 
@@ -31,28 +40,27 @@
 {
     <script>
         require(["ViewModels/Location"], function(locationViewModel) {
-            var deferred = $.Deferred();
-            $.ajax({
-                url: "http://localhost:29196/location/3",
-                context: document.body
-            }).done(function (data) {
-                var location = new locationViewModel(data);
-                ko.applyBindings(location);
-                //deferred.resolve(data);
+            $('#locationGET').click(function() {
+                $.ajax({
+                    url: "http://localhost:29196/location/2",
+                    context: document.body
+                }).done(function(data) {
+                    var location = new locationViewModel(data);
+                    ko.applyBindings(location);
+                });
             });
-
-            //TODO: Get all locations
-            //var listOfLocations;
-            //$.each(request.responseBody, function() {
-            //     new locationViewModel()
-            //});
-
-            //TODO: To lear defferred
-            //deferred.done(function () {
-            //    var location = new locationViewModel(request.responseBody);
-            //    ko.applyBindings(location);
-            //});
         });
-        //console.log(request);
+
+        require(["ViewModels/Locations"], function(locationsViewModel) {
+            $('#locationGETActive').click(function() {
+                $.ajax({
+                    url: "http://localhost:29196/location/",
+                    context: document.body
+                }).done(function(data) {
+                    var locations = new locationsViewModel(data);
+                    ko.applyBindings(locations);
+                });
+            });
+        });
     </script>
 }
