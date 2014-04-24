@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EventHub1._1.DTO;
 using EventHub1._1.Models;
 
 namespace EventHub1._1.DAL.Services
@@ -11,14 +12,25 @@ namespace EventHub1._1.DAL.Services
             this.uow = uow;
         }
 
-        public IEnumerable<Location> GetActiveLocations()
+        public IEnumerable<LocationDTO> GetActiveLocations()
         {
-            return uow.LocationRepository.Get(location => location.Active);
+            var allTheActiveLocationsFromTheDatabase = uow.LocationRepository.Get(location => location.Active);
+            var resultsFromDbConvertedIntoDTOs = new List<LocationDTO>();
+
+            foreach (var location in allTheActiveLocationsFromTheDatabase)
+            {
+                resultsFromDbConvertedIntoDTOs.Add(new LocationDTO(location));
+            }
+
+            return resultsFromDbConvertedIntoDTOs;
         }
 
-        public Location GetLocationById(int id)
+        public LocationDTO GetLocationById(int id)
         {
-            return uow.LocationRepository.GetByID(id);
+            var resultFromDb = uow.LocationRepository.GetByID(id);
+            var resultConvertedToDTO = new LocationDTO(resultFromDb);
+
+            return resultConvertedToDTO;
         }
 
         public void CreateLocation(Location locationToAdd)
@@ -53,11 +65,11 @@ namespace EventHub1._1.DAL.Services
 
     public interface ILocationService
     {
-        IEnumerable<Location> GetActiveLocations();
+        IEnumerable<LocationDTO> GetActiveLocations();
 
         void CreateLocation(Location locationToAdd);
 
-        Location GetLocationById(int id);
+        LocationDTO GetLocationById(int id);
 
         void ToggleActiveById(int id);
 

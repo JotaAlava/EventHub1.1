@@ -15,8 +15,11 @@
     </div>
     <div class="col-md-4">
         <h2>Testing Knockout View Model - One Item</h2>
+        <p>ID: <strong data-bind="text: id"></strong></p>
         <p>Name: <strong data-bind="text: name"></strong></p>
         <p>Address: <strong data-bind="text: address"></strong></p>
+        <p>Active: <strong data-bind="text: active"></strong></p>
+        
         <button id="locationGET" type="button">Get Location</button>
     </div>
     <div class="col-md-4">
@@ -51,14 +54,38 @@
             });
         });
 
-        require(["ViewModels/Locations"], function(locationsViewModel) {
+        require(["ViewModels/Location"], function(locationsViewModel) {
+            //$('#locationGETActive').click(function() {
+            //    $.ajax({
+            //        url: "http://localhost:29196/location/",
+            //        context: document.body
+            //    }).done(function(data) {
+            //        var locations = new locationsViewModel(data);
+            //        ko.applyBindings(locations);
+            //    });
+            //});
+
             $('#locationGETActive').click(function() {
                 $.ajax({
                     url: "http://localhost:29196/location/",
                     context: document.body
                 }).done(function(data) {
-                    var locations = new locationsViewModel(data);
-                    ko.applyBindings(locations);
+                    // ****************************** Code From Web Tutorial ******************************
+
+                    // Overall viewmodel for this screen, along with initial state
+                    function LocationsViewModel(data) {
+                        var self = this;
+
+                        // Editable data
+                        self.seats = ko.observableArray([
+                            new Location(data[0]),
+                            new Location(data[1])
+                        ]);
+                    }
+
+                    ko.applyBindings(new LocationsViewModel(data));
+
+                    // ****************************** End Code From Web Tutorial ******************************
                 });
             });
         });

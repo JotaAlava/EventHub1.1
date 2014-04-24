@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using EventHub1._1.DAL.Services;
+using EventHub1._1.DTO;
 using EventHub1._1.Models;
 using System.Net.Http;
 using System.Net;
@@ -17,14 +18,14 @@ namespace EventHub1._1.Controllers
 
         [HttpGet]
         [Route("location")]
-        public IEnumerable<Location> GetActiveLocations()
+        public IEnumerable<LocationDTO> GetActiveLocations()
         {
             return locationService.GetActiveLocations();
         }
 
         [HttpGet]
         [Route("location/{id}/")]
-        public Location GetLocationById(int id)
+        public LocationDTO GetLocationById(int id)
         {
             return locationService.GetLocationById(id);
         }
