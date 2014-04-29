@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/13/2014 15:52:13
--- Generated from EDMX file: C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHubModel\EventHubModel.edmx
+-- Date Created: 04/28/2014 12:55:11
+-- Generated from EDMX file: C:\Users\joseal\Documents\GitHub\EventHub1.1\EventHubModel\EventHubModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [EventHubDb];
+USE [EventHub1];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -18,7 +18,7 @@ GO
 -- --------------------------------------------------
 
 IF OBJECT_ID(N'[dbo].[FK_ActivityLocation]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Sports] DROP CONSTRAINT [FK_ActivityLocation];
+    ALTER TABLE [dbo].[Activities] DROP CONSTRAINT [FK_ActivityLocation];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserEvent_User]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserEvent] DROP CONSTRAINT [FK_UserEvent_User];
@@ -46,8 +46,8 @@ GO
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[Sports]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Sports];
+IF OBJECT_ID(N'[dbo].[Activities]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Activities];
 GO
 IF OBJECT_ID(N'[dbo].[Locations]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Locations];

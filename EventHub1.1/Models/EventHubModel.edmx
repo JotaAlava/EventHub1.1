@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EventHubDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="EventHub1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Activities">
           <Key>
             <PropertyRef Name="ActivityId" />
@@ -170,7 +170,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="EventHubDbModelStoreContainer">
+        <EntityContainer Name="EventHub1ModelStoreContainer">
           <EntitySet Name="Activities" EntityType="Self.Activities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
@@ -215,7 +215,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="EventHubDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="EventHub1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Activity">
           <Key>
             <PropertyRef Name="ActivityId" />
@@ -367,7 +367,7 @@
           <End Role="Events" Type="Self.Event" Multiplicity="*" />
           <End Role="Users" Type="Self.User" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="EventHubDbEntities7" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="EventHub1Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Activities" EntityType="Self.Activity" />
           <EntitySet Name="Events" EntityType="Self.Event" />
           <EntitySet Name="Locations" EntityType="Self.Location" />
@@ -408,9 +408,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EventHubDbModelStoreContainer" CdmEntityContainer="EventHubDbEntities7">
+        <EntityContainerMapping StorageEntityContainer="EventHub1ModelStoreContainer" CdmEntityContainer="EventHub1Entities">
           <EntitySetMapping Name="Activities">
-            <EntityTypeMapping TypeName="EventHubDbModel.Activity">
+            <EntityTypeMapping TypeName="EventHub1Model.Activity">
               <MappingFragment StoreEntitySet="Activities">
                 <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -424,7 +424,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Events">
-            <EntityTypeMapping TypeName="EventHubDbModel.Event">
+            <EntityTypeMapping TypeName="EventHub1Model.Event">
               <MappingFragment StoreEntitySet="Events">
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -434,7 +434,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Locations">
-            <EntityTypeMapping TypeName="EventHubDbModel.Location">
+            <EntityTypeMapping TypeName="EventHub1Model.Location">
               <MappingFragment StoreEntitySet="Locations">
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -444,7 +444,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Messages">
-            <EntityTypeMapping TypeName="EventHubDbModel.Message">
+            <EntityTypeMapping TypeName="EventHub1Model.Message">
               <MappingFragment StoreEntitySet="Messages">
                 <ScalarProperty Name="MessageId" ColumnName="MessageId" />
                 <ScalarProperty Name="Body" ColumnName="Body" />
@@ -455,7 +455,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PlusOnes">
-            <EntityTypeMapping TypeName="EventHubDbModel.PlusOne">
+            <EntityTypeMapping TypeName="EventHub1Model.PlusOne">
               <MappingFragment StoreEntitySet="PlusOnes">
                 <ScalarProperty Name="PlusOneId" ColumnName="PlusOneId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -465,7 +465,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="EventHubDbModel.User">
+            <EntityTypeMapping TypeName="EventHub1Model.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
@@ -476,7 +476,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="UserEvent" TypeName="EventHubDbModel.UserEvent" StoreEntitySet="UserEvent">
+          <AssociationSetMapping Name="UserEvent" TypeName="EventHub1Model.UserEvent" StoreEntitySet="UserEvent">
             <EndProperty Name="Events">
               <ScalarProperty Name="EventId" ColumnName="Events_EventId" />
             </EndProperty>

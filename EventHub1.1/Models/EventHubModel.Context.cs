@@ -13,10 +13,10 @@ namespace EventHub1._1.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class EventHubDbEntities7 : DbContext
+    public partial class EventHub1Entities : DbContext
     {
-        public EventHubDbEntities7()
-            : base("name=EventHubDbEntities7")
+        public EventHub1Entities()
+            : base("name=EventHub1Entities")
         {
         }
     

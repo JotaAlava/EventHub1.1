@@ -236,6 +236,15 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Scripts\infuser-amd.js" />
+    <Content Include="Scripts\infuser-amd.min.gz.js" />
+    <Content Include="Scripts\infuser-amd.min.js" />
+    <Content Include="Scripts\infuser.js" />
+    <Content Include="Scripts\infuser.min.gz.js" />
+    <Content Include="Scripts\infuser.min.js" />
+    <Content Include="Scripts\jasmine-html.js" />
+    <Content Include="Scripts\jasmine-jquery.js" />
+    <Content Include="Scripts\jasmine.js" />
     <EntityDeploy Include="Models\EventHubModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EventHubModel.Designer.cs</LastGenOutput>
@@ -253,15 +262,6 @@
       <DependentUpon>EventHubModel.edmx</DependentUpon>
       <LastGenOutput>EventHubModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\infuser-amd.js" />
-    <Content Include="Scripts\infuser-amd.min.gz.js" />
-    <Content Include="Scripts\infuser-amd.min.js" />
-    <Content Include="Scripts\infuser.js" />
-    <Content Include="Scripts\infuser.min.gz.js" />
-    <Content Include="Scripts\infuser.min.js" />
-    <Content Include="Scripts\jasmine-html.js" />
-    <Content Include="Scripts\jasmine-jquery.js" />
-    <Content Include="Scripts\jasmine.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />

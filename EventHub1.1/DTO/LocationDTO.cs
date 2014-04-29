@@ -9,10 +9,13 @@ namespace EventHub1._1.DTO
     {
         public LocationDTO(Location location)
         {
-            LocationId = location.LocationId;
-            Name = location.Name;
-            Address = location.Address;
-            Active = location.Active;
+            if (location != null)
+            {
+                LocationId = location.LocationId;
+                Name = location.Name;
+                Address = location.Address;
+                Active = location.Active;
+            }            
         }
 
         public int LocationId { get; set; }
