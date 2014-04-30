@@ -13,7 +13,7 @@
         </p>
         <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
     </div>
-    <div class="col-md-4">
+    @*<div class="col-md-4">
         <h2>Testing Knockout View Model - One Item</h2>
         <p>ID: <strong data-bind="text: id"></strong></p>
         <p>Name: <strong data-bind="text: name"></strong></p>
@@ -21,20 +21,33 @@
         <p>Active: <strong data-bind="text: active"></strong></p>
         
         <button id="locationGET" type="button">Get Location</button>
-    </div>
+    </div>*@
     <div class="col-md-4">
         <h2>Testing Knockout View Model - An Observable Array!</h2>
 
-        <ul data-bind="template: { name: 'tagsTempl' }"></ul>
+        <ul data-bind="template: { name: 'locationsTempl' }"></ul>
 
         <button id="locationGETActive" type="button">Get Active Locations</button>
 
-        <script id="tagsTempl" type="text/html">
-            <li class="tagItem">
-                <p>Name: <strong data-bind="text: name"></strong></p>
-                <p>Address: <strong data-bind="text: address"></strong></p>
+        <script id="locationsTempl" type="text/html">
+            <li data-bind="foreach: locations">
+                <div>Id: <strong data-bind="text: id"></strong></div>
+                <div>Name: <strong data-bind="text: name"></strong></div>
+                <div>Address: <strong data-bind="text: address"></strong></div>
+                <div>Active: <strong data-bind="text: active"></strong></div>
             </li>
         </script>
+    </div>
+    <div class="col-md-4">
+        <h2>Posting a Location</h2>
+
+        <form data-bind="submit: doSomething">
+            Name: <input type="text" name="name"><br>
+            Address: <input type="text" name="address">
+            <button type="submit">Submit</button>
+        </form>
+
+        <button id="postLocation" type="submit">Post Location</button>
     </div>
 </div>
 
@@ -54,9 +67,8 @@
                 });
             });
 
-            // TODO: Figure out why locationsViewmodel is undefined!
             // Call to get all active locations
-            $('#locationGETActive').click(function () {
+            $(document).ready(function () {
                 $.ajax({
                     url: "http://localhost:29196/location/",
                     context: document.body
@@ -69,6 +81,21 @@
 
                 });
             });
+
+            var locations = {
+                doSomething: function (formData) {
+                    alert("jota");
+                }
+            } 
+
+            $('#postLocation').click(function () {
+                $.ajax({
+                    url: "http://localhost:29196/location/",
+                    context: document.body,
+                    type: 'POST',
+                    data: "name:Jota"
+                });
+            })
         });    
     </script>
 }

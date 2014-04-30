@@ -9,7 +9,7 @@
             self.locations.push(new location(locationsDTO[i]));
         }
 
-        return self.locations;
+        return self;
     }
 
     return locations;
