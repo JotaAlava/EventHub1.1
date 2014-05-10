@@ -1,54 +1,53 @@
-﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-            a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-            is an ideal platform for building RESTful applications on the .NET Framework.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
-    </div>
-    @*<div class="col-md-4">
-        <h2>Testing Knockout View Model - One Item</h2>
-        <p>ID: <strong data-bind="text: id"></strong></p>
-        <p>Name: <strong data-bind="text: name"></strong></p>
-        <p>Address: <strong data-bind="text: address"></strong></p>
-        <p>Active: <strong data-bind="text: active"></strong></p>
-        
-        <button id="locationGET" type="button">Get Location</button>
+﻿@*<div class="jumbotron">
+        <h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
+        <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
     </div>*@
-    <div class="col-md-4">
-        <h2>Testing Knockout View Model - An Observable Array!</h2>
+<div class="row">
+    @*<div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>
+                ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
+                a broad range of clients, including browsers and mobile devices. ASP.NET Web API
+                is an ideal platform for building RESTful applications on the .NET Framework.
+            </p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+        </div>*@
+    <div class="col-md-12">
+        <h2 style="text-align:right;">Posting a Location</h2>
 
-        <ul data-bind="template: { name: 'locationsTempl' }"></ul>
-
-        <button id="locationGETActive" type="button">Get Active Locations</button>
-
-        <script id="locationsTempl" type="text/html">
-            <li data-bind="foreach: locations">
-                <div>Id: <strong data-bind="text: id"></strong></div>
-                <div>Name: <strong data-bind="text: name"></strong></div>
-                <div>Address: <strong data-bind="text: address"></strong></div>
-                <div>Active: <strong data-bind="text: active"></strong></div>
-            </li>
-        </script>
-    </div>
-    <div class="col-md-4">
-        <h2>Posting a Location</h2>
-
-        <form data-bind="submit: doSomething">
+        <form data-bind="submit: doSomething" style="text-align:right">
             Name: <input type="text" name="name"><br>
-            Address: <input type="text" name="address">
-            <button type="submit">Submit</button>
+            Address: <input type="text" name="address"><br>
+            Active <input type="checkbox" name="active">
+            <br /><br>
+            <button type="submit" style="color:blue;">Submit</button>
+            <br><br>
         </form>
-
-        <button id="postLocation" type="submit">Post Location</button>
     </div>
+
+    @*<button data-bind="click: incrementClickCounter">Click me</button>*@
+
+    <div id="sport" class="col-md-12">
+        <div data-bind="template: { name: 'locationsTempl' }"></div>
+    </div>
+        <script id="locationsTempl" type="text/html">
+            
+            <div data-bind="foreach: locations">
+                <div data-bind="attr: { id : 'sportName_' + id() }, click: $root.hideDetails " class="well">
+                    <h3>Name: <strong data-bind="text: name"></strong></h3>
+
+                    <ul data-bind="attr: { id : 'sportDetails_' + id() }">
+                        <li>
+                            <div>Id: <strong data-bind="text: id"></strong></div>
+                            <div>Address: <strong data-bind="text: address"></strong></div>
+                            <div>Active: <strong data-bind="text: active"></strong></div>
+                        </li>
+                        <button data-bind="attr: { id : id }" style="color:blue;">Delete</button>
+                    </ul>
+                </div>
+            </div>
+        </script>
 </div>
 
 <!-- This will move these codes to ze layout page -->
@@ -56,14 +55,26 @@
 {
     <script>
         require(["ViewModels/Location", "ViewModels/Locations"], function (locationViewModel, locationsViewModel) {
+            var data;
             // Call to get one location
-            $('#locationGET').click(function() {
+            $('#locationGET').click(function () {
                 $.ajax({
                     url: "http://localhost:29196/location/1",
                     context: document.body
-                }).done(function(data) {
+                }).done(function (data) {
                     var location = new locationViewModel(data);
                     ko.applyBindings(location);
+                });
+            });
+
+            $('#locationGETActive').click(function () {
+                $.ajax({
+                    url: "http://localhost:29196/location/",
+                    context: document.body
+                }).done(function (data) {
+
+                    // Overall viewmodel for this screen, along with initial state
+                    activeLocations = new locationsViewModel(data);
                 });
             });
 
@@ -75,27 +86,31 @@
                 }).done(function (data) {
 
                     // Overall viewmodel for this screen, along with initial state
-                    var activeLocations = new locationsViewModel(data);
+                    activeLocations = new locationsViewModel(data);
 
                     ko.applyBindings(activeLocations);
 
                 });
             });
 
-            var locations = {
-                doSomething: function (formData) {
-                    alert("jota");
-                }
-            } 
+                
+            
 
-            $('#postLocation').click(function () {
-                $.ajax({
-                    url: "http://localhost:29196/location/",
-                    context: document.body,
-                    type: 'POST',
-                    data: "name:Jota"
-                });
-            })
-        });    
+            //$('div[id^="sportDetails_"]').click(function () {
+            //    alert('a')
+            //    $('#sportDetails').toggle();
+            //})
+
+
+
+            //$('#postLocation').click(function () {
+            //    $.ajax({
+            //        url: "http://localhost:29196/location/",
+            //        context: document.body,
+            //        type: 'POST',
+            //        data: "name:Jota"
+            //    });
+            //})
+        });
     </script>
 }
