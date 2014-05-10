@@ -37,6 +37,13 @@ namespace EventHub1._1
 
             bundles.Add(new ScriptBundle("~/bundles/App")
                     .IncludeDirectory("~/Scripts/App/", "*.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/LightBlueJS")
+                    .IncludeDirectory("~/Views/LightBlue/js", "*.js"));
+
+            bundles.Add(new StyleBundle("~/Content/LightBlueCss")
+                .IncludeDirectory("~/Views/LightBlue/css", "*.css", true));
+
         }
     }
 }
