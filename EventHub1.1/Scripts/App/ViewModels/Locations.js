@@ -2,11 +2,33 @@
 
     var locations = function (locationsDTO) {
         var self = this;
+        self.selectedItems = ko.observableArray([]);
 
         self.locations = ko.observableArray();
-        
-        self.hideDetails = function () {
-            $('ul[id^="sportDetails_"]').toggle()
+
+        self.hideDetails = function (viewModelOnWhichThisMethodWasCalled) {
+            $('ul[id^="sportDetails_' + viewModelOnWhichThisMethodWasCalled.id() + '"]').toggle()
+        }
+
+        self.deleteLocation = function (viewModelOnWhichThisMethodWasCalled) {
+            var idOfLocationToDelete = viewModelOnWhichThisMethodWasCalled.id();
+
+            $.ajax({
+                url: "http://localhost:29196/location/" + idOfLocationToDelete,
+                context: document.body,
+            }).done(function (dataFromServiceCall) {
+                self.locations.remove(dataFromServiceCall);
+            });
+
+            $.ajax({
+                dataType: "json",
+                url: "http://localhost:29196/location/" + idOfLocationToDelete,
+                context: document.body,
+                dataType: 'json',
+                type: 'DELETE',
+            });
+
+            
         }
 
         // Probably should find a better way of doing this - Circular Reference error

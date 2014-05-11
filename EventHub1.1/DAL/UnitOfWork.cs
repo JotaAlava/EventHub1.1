@@ -6,7 +6,7 @@ namespace EventHub1._1.DAL
 {
     public class UnitOfWork : IDisposable
     {
-        private EventHub1Entities context = new EventHub1Entities();
+        private EventHubEntities context = new EventHubEntities();
         private GenericRepository<Location> locationRepository;
         private GenericRepository<Activity> activityRepository;
 

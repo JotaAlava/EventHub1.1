@@ -4,10 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>Ulti Sports</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body class="container">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -27,12 +28,16 @@
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+        <div class="row">
+
+            @Html.Partial("_SideNavBar")
+            @RenderBody()
+            </div>
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
@@ -40,10 +45,76 @@
 
     @Scripts.Render("~/bundles/App")
     @Scripts.Render("~/bundles/require")
-    @Styles.Render("~/bundles/LightBlueCss")
-
-    @Scripts.Render("~/bundles/LightBlueJS")
 
     @RenderSection("scripts", required: false)
+
+    <script>
+        require(["ViewModels/Location", "ViewModels/Locations"], function (locationViewModel, locationsViewModel) {
+            var data;
+            // Call to get one location
+            $('#locationGET').click(function () {
+                $.ajax({
+                    url: "http://localhost:29196/location/1",
+                    context: document.body
+                }).done(function (data) {
+                    var location = new locationViewModel(data);
+                    ko.applyBindings(location);
+                });
+            });
+
+            $('#locationGETActive').click(function () {
+                $.ajax({
+                    url: "http://localhost:29196/location/",
+                    context: document.body
+                }).done(function (data) {
+
+                    // Overall viewmodel for this screen, along with initial state
+                    activeLocations = new locationsViewModel(data);
+                });
+            });
+
+            // Call to get all active locations
+            $(document).ready(function () {
+                $.ajax({
+                    url: "http://localhost:29196/location/",
+                    context: document.body
+                }).done(function (data) {
+
+                    // Overall viewmodel for this screen, along with initial state
+                    activeLocations = new locationsViewModel(data);
+
+                    ko.applyBindings(activeLocations);
+
+                });
+            });
+
+            //******************* Side Nav Bar Scripts **********************************
+            $('#ActivitiesMenu').click(function () {
+                $('li[id^="ActivitiesSubMenu_"]').toggle();
+            })
+
+            $('#LocationsMenu').click(function () {
+                $('li[id^="LocationsSubMenu_"]').toggle();
+            })
+            //***************************************************************************
+
+
+            //$('div[id^="sportDetails_"]').click(function () {
+            //    alert('a')
+            //    $('#sportDetails').toggle();
+            //})
+
+
+
+            //$('#postLocation').click(function () {
+            //    $.ajax({
+            //        url: "http://localhost:29196/location/",
+            //        context: document.body,
+            //        type: 'POST',
+            //        data: "name:Jota"
+            //    });
+            //})
+        });
+    </script>
 </body>
 </html>

@@ -9,10 +9,10 @@ namespace EventHub1._1.DAL.Repositories
 {
     public class GenericRepository<TEntity> where TEntity : class
     {
-        internal EventHub1Entities context;
+        internal EventHubEntities context;
         internal DbSet<TEntity> dbSet;
 
-        public GenericRepository(EventHub1Entities context)
+        public GenericRepository(EventHubEntities context)
         {
             this.context = context;
             this.dbSet = context.Set<TEntity>();

@@ -1,0 +1,34 @@
+﻿<!--TODO: Add code such that the sizes where it is messed up (Between 480x800 and  768x1280 inclusive) then the form is rendered differently)-->
+<div class="col-md-3" style="margin-top:3%">
+    <h2 style="text-align:right;">Posting a Location</h2>
+
+    <form data-bind="submit: doSomething" style="text-align:right">
+        Name: <input type="text" name="name"><br>
+        Address: <input type="text" name="address"><br>
+        Active <br /><input type="checkbox" name="active">
+        <br /><br>
+        <button type="submit" style="color:blue;">Submit</button>
+        <br><br>
+    </form>
+</div>
+<div id="Canvas" class="col-md-6" style="margin-top:5%;">
+    <div data-bind="template: { name: 'locationsTempl' }"></div>
+</div>
+<script id="locationsTempl" type="text/html">
+    <div data-bind="foreach: locations">
+        <div class="well">
+            <!--TODO: Make these two buttons sexy looking-->
+            <button data-bind="attr: { id : id }, click: $root.deleteLocation" style="color:blue;">Delete</button>
+            <button data-bind="attr: { id : 'sportName_' + id() }, click: $root.hideDetails " style="color:blue;">Hide Details</button>
+            <h3>Name: <strong data-bind="text: name"></strong></h3>
+
+            <ul data-bind="attr: { id : 'sportDetails_' + id() }">
+                <li>
+                    <div>Id: <strong data-bind="text: id"></strong></div>
+                    <div>Address: <strong data-bind="text: address"></strong></div>
+                    <div>Active: <strong data-bind="text: active"></strong></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</script>

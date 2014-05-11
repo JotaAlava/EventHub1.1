@@ -12,7 +12,12 @@ namespace EventHub1._1.Controllers
         // GET: /Home/
         public ActionResult Index()
         {
-            return View("Index");
+            return View();
+        }
+
+        public ActionResult Locations()
+        {
+            return View("_Locations");
         }
 	}
 }

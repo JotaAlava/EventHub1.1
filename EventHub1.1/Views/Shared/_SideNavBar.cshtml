@@ -1,0 +1,26 @@
+﻿<div class="nav nav-tabs nav-stacked col-md-2">
+    <ul class="nav bs-sidenav">
+        <li>
+            <a id="SideBarDashboardLink" href="http://localhost:29196/"><h4><strong>Dashboard</strong></h4></a>
+        </li>
+        <li>
+            <!--TODO: Add glyphs to parent menu item-->
+            <a id="ActivitiesMenu" href="#"><h4><strong>Events</strong></h4></a>
+            <ul class="nav">
+                <li id="ActivitiesSubMenu_1" style="display:none"><a href="#">Today</a></li>
+                <li id="ActivitiesSubMenu_2" style="display:none"><a href="#">This Week</a></li>
+            </ul>
+        </li>
+        <li>
+            <!--TODO: Add glyphs to parent menu item-->
+            <a id="LocationsMenu" href="#"><h4><strong>Administrator</strong></h4></a>
+            <ul class="nav">
+                <li id="LocationsSubMenu_2" style="display:none"><a href="#">Activities</a></li>
+                <li id="LocationsSubMenu_4" style="display:none"><a href="#">Assign Admins</a></li>
+                <li id="LocationsSubMenu_1" style="display:none">@Html.ActionLink("Locations", "Locations", "Home")</li>
+                <li id="LocationsSubMenu_3" style="display:none"><a href="#">Players</a></li>
+            </ul>
+        </li>
+
+    </ul>
+</div>
