@@ -6,19 +6,26 @@
 
         self.locations = ko.observableArray();
 
-        self.hideDetails = function (viewModelOnWhichThisMethodWasCalled) {
-            $('ul[id^="sportDetails_' + viewModelOnWhichThisMethodWasCalled.id() + '"]').toggle()
+        self.hideDetails = function (currentLocationsInsideObservableArrayOfLocations) {
+            $('ul[id^="sportDetails_' + currentLocationsInsideObservableArrayOfLocations.id() + '"]').toggle()
         }
 
-        self.deleteLocation = function (viewModelOnWhichThisMethodWasCalled) {
-            var idOfLocationToDelete = viewModelOnWhichThisMethodWasCalled.id();
+        self.toggleActive = function (currentLocationsInsideObservableArrayOfLocations) {
 
             $.ajax({
-                url: "http://localhost:29196/location/" + idOfLocationToDelete,
+                url: "http://localhost:29196/location/ToggleActiveById/" + currentLocationsInsideObservableArrayOfLocations.id(),
                 context: document.body,
-            }).done(function (dataFromServiceCall) {
-                self.locations.remove(dataFromServiceCall);
-            });
+                type: 'POST',
+                statusCode: {
+                    200: function () {
+                        currentLocationsInsideObservableArrayOfLocations.active(!currentLocationsInsideObservableArrayOfLocations.active())
+                    }
+                }
+            })
+        }
+
+        self.deleteLocation = function (currentLocationsInsideObservableArrayOfLocations) {
+            var idOfLocationToDelete = currentLocationsInsideObservableArrayOfLocations.id();
 
             $.ajax({
                 dataType: "json",
@@ -26,12 +33,17 @@
                 context: document.body,
                 dataType: 'json',
                 type: 'DELETE',
-            });
+                statusCode: {
+                    200: function () {
+                        self.locations.remove(currentLocationsInsideObservableArrayOfLocations);
+                    }
+                }
+            })
 
             
         }
 
-        // Probably should find a better way of doing this - Circular Reference error
+        // Probably should find a better way of doing this - Workaround for Circular Reference error
         self.doSomething = function (formData) {
             var result = (function (formData) {
                 var result = {
