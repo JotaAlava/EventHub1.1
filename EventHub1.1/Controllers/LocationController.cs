@@ -24,6 +24,13 @@ namespace EventHub1._1.Controllers
         }
 
         [HttpGet]
+        [Route("location/GetInactive")]
+        public IEnumerable<LocationDTO> GetInactiveLocations()
+        {
+            return locationService.GetInactiveLocations();
+        }
+
+        [HttpGet]
         [Route("location/{id}/")]
         public LocationDTO GetLocationById(int id)
         {

@@ -25,6 +25,19 @@ namespace EventHub1._1.DAL.Services
             return resultsFromDbConvertedIntoDTOs;
         }
 
+        public IEnumerable<LocationDTO> GetInactiveLocations()
+        {
+            var allTheActiveLocationsFromTheDatabase = uow.LocationRepository.Get(location => location.Active == false);
+            var resultsFromDbConvertedIntoDTOs = new List<LocationDTO>();
+
+            foreach (var location in allTheActiveLocationsFromTheDatabase)
+            {
+                resultsFromDbConvertedIntoDTOs.Add(new LocationDTO(location));
+            }
+
+            return resultsFromDbConvertedIntoDTOs;
+        }
+
         public LocationDTO GetLocationById(int id)
         {
             var resultFromDb = uow.LocationRepository.GetByID(id);
@@ -66,6 +79,8 @@ namespace EventHub1._1.DAL.Services
     public interface ILocationService
     {
         IEnumerable<LocationDTO> GetActiveLocations();
+
+        IEnumerable<LocationDTO> GetInactiveLocations();
 
         void CreateLocation(Location locationToAdd);
 
