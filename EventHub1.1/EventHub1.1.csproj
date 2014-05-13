@@ -212,6 +212,8 @@
       <DependentUpon>EventHub.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Scripts\App\ViewModels\Activities.js" />
+    <Content Include="Scripts\App\ViewModels\Activity.js" />
     <Content Include="Scripts\App\ViewModels\Locations.js" />
   </ItemGroup>
   <ItemGroup>
@@ -304,7 +306,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
     <Content Include="Views\Shared\_SideNavBar.cshtml" />
-    <Content Include="Views\Home\_Locations.cshtml" />
+    <Content Include="Views\Shared\_Locations.cshtml" />
+    <Content Include="Views\Shared\_Activities.cshtml" />
+    <Content Include="Views\Home\Locations.cshtml" />
+    <Content Include="Views\Home\Activity.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

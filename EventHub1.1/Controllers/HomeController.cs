@@ -17,7 +17,12 @@ namespace EventHub1._1.Controllers
 
         public ActionResult Locations()
         {
-            return View("_Locations");
+            return View("Locations");
+        }
+
+        public ActionResult Activities()
+        {
+            return View("Activity");
         }
 	}
 }

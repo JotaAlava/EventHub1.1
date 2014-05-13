@@ -24,7 +24,7 @@ namespace EventHub1._1.Controllers
         }
 
         [HttpGet]
-        [Route("event/{id}/")]
+        [Route("event/{id}")]
         public Event GetEventById(int id)
         {
             return eventService.GetEventById(id);

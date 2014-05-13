@@ -18,6 +18,7 @@ namespace EventHub1._1.DAL.Services
 
         public void CreateEvent(Models.Event eventToAdd)
         {
+            eventToAdd.Activity = uow.ActivityRepository.GetByID(eventToAdd.ActivityId);
             uow.EventRepository.Insert(eventToAdd);
             uow.Commit();
         }

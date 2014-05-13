@@ -1,10 +1,14 @@
 ﻿define(["ViewModels/Location"], function (Location) {
 
     var locations = function (locationsDTO) {
-        var self = this;
-        self.selectedItems = ko.observableArray([]);
+        var self = this;        
 
         self.locations = ko.observableArray();
+
+        // Constructor
+        for (var i = 0; i < locationsDTO.length; i++) {
+            self.locations.push(new Location(locationsDTO[i]));
+        }
 
         self.hideDetails = function (clickedLocationInsideObservableArrayOfLocations) {
             $('ul[id^="sportDetails_' + clickedLocationInsideObservableArrayOfLocations.id() + '"]').toggle()
@@ -137,10 +141,6 @@
             $('#modalLocationNameInputBox').val("")
             $('#modalLocationAddressInputBox').val("")
             $('#updateLocationDetailsModal').modal('hide');
-        }
-
-        for (var i = 0; i < locationsDTO.length; i++) {
-            self.locations.push(new Location(locationsDTO[i]));
         }
 
         self.showInactiveLocations = function (clickedLocationInsideObservableArrayOfLocations) {

@@ -61,3 +61,65 @@
         </div>
     </div>
 </div>
+@section scripts
+{
+    <script>
+        require(["ViewModels/Location", "ViewModels/Locations"], function (locationViewModel, locationsViewModel) {
+            var data;
+            // Call to get one location
+            //$('#locationGET').click(function () {
+            //    $.ajax({
+            //        url: "http://localhost:29196/location/1",
+            //        context: document.body
+            //    }).done(function (data) {
+            //        var location = new locationViewModel(data);
+            //        ko.applyBindings(location);
+            //    });
+            //});
+
+            //$('#locationGETActive').click(function () {
+            //    $.ajax({
+            //        url: "http://localhost:29196/location/",
+            //        context: document.body
+            //    }).done(function (data) {
+
+            //        // Overall viewmodel for this screen, along with initial state
+            //        activeLocations = new locationsViewModel(data);
+            //    });
+            //});
+
+            // Call to get all active locations
+            $(document).ready(function () {
+                $.ajax({
+                    url: "http://localhost:29196/location/",
+                    context: document.body
+                }).done(function (data) {
+
+                    // Overall viewmodel for this screen, along with initial state
+                    activeLocations = new locationsViewModel(data);
+
+                    ko.applyBindings(activeLocations, document.getElementById("locationsPage"));
+
+                });
+            });
+
+
+
+            //$('div[id^="sportDetails_"]').click(function () {
+            //    alert('a')
+            //    $('#sportDetails').toggle();
+            //})
+
+
+
+            //$('#postLocation').click(function () {
+            //    $.ajax({
+            //        url: "http://localhost:29196/location/",
+            //        context: document.body,
+            //        type: 'POST',
+            //        data: "name:Jota"
+            //    });
+            //})
+        });
+    </script>
+}
