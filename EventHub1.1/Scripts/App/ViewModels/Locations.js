@@ -144,15 +144,8 @@
         }
 
         self.showInactiveLocations = function (clickedLocationInsideObservableArrayOfLocations) {
-            var currentStateOfTheActivePropertyOfAllTheDisplayedLocations = false;
-            if (clickedLocationInsideObservableArrayOfLocations.locations().length == 0) {
-                return
-            }
-            else {
-                currentStateOfTheActivePropertyOfAllTheDisplayedLocations = clickedLocationInsideObservableArrayOfLocations.locations()[0].active();
-            }
-
-            if (currentStateOfTheActivePropertyOfAllTheDisplayedLocations) {
+            if (sessionStorage.getItem("viewingActiveLocations") == "true") {
+                sessionStorage.setItem("viewingActiveLocations", false)
                 self.locations.removeAll();
                 $('#toggleBetweenLocationsButton').html("See Active")
                 $.ajax({
@@ -169,7 +162,8 @@
                     }
                 })
             }
-            else if (!currentStateOfTheActivePropertyOfAllTheDisplayedLocations) {
+            else if (sessionStorage.getItem("viewingActiveLocations") == "false") {
+                sessionStorage.setItem("viewingActiveLocations", true)
                 self.locations.removeAll();
                 $('#toggleBetweenLocationsButton').html("See Inactive")
                 $.ajax({

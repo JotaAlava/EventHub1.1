@@ -174,6 +174,7 @@
     <Compile Include="DAL\Services\PlusOneService.cs" />
     <Compile Include="DAL\Services\UserService.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
+    <Compile Include="DTO\ActivityDTO.cs" />
     <Compile Include="DTO\LocationDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -225,6 +226,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\App\ViewModels\Location.js" />
+    <Content Include="Scripts\blockui.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -306,8 +308,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
     <Content Include="Views\Shared\_SideNavBar.cshtml" />
-    <Content Include="Views\Shared\_Locations.cshtml" />
-    <Content Include="Views\Shared\_Activities.cshtml" />
     <Content Include="Views\Home\Locations.cshtml" />
     <Content Include="Views\Home\Activity.cshtml" />
   </ItemGroup>

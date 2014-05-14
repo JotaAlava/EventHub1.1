@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using EventHub1._1.Models;
+using EventHub1._1.DTO;
 
 namespace EventHub1._1.DAL.Services
 {
@@ -11,9 +12,30 @@ namespace EventHub1._1.DAL.Services
             this.uow = uow;
         }
 
-        public IEnumerable<Activity> GetActiveActivities()
+        public IEnumerable<ActivityDTO> GetActiveActivities()
         {
-            return uow.ActivityRepository.Get(location => location.Active);
+            var allTheActiveActivitiesFromTheDatabase = uow.ActivityRepository.Get(location => location.Active);
+            var resultsFromDbConvertedIntoDTOs = new List<ActivityDTO>();
+
+            foreach (var activity in allTheActiveActivitiesFromTheDatabase)
+            {
+                resultsFromDbConvertedIntoDTOs.Add(new ActivityDTO(activity));
+            }
+
+            return resultsFromDbConvertedIntoDTOs;
+        }
+
+        public IEnumerable<ActivityDTO> GetInactiveActivities()
+        {
+            var allTheActiveActivitiesFromTheDatabase = uow.ActivityRepository.Get(location => location.Active == false);
+            var resultsFromDbConvertedIntoDTOs = new List<ActivityDTO>();
+
+            foreach (var activity in allTheActiveActivitiesFromTheDatabase)
+            {
+                resultsFromDbConvertedIntoDTOs.Add(new ActivityDTO(activity));
+            }
+
+            return resultsFromDbConvertedIntoDTOs;
         }
 
         public Activity GetActivityById(int id)
@@ -53,8 +75,9 @@ namespace EventHub1._1.DAL.Services
 
     public interface IActivityService
     {
-
-        IEnumerable<Activity> GetActiveActivities();
+        IEnumerable<ActivityDTO> GetActiveActivities();
+                            
+        IEnumerable<ActivityDTO> GetInactiveActivities();
 
         Activity GetActivityById(int id);
 

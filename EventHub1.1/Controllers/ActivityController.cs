@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using EventHub1._1.DAL.Services;
 using EventHub1._1.Models;
+using EventHub1._1.DTO;
 
 namespace EventHub1._1.Controllers
 {
@@ -20,9 +21,16 @@ namespace EventHub1._1.Controllers
 
         [HttpGet]
         [Route("activity")]
-        public IEnumerable<Activity> GetActiveActivities()
+        public IEnumerable<ActivityDTO> GetActiveActivities()
         {
             return activityService.GetActiveActivities();
+        }
+
+        [HttpGet]
+        [Route("activity/GetInactive")]
+        public IEnumerable<ActivityDTO> GetInactiveActivities()
+        {
+            return activityService.GetInactiveActivities();
         }
 
         [HttpGet]

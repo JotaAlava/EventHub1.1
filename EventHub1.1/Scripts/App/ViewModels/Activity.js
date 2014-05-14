@@ -3,8 +3,9 @@
         var self = this;
         self.id = ko.observable(activityDTO.ActivityId);
         self.name = ko.observable(activityDTO.Name);
+        self.dayOfWeek = ko.observable(activityDTO.DayOfWeek)
 
-        self.time = ko.observable(activityDTO.time);
+        self.time = ko.observable(activityDTO.Time);
         self.locationId = ko.observable(activityDTO.LocationId)
         self.active = ko.observable(activityDTO.Active)
 

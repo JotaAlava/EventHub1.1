@@ -31,6 +31,9 @@ namespace EventHub1._1
             bundles.Add(new ScriptBundle("~/bundles/Main").Include(
                       "~/Scripts/Main.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/blockui").Include(
+                      "~/Scripts/blockui.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/EventHub.css"));

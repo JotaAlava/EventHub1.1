@@ -4,9 +4,9 @@
         <h2 style="text-align:right;">Add Location</h2>
 
         <form data-bind="submit: addLocation" style="text-align:right">
-            Name: <input id="nameInputBox" type="text" name="name"><br>
-            Address: <input id="addressInputBox" type="text" name="address"><br>
-            Active <br /><input type="checkbox" name="active">
+            Name:<br /> <input id="nameInputBox" type="text" name="name"><br>
+            Address:<br /> <input id="addressInputBox" type="text" name="address"><br>
+            Active<br /><input type="checkbox" name="active">
             <br /><br />
             <button class="btn btn-primary btn" type="submit" style="color:blue;">Submit</button>
             <br /><br />
@@ -90,6 +90,18 @@
 
             // Call to get all active locations
             $(document).ready(function () {
+                $.blockUI({
+                    css: {
+                        border: 'none',
+                        padding: '15px',
+                        backgroundColor: '#000',
+                        '-webkit-border-radius': '10px',
+                        '-moz-border-radius': '10px',
+                        opacity: .5,
+                        color: '#fff'
+                    }
+                });
+
                 $.ajax({
                     url: "http://localhost:29196/location/",
                     context: document.body
@@ -99,7 +111,8 @@
                     activeLocations = new locationsViewModel(data);
 
                     ko.applyBindings(activeLocations, document.getElementById("locationsPage"));
-
+                    sessionStorage.setItem("viewingActiveLocations", true)
+                    setTimeout($.unblockUI, 0);
                 });
             });
 

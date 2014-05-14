@@ -1,40 +1,39 @@
 ﻿<div id="activitiesPage">
-    @*<script>
-            require(["ViewModels/Activity", "ViewModels/Activities"], function (activityViewModel, activitiesViewModel) {
-                $(document).ready(function () {
-                    $.ajax({
-                        url: "http://localhost:29196/activity/",
-                        context: document.body
-                    }).done(function (data) {
+    <div class="col-md-3" style="margin-top:3%">
+        <h2 style="text-align:right;">Add Activity</h2>
 
-                        // Overall viewmodel for this screen, along with initial state
-                        activeActivities = new activitiesViewModel(data);
-
-                        ko.applyBindings(activeLocations);
-
-                    });
-                });
-            });
-        </script>*@
-    <div id="Canvas" class="col-md-6" style="margin-top:5%;">
+        <form data-bind="submit: addActivity" style="text-align:right">
+            Name:<br /> <input id="activityNameInputBox" type="text" name="name"><br>
+            Day Of Week:<br /> <input id="dayOfWeekInputBox" type="text" name="address"><br>
+            <br /><br />
+            <button class="btn btn-primary btn" type="submit" style="color:blue;">Submit</button>
+            <br /><br />
+            <button class="btn btn-primary btn" id="toggleBetweenActivitiesButton" data-bind="click: $root.showInactiveActivities" style="color:blue;">See Inactive</button>
+            <br><br>
+        </form>
+    </div>
+    <div id="Canvas" class="col-md-7" style="margin-top:5%;">
         <div data-bind="template: { name: 'activitiesTempl' }"></div>
     </div>
-
     <script id="activitiesTempl" type="text/html">
         <div data-bind="foreach: activities">
             <div class="well">
                 <!--TODO: Make these two buttons sexy looking-->
-                @*<button class="btn btn-primary btn" data-bind="attr: { id : id }, click: $root.toggleActive" style="color:blue;">Toggle Active</button>
-                    <button class="btn btn-primary btn" data-bind="click: $root.showUpdateLocationModal" data-toggle="modal" data-target="#updateLocationDetailsModal">Update</button>
-                    <button class="btn btn-primary btn" data-bind="attr: { id : 'sportName_' + id() }, click: $root.hideDetails " style="color:blue;">Details</button>
-                    <button class="btn btn-primary btn" data-bind="attr: { id : id }, click: $root.deleteLocation" style="color:blue;">Delete</button>*@
+                <button class="btn btn-primary btn" data-bind="attr: { id : id }, click: $root.toggleActiveActivity" style="color:blue;">Toggle Active</button>
+                <button class="btn btn-primary btn" data-bind="click: $root.showUpdateLocationModal" data-toggle="modal" data-target="#updateLocationDetailsModal">Update</button>
+                <button class="btn btn-primary btn" data-bind="attr: { id : 'sportName_' + id() }, click: $root.hideActivityDetails" style="color:blue;">Details</button>
+                <button class="btn btn-primary btn" data-bind="attr: { id : id }, click: $root.deleteActivity" style="color:blue;">Delete</button>
                 <h3>Name: <strong data-bind="text: name"></strong></h3>
 
                 <ul data-bind="attr: { id : 'activityDetails_' + id() }" style="display:none">
                     <li>
                         <div>Id: <strong data-bind="text: id"></strong></div>
-                        <div>Address: <strong data-bind="text: address"></strong></div>
+                        <div>Day Of The Week: <strong data-bind="text: dayOfWeek"></strong></div>
+                        <div>Time: <strong data-bind="text: time"></strong></div>
+                        <div>Location: <strong data-bind="text: locationId"></strong></div>
                         <div>Active: <strong data-bind="text: active"></strong></div>
+                        <div>Preferred Players: <strong data-bind="text: preferredNumberOfPlayers"></strong></div>
+                        <div>Required Players: : <strong data-bind="text: requiredNumberOfPlayers"></strong></div>
                     </li>
                 </ul>
             </div>
@@ -43,20 +42,35 @@
 </div>
 @section scripts
 {
-<script>
-    require(["ViewModels/Activity", "ViewModels/Activities"], function (activityViewModel, activitiesViewModel) {
-        $(document).ready(function () {
-            $.ajax({
-                url: "http://localhost:29196/activity/",
-                context: document.body
-            }).done(function (data) {
+    <script>
+        require(["ViewModels/Activity", "ViewModels/Activities"], function (activityViewModel, activitiesViewModel) {
+            $(document).ready(function () {
+                $.blockUI({
+                    css: {
+                        border: 'none',
+                        padding: '15px',
+                        backgroundColor: '#000',
+                        '-webkit-border-radius': '10px',
+                        '-moz-border-radius': '10px',
+                        opacity: .5,
+                        color: '#fff'
+                    }
+                });
+                $.ajax({
+                    url: "http://localhost:29196/activity/",
+                    context: document.body
+                }).done(function (data) {
 
-                // Overall viewmodel for this screen, along with initial state
-                activeActivities = new activitiesViewModel(data);
-                //ko.cleanNode($("#locationsPage")[0]);
-                ko.applyBindings(activeActivities, document.getElementById("activitiesPage"));
+                    // Overall viewmodel for this screen, along with initial state
+                    //activeActivities = new activitiesViewModel(data);
+
+                    activities = new activitiesViewModel(data);
+                    //ko.cleanNode($("#locationsPage")[0]);
+                    ko.applyBindings(activities, document.getElementById("activitiesPage"));
+                    sessionStorage.setItem("viewingActiveActivities", true)
+                    setTimeout($.unblockUI, 0);
+                });
             });
         });
-    });
-</script>
+    </script>
 }
