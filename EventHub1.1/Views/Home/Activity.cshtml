@@ -4,7 +4,13 @@
 
         <form data-bind="submit: addActivity" style="text-align:right">
             Name:<br /> <input id="activityNameInputBox" type="text" name="name"><br>
-            Day Of Week:<br /> <input id="dayOfWeekInputBox" type="text" name="address"><br>
+            Day Of Week:<br /> <input id="dayOfWeekInputBox" type="text" name="dayOfWeek"><br>
+            Time:<br /> <input id="activityDatePicker" type="text" name="date"><br>
+            Select Location:<br /> <select id="locationsDropdown" name="locationId" @*data-bind="click: $root.populateActivityDropdown"*@>
+            </select><br>
+            Active:<br /> <input id="activityActiveFlag" type="checkbox" name="name"><br>
+            Preferred Players:<br /> <input id="preferredPlayersInputBox" type="text" name="preferredPlayers"><br>
+            Required Players:<br /> <input id="requiredPlayersInputBox" type="text" name="requiredPlayers"><br>
             <br /><br />
             <button class="btn btn-primary btn" type="submit" style="color:blue;">Submit</button>
             <br /><br />
@@ -38,7 +44,7 @@
                 </ul>
             </div>
         </div>
-    </script>
+    </script>    
 </div>
 @section scripts
 {
@@ -65,10 +71,11 @@
                     //activeActivities = new activitiesViewModel(data);
 
                     activities = new activitiesViewModel(data);
+                    activities.populateActivityDropdown();
                     //ko.cleanNode($("#locationsPage")[0]);
                     ko.applyBindings(activities, document.getElementById("activitiesPage"));
                     sessionStorage.setItem("viewingActiveActivities", true)
-                    setTimeout($.unblockUI, 0);
+                    setTimeout($.unblockUI, 1000);
                 });
             });
         });

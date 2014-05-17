@@ -1,7 +1,28 @@
-﻿define(["ViewModels/Activity"], function (Activity) { 
-    
+﻿define(["ViewModels/Activity"], function (Activity) {
+
     var activities = function (activityDTO) {
         var self = this;
+
+        self.activeLocationsToSelectFrom = [];
+        self.populateActivityDropdown = function () {
+            $.ajax({
+                url: "http://localhost:29196/location/",
+                context: document.body
+            }).done(function (data) {
+
+                self.activeLocationsToSelectFrom = data
+                for (var i in data) {
+                    $('#locationsDropdown').append('<option value="' + data[i].LocationId + '">' + data[i].Name + '</option>')
+                }
+                // Overall viewmodel for this screen, along with initial state
+                //activeLocations = new locationsViewModel(data);
+                
+                //for (location in data) {
+                //    alert("Adding: " + location.name)
+                //    self.activeLocationsToSelectFrom.push(location);
+                //}
+            });
+        }
 
         self.activities = ko.observableArray();
 
@@ -63,13 +84,35 @@
             setTimeout($.unblockUI, 0);
         }
 
-        self.addActivity = function ()
-        {
-            alert("Add Activity");
+        self.addActivity = function (formData) {
+            var result = (function (formData) {
+                var result = {
+                    Name: formData[0].value,
+                    DayOfWeek: formData[1].value,
+                    Time: formData[2].value == "on" ? true : false,
+                    LocationId: formData[3].value,
+                    Active: formData[4].value == "on" ? true : false,
+                    PreferredNumberOfPlayers1: formData[5].value,
+                    RequiredNumberOfPlayers1: formData[6].value
+                }
+
+                return result;
+            })(formData);
+
+            $.ajax({
+                dataType: "json",
+                url: "http://localhost:29196/activity/",
+                context: document.body,
+                type: 'POST',
+                data: result
+            }).success(function (result) {
+                var newLocaiton = new Location(result);
+
+                self.locations.push(newLocaiton);
+            });
         }
 
-        self.toggleActiveActivity = function (clickedActivityInsideObservableArrayOfActivities)
-        {
+        self.toggleActiveActivity = function (clickedActivityInsideObservableArrayOfActivities) {
             $.ajax({
                 url: "http://localhost:29196/activity/ToggleActiveById/" + clickedActivityInsideObservableArrayOfActivities.id(),
                 context: document.body,
@@ -82,18 +125,15 @@
             })
         }
 
-        self.showUpdateActivityModal = function() 
-        {
+        self.showUpdateActivityModal = function () {
             alert("showUpdateActivityModal")
         }
 
-        self.hideActivityDetails = function (clickedActivityInsideObservableArrayOfActivities)
-        {
+        self.hideActivityDetails = function (clickedActivityInsideObservableArrayOfActivities) {
             $('ul[id^="activityDetails_' + clickedActivityInsideObservableArrayOfActivities.id() + '"]').toggle()
         }
 
-        self.deleteActivity = function ()
-        {
+        self.deleteActivity = function () {
             alert("deleteActivity")
         }
 
