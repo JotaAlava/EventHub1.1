@@ -16,7 +16,7 @@ namespace EventHub1._1.DTO
                 Name = activity.Name;
                 DayOfWeek = activity.DayOfWeek;
 
-                Time = activity.Time;
+                Time = String.Format("{0:T}", activity.Time);
                 LocationId = activity.LocationId;
                 Active = activity.Active;
 
@@ -29,7 +29,7 @@ namespace EventHub1._1.DTO
         public string Name { get; set; }
         public string DayOfWeek{ get; set; }
 
-        public DateTime Time { get; set; }
+        public string Time { get; set; }
         public int LocationId { get; set; }
         public bool Active { get; set; }
 

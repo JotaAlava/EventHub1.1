@@ -76,6 +76,6 @@ namespace EventHub1._1.Controllers
             var responnse = Request.CreateResponse(HttpStatusCode.OK);
 
             return responnse;
-        }
+        }        
     }
 }

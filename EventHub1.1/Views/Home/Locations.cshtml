@@ -6,7 +6,7 @@
         <form data-bind="submit: addLocation" style="text-align:right">
             Name:<br /> <input id="nameInputBox" type="text" name="name"><br>
             Address:<br /> <input id="addressInputBox" type="text" name="address"><br>
-            Active<br /><input type="checkbox" name="active">
+            Active<br /><input type="checkbox" name="active" value="off">
             <br /><br />
             <button class="btn btn-primary btn" type="submit" style="color:blue;">Submit</button>
             <br /><br />
@@ -112,7 +112,17 @@
 
                     ko.applyBindings(activeLocations, document.getElementById("locationsPage"));
                     sessionStorage.setItem("viewingActiveLocations", true)
-                    setTimeout($.unblockUI, 0);
+
+                    $('#activityActiveFlag').click(function () {
+                        var isChecked = $(this).prop("checked")
+
+                        if (isChecked)
+                            $(this).attr("value", "on")
+                        else
+                            $(this).attr("value", "off")
+                    })
+
+                    setTimeout($.unblockUI, 500);
                 });
             });
 

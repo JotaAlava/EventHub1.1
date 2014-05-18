@@ -44,8 +44,6 @@
                     }
                 }
             })
-
-
         }
 
         // Probably should find a better way of doing this - Workaround for Circular Reference error

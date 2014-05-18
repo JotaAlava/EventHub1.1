@@ -13,7 +13,7 @@ namespace EventHub1._1.Models
     using System.Collections.Generic;
     
     public partial class Activity
-    { 
+    {
         public Activity()
         {
             this.Events = new HashSet<Event>();

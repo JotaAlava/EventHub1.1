@@ -74,6 +74,11 @@ namespace EventHub1._1.DAL.Services
             uow.LocationRepository.Update(locationToUpdate);
             uow.Commit();
         }
+
+        Location ILocationService.GetLegitLocationById(int locationId)
+        {
+            return uow.LocationRepository.GetByID(locationId);
+        }
     }
 
     public interface ILocationService
@@ -91,5 +96,7 @@ namespace EventHub1._1.DAL.Services
         void DeleteLocationById(int id);
 
         void UpdateLocation(Location locationToUpdate);
+
+        Location GetLegitLocationById(int locationId);
     }
 }

@@ -12,10 +12,12 @@ namespace EventHub1._1.Controllers
 {
     public class ActivityController : ApiController
     {
+        private ILocationService locationService;
         private IActivityService activityService;
 
-        public ActivityController(IActivityService activityService)
+        public ActivityController(IActivityService activityService, ILocationService locationService)
         {
+            this.locationService = locationService;
             this.activityService = activityService;
         }
 
@@ -44,6 +46,9 @@ namespace EventHub1._1.Controllers
         [Route("activity")]
         public HttpResponseMessage CreateActivity(Activity activityToAdd)
         {
+            activityToAdd.Time = activityToAdd.Time.ToUniversalTime();
+
+            activityToAdd.Location = locationService.GetLegitLocationById(activityToAdd.LocationId);
             activityService.CreateActivity(activityToAdd);
             var responnse = Request.CreateResponse(HttpStatusCode.Created, activityToAdd);
 
@@ -65,8 +70,17 @@ namespace EventHub1._1.Controllers
         [Route("activity/{id}/")]
         public HttpResponseMessage DeleteActivityById(int id)
         {
-            activityService.DeleteActivityById(id);
-            var responnse = Request.CreateResponse(HttpStatusCode.OK);
+            HttpResponseMessage responnse;
+            try
+            {
+                activityService.DeleteActivityById(id);
+                responnse = Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch(Exception e)
+            {
+                responnse = Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+            
 
             return responnse;
         }
@@ -75,6 +89,9 @@ namespace EventHub1._1.Controllers
         [Route("activity")]
         public HttpResponseMessage UpdateActivity(Activity activityToUpdate)
         {
+            activityToUpdate.Time = activityToUpdate.Time.ToUniversalTime();
+
+            activityToUpdate.Location = locationService.GetLegitLocationById(activityToUpdate.LocationId);
             activityService.UpdateActivity(activityToUpdate);
             var responnse = Request.CreateResponse(HttpStatusCode.OK);
 

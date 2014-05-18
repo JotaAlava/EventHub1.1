@@ -3,14 +3,13 @@
         <h2 style="text-align:right;">Add Activity</h2>
 
         <form data-bind="submit: addActivity" style="text-align:right">
-            Name:<br /> <input id="activityNameInputBox" type="text" name="name"><br>
-            Day Of Week:<br /> <input id="dayOfWeekInputBox" type="text" name="dayOfWeek"><br>
-            Time:<br /> <input id="activityDatePicker" type="text" name="date"><br>
-            Select Location:<br /> <select id="locationsDropdown" name="locationId" @*data-bind="click: $root.populateActivityDropdown"*@>
-            </select><br>
-            Active:<br /> <input id="activityActiveFlag" type="checkbox" name="name"><br>
-            Preferred Players:<br /> <input id="preferredPlayersInputBox" type="text" name="preferredPlayers"><br>
-            Required Players:<br /> <input id="requiredPlayersInputBox" type="text" name="requiredPlayers"><br>
+            Name:<br /> <input id="activityNameInputBox" type="text" name="Name"><br>
+            Day Of Week:<br /> <input id="dayOfWeekInputBox" type="text" name="DayOfWeek"><br>
+            Time:<br /> <input class="input-small add-on" id="activityDatePicker" type="text" name="Time"><br>
+            Select Location:<br /> <select style="color: black; width: 174px" id="locationsDropdown" name="LocationId"></select><br>
+            Active:<br /> <input id="activityActiveFlag" type="checkbox" name="Active" value="off"><br>
+            Preferred Players:<br /> <input id="preferredPlayersInputBox" type="text" name="PreferredNumberOfPlayers1"><br>
+            Required Players:<br /> <input id="requiredPlayersInputBox" type="text" name="RequiredNumberOfPlayers1"><br>
             <br /><br />
             <button class="btn btn-primary btn" type="submit" style="color:blue;">Submit</button>
             <br /><br />
@@ -26,7 +25,7 @@
             <div class="well">
                 <!--TODO: Make these two buttons sexy looking-->
                 <button class="btn btn-primary btn" data-bind="attr: { id : id }, click: $root.toggleActiveActivity" style="color:blue;">Toggle Active</button>
-                <button class="btn btn-primary btn" data-bind="click: $root.showUpdateLocationModal" data-toggle="modal" data-target="#updateLocationDetailsModal">Update</button>
+                <button class="btn btn-primary btn" data-bind="click: $root.showUpdateActivityModal" data-toggle="modal" data-target="#updateActivityDetailsModal">Update</button>
                 <button class="btn btn-primary btn" data-bind="attr: { id : 'sportName_' + id() }, click: $root.hideActivityDetails" style="color:blue;">Details</button>
                 <button class="btn btn-primary btn" data-bind="attr: { id : id }, click: $root.deleteActivity" style="color:blue;">Delete</button>
                 <h3>Name: <strong data-bind="text: name"></strong></h3>
@@ -44,12 +43,41 @@
                 </ul>
             </div>
         </div>
-    </script>    
+    </script>
+    <!-- Modal -->
+    <div class="modal fade" id="updateActivityDetailsModal" tabindex="-1" role="dialog" aria-labelledby="updateLocationDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="updateLocationDetailsModalLabel">Update Activity</h4>
+                </div>
+                <form data-bind="submit: updateActivityModal">
+                    <div style="margin:5%">
+                        <input id="modalActivityIdHiddenInputBox" type="hidden" name="ActivityId">
+                        Name:<br /> <input id="modalActivityNameInputBox" type="text" name="Name"><br>
+                        Day Of Week:<br /> <input id="modalDayOfWeekInputBox" type="text" name="DayOfWeek"><br>
+                        Time:<br /> <input class="input-small add-on" id="modalActivityDatePicker" type="text" name="Time"><br>
+                        Select Location:<br /> <select style="color: black; width: 174px" id="modalLocationsDropdown" name="LocationId"></select><br>
+                        Active:<br /> <input id="modalActivityActiveFlag" type="checkbox" name="Active" value="off"><br>
+                        Preferred Players:<br /> <input id="modalPreferredPlayersInputBox" type="text" name="PreferredNumberOfPlayers1"><br>
+                        Required Players:<br /> <input id="modalRequiredPlayersInputBox" type="text" name="RequiredNumberOfPlayers1"><br>
+                    </div>
+                    <div class="clear modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
 </div>
 @section scripts
 {
     <script>
         require(["ViewModels/Activity", "ViewModels/Activities"], function (activityViewModel, activitiesViewModel) {
+
             $(document).ready(function () {
                 $.blockUI({
                     css: {
@@ -75,7 +103,43 @@
                     //ko.cleanNode($("#locationsPage")[0]);
                     ko.applyBindings(activities, document.getElementById("activitiesPage"));
                     sessionStorage.setItem("viewingActiveActivities", true)
-                    setTimeout($.unblockUI, 1000);
+
+                    $('#activityDatePicker').timepicker({
+                        defaultTime: 'current',
+                        minuteStep: 1,
+                        disableFocus: true,
+                        template: 'dropdown'
+                    });
+
+                    setTimeout($.unblockUI, 500);
+
+                    // *** Helper Functions For Form ***
+                    $('#activityDatePicker').change(function () {
+                        $('#activityDatePicker').attr("value", $('#activityDatePicker').val());
+                    })
+
+                    $('#activityActiveFlag').click(function () {
+                        var isChecked = $(this).prop("checked")
+
+                        if (isChecked)
+                            $(this).attr("value", "on")
+                        else
+                            $(this).attr("value", "off")
+                    })
+
+                    $('#modalActivityActiveFlag').click(function () {
+                        var isChecked = $(this).prop("checked")
+
+                        if (isChecked)
+                            $(this).attr("value", "on")
+                        else
+                            $(this).attr("value", "off")
+                    })
+                    // ************************************
+                    //$('#activityActiveFlag').click(function () {
+                    //    console.log(this)
+                    //    $(this).checked(true);
+                    //})
                 });
             });
         });

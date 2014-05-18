@@ -34,9 +34,13 @@ namespace EventHub1._1
             bundles.Add(new ScriptBundle("~/bundles/blockui").Include(
                       "~/Scripts/blockui.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/timepicker").Include(
+                      "~/Scripts/bootstrap-timepicker.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/EventHub.css"));
+                      "~/Content/EventHub.css",
+                      "~/Content/bootstrap-timepicker.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/App")
                     .IncludeDirectory("~/Scripts/App/", "*.js"));
