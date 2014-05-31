@@ -113,7 +113,6 @@
             }).success(function (result) {
                 var newActivity = new Activity(result);
 
-
                 newActivity.time = new Date(result.Time).toLocaleTimeString();
                 self.activities.push(newActivity);
             });
@@ -212,6 +211,10 @@
             $('#modalActivityNameInputBox').val(clickedLocationInsideObservableArrayOfActivities.name())
             $('#modalDayOfWeekInputBox').val(clickedLocationInsideObservableArrayOfActivities.dayOfWeek())
             $('#modalActivityDatePicker').val(clickedLocationInsideObservableArrayOfActivities.time())
+
+            $('#updateActivityDetailsModal').on('shown.bs.modal', function () {
+                $('#modalActivityNameInputBox').focus();
+            })
 
             if (clickedLocationInsideObservableArrayOfActivities.active())
             {

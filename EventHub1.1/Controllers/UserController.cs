@@ -30,6 +30,13 @@ namespace EventHub1._1.Controllers
             return userService.GetUserById(id);
         }
 
+        [HttpGet]
+        [Route("user/GetInactive")]
+        public IEnumerable<User> GetAllInActivteUsers()
+        {
+            return userService.GetAllInactiveUsers();
+        }
+
         [HttpPost]
         [Route("user")]
         public HttpResponseMessage CreateUser(User activityToAdd)
@@ -46,6 +53,17 @@ namespace EventHub1._1.Controllers
         public HttpResponseMessage ToggleActiveById(int id)
         {
             userService.ToggleActiveById(id);
+            var responnse = Request.CreateResponse(HttpStatusCode.OK);
+
+            return responnse;
+        }
+
+        [HttpPost]
+        [Route("user/ToggleAdminById/{id}/")]
+
+        public HttpResponseMessage ToggleAdminById(int id)
+        {
+            userService.ToggleAdminById(id);
             var responnse = Request.CreateResponse(HttpStatusCode.OK);
 
             return responnse;

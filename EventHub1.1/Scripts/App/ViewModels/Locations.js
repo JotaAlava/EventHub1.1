@@ -185,6 +185,10 @@
             $('#modalLocationNameInputBox').val(clickedLocationInsideObservableArrayOfLocations.name())
             $('#modalLocationAddressInputBox').val(clickedLocationInsideObservableArrayOfLocations.address())
             $('#modalActiveStatusHiddenInputBox').val(clickedLocationInsideObservableArrayOfLocations.active())
+
+            $('#updateLocationDetailsModal').on('shown.bs.modal', function () {
+                $('#modalLocationNameInputBox').focus();
+            })
         }
 
         return self;

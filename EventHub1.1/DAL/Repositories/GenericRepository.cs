@@ -9,10 +9,10 @@ namespace EventHub1._1.DAL.Repositories
 {
     public class GenericRepository<TEntity> where TEntity : class
     {
-        internal EventHubEntities2 context;
+        internal EventHub1Entities2 context;
         internal DbSet<TEntity> dbSet;
 
-        public GenericRepository(EventHubEntities2 context)
+        public GenericRepository(EventHub1Entities2 context)
         {
             this.context = context;
             this.dbSet = context.Set<TEntity>();
@@ -76,5 +76,17 @@ namespace EventHub1._1.DAL.Repositories
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
         }
+
+        //TODO: Make this generic!
+        public bool UserExistsInDb(string username)
+        {
+            return context.Users.Any(user => user.Username == username);
+        }
+
+        //TODO: Make this ALSO generic!
+        //public bool EventsForTodaysActivitiesExistInDb(List<int> idOfActivitiesForToday)
+        //{
+        //    //return context.Users.Any(user => user.Username == username);
+        //}
     }
 }

@@ -172,51 +172,59 @@
     <Compile Include="DAL\Services\EventService.cs" />
     <Compile Include="DAL\Services\LocationService.cs" />
     <Compile Include="DAL\Services\MessageService.cs" />
+    <Compile Include="DTO\MessageDTO.cs" />
+    <Compile Include="DTO\PlusOneDTO.cs" />
     <Compile Include="DAL\Services\PlusOneService.cs" />
     <Compile Include="DAL\Services\UserService.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="DTO\ActivityDTO.cs" />
     <Compile Include="DTO\LocationDTO.cs" />
+    <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="Filters\AutomaticEventGeneration.cs" />
+    <Compile Include="Filters\AutomaticUserCreation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Activity.cs">
-      <DependentUpon>EventHub.tt</DependentUpon>
+      <DependentUpon>EventHubModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Event.cs">
-      <DependentUpon>EventHub.tt</DependentUpon>
+      <DependentUpon>EventHubModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventHub.Context.cs">
+    <Compile Include="Models\EventHubModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EventHub.Context.tt</DependentUpon>
+      <DependentUpon>EventHubModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventHub.cs">
+    <Compile Include="Models\EventHubModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EventHub.tt</DependentUpon>
+      <DependentUpon>EventHubModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventHub.Designer.cs">
+    <Compile Include="Models\EventHubModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EventHub.edmx</DependentUpon>
+      <DependentUpon>EventHubModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Location.cs">
-      <DependentUpon>EventHub.tt</DependentUpon>
+      <DependentUpon>EventHubModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Message.cs">
-      <DependentUpon>EventHub.tt</DependentUpon>
+      <DependentUpon>EventHubModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PlusOne.cs">
-      <DependentUpon>EventHub.tt</DependentUpon>
+      <DependentUpon>EventHubModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>EventHub.tt</DependentUpon>
+      <DependentUpon>EventHubModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\bootstrap-timepicker.min.css" />
+    <Content Include="Content\select2-bootstrap.css" />
     <Content Include="Scripts\App\ViewModels\Activities.js" />
     <Content Include="Scripts\App\ViewModels\Activity.js" />
+    <Content Include="Scripts\App\ViewModels\Event.js" />
+    <Content Include="Scripts\App\ViewModels\Events.js" />
     <Content Include="Scripts\App\ViewModels\Locations.js" />
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +235,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\App\ViewModels\Location.js" />
+    <Content Include="Scripts\App\ViewModels\Player.js" />
+    <Content Include="Scripts\App\ViewModels\Players.js" />
     <Content Include="Scripts\blockui.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -251,26 +261,26 @@
     <Content Include="Scripts\jasmine-html.js" />
     <Content Include="Scripts\jasmine-jquery.js" />
     <Content Include="Scripts\jasmine.js" />
-    <EntityDeploy Include="Models\EventHub.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EventHub.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\EventHub.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EventHub.edmx</DependentUpon>
-      <LastGenOutput>EventHub.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\EventHub.edmx.diagram">
-      <DependentUpon>EventHub.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\EventHub.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EventHub.edmx</DependentUpon>
-      <LastGenOutput>EventHub.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />
     <Content Include="Scripts\bootstrap-timepicker.min.js" />
+    <EntityDeploy Include="Models\EventHubModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EventHubModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\EventHubModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EventHubModel.edmx</DependentUpon>
+      <LastGenOutput>EventHubModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\EventHubModel.edmx.diagram">
+      <DependentUpon>EventHubModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\EventHubModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EventHubModel.edmx</DependentUpon>
+      <LastGenOutput>EventHubModel.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
@@ -288,12 +298,14 @@
     <Content Include="Scripts\require.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\select2.js" />
     <Content Include="Scripts\TrafficCop-amd.js" />
     <Content Include="Scripts\TrafficCop-amd.min.gz.js" />
     <Content Include="Scripts\TrafficCop-amd.min.js" />
     <Content Include="Scripts\TrafficCop.js" />
     <Content Include="Scripts\TrafficCop.min.gz.js" />
     <Content Include="Scripts\TrafficCop.min.js" />
+    <Content Include="Scripts\underscore.js" />
     <Content Include="Tests\jasmineTests.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -314,6 +326,8 @@
     <Content Include="Views\Home\Locations.cshtml" />
     <Content Include="Views\Home\Activity.cshtml" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
+    <Content Include="Views\Home\Players.cshtml" />
+    <Content Include="Views\Home\Events.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

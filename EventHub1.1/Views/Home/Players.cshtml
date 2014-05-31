@@ -1,0 +1,57 @@
+﻿<div id="playersPage">
+    <div id="Canvas" class="col-md-7" style="margin-top:5%;">
+        <button class="btn btn-primary btn" id="toggleBetweenUsersButton" data-bind="click: $root.showInactiveUsers" style="color:blue;">See Inactive</button>
+        <div data-bind="template: { name: 'playersTempl' }"></div>
+    </div>
+    <script id="playersTempl" type="text/html">
+        <div data-bind="foreach: listOfPlayers">
+            <div class="well">
+                <button class="btn btn-primary btn" data-bind="attr: { id : userId() }, click: $root.toggleAdminPrivileges" style="color:blue;">Grant Admin Privileges</button>
+                <button class="btn btn-primary btn" data-bind="attr: { id : userId() }, click: $root.toggleActivePlayer" style="color:blue;">Toggle Active</button>
+                <ul style="display:block">
+                    <li>
+                        <!--TODO: Make these two buttons sexy looking-->
+                        <h3>Name: <strong data-bind="text: name"></strong></h3>
+                        <div>Id: <strong data-bind="text: userId"></strong></div>
+                        <div>Username: <strong data-bind="text: username"></strong></div>
+                        <div>Email: <strong data-bind="text: email"></strong></div>
+                        <div>Is Administrator: <strong data-bind="text: isAdmin"></strong></div>
+                        <div>Is Active: : <strong data-bind="text: active"></strong></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </script>
+</div>
+@section scripts
+{
+    <script>
+        require(["ViewModels/Player", "ViewModels/Players"], function (playerViewModel, playersViewModel) {
+            $(document).ready(function () {
+                $.blockUI({
+                    css: {
+                        border: 'none',
+                        padding: '15px',
+                        backgroundColor: '#000',
+                        '-webkit-border-radius': '10px',
+                        '-moz-border-radius': '10px',
+                        opacity: .5,
+                        color: '#fff'
+                    }
+                });
+                $.ajax({
+                    url: "http://localhost:29196/user/",
+                    context: document.body
+                }).done(function (data) {
+
+                    // Overall viewmodel for this screen, along with initial state
+                    listOfPlayers = new playersViewModel(data);
+                    ko.applyBindings(listOfPlayers, document.getElementById("playersPage"));
+                    sessionStorage.setItem("viewingActiveUsers", true)
+
+                    setTimeout($.unblockUI, 500);
+                })
+            })
+        });
+    </script>
+}

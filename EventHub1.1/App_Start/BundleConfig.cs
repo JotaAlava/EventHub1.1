@@ -44,6 +44,15 @@ namespace EventHub1._1
 
             bundles.Add(new ScriptBundle("~/bundles/App")
                     .IncludeDirectory("~/Scripts/App/", "*.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/select2").Include(
+                      "~/Scripts/select2.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/underscore").Include(
+                      "~/Scripts/underscore.js"));
+
+            bundles.Add(new StyleBundle("~/Content/select2").Include(
+                      "~/Content/select2.css"));
         }
     }
 }

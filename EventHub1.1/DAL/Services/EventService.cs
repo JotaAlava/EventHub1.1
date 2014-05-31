@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using EventHub1._1.DTO;
+using EventHub1._1.Models;
+using System.Collections.Generic;
 
 namespace EventHub1._1.DAL.Services
 {
@@ -41,6 +43,68 @@ namespace EventHub1._1.DAL.Services
         {
             uow.EventRepository.Delete(eventToUpdate);
         }
+
+
+        public EventServiceResponseCodes JoinEvent(int eventId, string username)
+        {
+            EventServiceResponseCodes result;
+            var eventToUpdate = uow.EventRepository.GetByID(eventId);
+            var userToJoinEvent = uow.UserRepository.Get(user => user.Username == username) as List<User>;
+
+            if (!eventToUpdate.Users.Contains(userToJoinEvent[0]))
+            {
+                var newUser = uow.UserRepository.GetByID(userToJoinEvent[0].UserId);
+                eventToUpdate.Users.Add(newUser);
+                uow.EventRepository.Update(eventToUpdate);
+
+                uow.Commit();
+                result = EventServiceResponseCodes.OperationSuccessfull;
+            }
+            else
+            {
+                result = EventServiceResponseCodes.CannotJoinTwice;
+            }
+
+            return result;
+        }
+
+
+        public EventServiceResponseCodes LeaveEvent(int eventId, string username)
+        {
+            EventServiceResponseCodes result;
+            var eventToUpdate = uow.EventRepository.GetByID(eventId);
+            var userToJoinEvent = uow.UserRepository.Get(user => user.Username == username) as List<User>;
+
+            if (eventToUpdate.Users.Contains(userToJoinEvent[0]))
+            {
+                var newUser = uow.UserRepository.GetByID(userToJoinEvent[0].UserId);
+                eventToUpdate.Users.Remove(newUser);
+                uow.EventRepository.Update(eventToUpdate);
+
+                uow.Commit();
+                result = EventServiceResponseCodes.OperationSuccessfull;
+            }
+            else
+            {
+                result = EventServiceResponseCodes.CannotLeaveIfNotJoined;
+            }
+
+            return result;
+        }
+
+
+        public List<UserDTO> GetParticipantsByEventId(int eventId)
+        {
+            var eventInQuestion = uow.EventRepository.GetByID(eventId);
+            var usersForEventInQuestion = new List<UserDTO>();
+
+            foreach (var user in eventInQuestion.Users)
+            {
+                usersForEventInQuestion.Add(new UserDTO(user));
+            }
+
+            return usersForEventInQuestion;
+        }        
     }
 
     public interface IEventService
@@ -57,5 +121,19 @@ namespace EventHub1._1.DAL.Services
         void DeleteEventById(int id);
 
         void UpdateEvent(Models.Event eventToUpdate);
+
+        EventServiceResponseCodes JoinEvent(int eventId, string username);
+
+        EventServiceResponseCodes LeaveEvent(int eventId, string username);
+
+        List<UserDTO> GetParticipantsByEventId(int eventId);
+    }
+
+    public enum EventServiceResponseCodes
+    {
+        OperationSuccessfull,
+        CannotJoinTwice,
+        CannotLeaveIfNotJoined,
+        UsersFound,
     }
 }

@@ -6,21 +6,24 @@ using System.Net.Http;
 using System.Web.Http;
 using EventHub1._1.DAL.Services;
 using EventHub1._1.Models;
+using EventHub1._1.DTO;
 
 namespace EventHub1._1.Controllers
 {
     public class MessageController : ApiController
     {
         private IMessageService messageService;
+        private IUserService userService;
 
-        public MessageController(IMessageService sportService)
+        public MessageController(IMessageService messageService, IUserService userService)
         {
-            this.messageService = sportService;
+            this.messageService = messageService;
+            this.userService = userService;
         }
 
         [HttpGet]
         [Route("message")]
-        public IEnumerable<Message> GetAllMessages()
+        public IEnumerable<MessageDTO> GetAllMessages()
         {
             return messageService.GetAllMessages();
         }
@@ -34,10 +37,13 @@ namespace EventHub1._1.Controllers
 
         [HttpPost]
         [Route("message")]
-        public HttpResponseMessage CreateMessage(Message activityToAdd)
+        public HttpResponseMessage CreateMessage(Message messageToAdd)
         {
-            messageService.CreateMessage(activityToAdd);
-            var responnse = Request.CreateResponse(HttpStatusCode.Created, activityToAdd);
+            messageToAdd.UserId = userService.GetUserIdByUsername(User.Identity.Name);
+            messageToAdd.Deleted = false;
+
+            messageService.CreateMessage(messageToAdd);
+            var responnse = Request.CreateResponse(HttpStatusCode.Created, messageToAdd);
 
             return responnse;
         }

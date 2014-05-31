@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using EventHub1._1.DTO;
+using System.Collections.Generic;
 
 namespace EventHub1._1.DAL.Services
 {
@@ -9,9 +10,17 @@ namespace EventHub1._1.DAL.Services
         {
             this.uow = uow;
         }
-        public IEnumerable<Models.Message> GetAllMessages()
+        public IEnumerable<MessageDTO> GetAllMessages()
         {
-            return uow.MessageRepository.Get();
+            var allMessages = uow.MessageRepository.Get();
+            var messagesToDTO = new List<MessageDTO>();
+
+            foreach (var message in allMessages)
+            {
+                messagesToDTO.Add(new MessageDTO(message));
+            }
+
+            return messagesToDTO;
         }
 
         public Models.Message GetMessageByAuthor(int authorId)
@@ -33,8 +42,7 @@ namespace EventHub1._1.DAL.Services
 
     public interface IMessageService
     {
-
-        IEnumerable<Models.Message> GetAllMessages();
+        IEnumerable<MessageDTO> GetAllMessages();
 
         Models.Message GetMessageByAuthor(int id);
 

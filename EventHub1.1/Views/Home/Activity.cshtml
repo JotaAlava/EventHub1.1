@@ -6,7 +6,7 @@
             Name:<br /> <input id="activityNameInputBox" type="text" name="Name"><br>
             Day Of Week:<br /> <input id="dayOfWeekInputBox" type="text" name="DayOfWeek"><br>
             Time:<br /> <input class="input-small add-on" id="activityDatePicker" type="text" name="Time"><br>
-            Select Location:<br /> <select style="color: black; width: 174px" id="locationsDropdown" name="LocationId"></select><br>
+            Select Location:<br /> <select style="color: black; width: 215px" id="locationsDropdown" name="LocationId"></select><br>
             Active:<br /> <input id="activityActiveFlag" type="checkbox" name="Active" value="off"><br>
             Preferred Players:<br /> <input id="preferredPlayersInputBox" type="text" name="PreferredNumberOfPlayers1"><br>
             Required Players:<br /> <input id="requiredPlayersInputBox" type="text" name="RequiredNumberOfPlayers1"><br>
@@ -16,6 +16,10 @@
             <button class="btn btn-primary btn" id="toggleBetweenActivitiesButton" data-bind="click: $root.showInactiveActivities" style="color:blue;">See Inactive</button>
             <br><br>
         </form>
+
+        <script>
+            $(document).ready(function () { $("#locationsDropdown").select2(); });
+        </script>
     </div>
     <div id="Canvas" class="col-md-7" style="margin-top:5%;">
         <div data-bind="template: { name: 'activitiesTempl' }"></div>

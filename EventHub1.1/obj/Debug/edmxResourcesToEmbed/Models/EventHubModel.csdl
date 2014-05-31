@@ -151,7 +151,7 @@
     <End Role="Events" Type="Self.Event" Multiplicity="*" />
     <End Role="Users" Type="Self.User" Multiplicity="*" />
   </Association>
-  <EntityContainer Name="EventHub1Entities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="EventHub1Entities2" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Activities" EntityType="Self.Activity" />
     <EntitySet Name="Events" EntityType="Self.Event" />
     <EntitySet Name="Locations" EntityType="Self.Location" />
