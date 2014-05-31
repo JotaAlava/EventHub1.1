@@ -8,6 +8,7 @@ using System.Web.Mvc;
 namespace EventHub1._1.Controllers
 {
     [AutomaticUserCreation]
+    [AutomaticEventGeneration]
     public class HomeController : Controller
     {
         //

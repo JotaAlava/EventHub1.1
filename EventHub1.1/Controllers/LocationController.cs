@@ -5,9 +5,11 @@ using EventHub1._1.DTO;
 using EventHub1._1.Models;
 using System.Net.Http;
 using System.Net;
+using EventHub1._1.Filters;
 
 namespace EventHub1._1.Controllers
 {
+    [AutomaticEventGeneration]
     public class LocationController : ApiController
     {
         private ILocationService locationService;

@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="EventHub1ModelStoreContainer" CdmEntityContainer="EventHub1Entities2">
+  <EntityContainerMapping StorageEntityContainer="EventHubModelStoreContainer" CdmEntityContainer="EventHubEntities3">
     <EntitySetMapping Name="Activities">
-      <EntityTypeMapping TypeName="EventHub1Model.Activity">
+      <EntityTypeMapping TypeName="EventHubModel.Activity">
         <MappingFragment StoreEntitySet="Activities">
           <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -16,7 +16,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Events">
-      <EntityTypeMapping TypeName="EventHub1Model.Event">
+      <EntityTypeMapping TypeName="EventHubModel.Event">
         <MappingFragment StoreEntitySet="Events">
           <ScalarProperty Name="EventId" ColumnName="EventId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -26,7 +26,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Locations">
-      <EntityTypeMapping TypeName="EventHub1Model.Location">
+      <EntityTypeMapping TypeName="EventHubModel.Location">
         <MappingFragment StoreEntitySet="Locations">
           <ScalarProperty Name="LocationId" ColumnName="LocationId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -36,7 +36,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Messages">
-      <EntityTypeMapping TypeName="EventHub1Model.Message">
+      <EntityTypeMapping TypeName="EventHubModel.Message">
         <MappingFragment StoreEntitySet="Messages">
           <ScalarProperty Name="MessageId" ColumnName="MessageId" />
           <ScalarProperty Name="Body" ColumnName="Body" />
@@ -47,7 +47,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="PlusOnes">
-      <EntityTypeMapping TypeName="EventHub1Model.PlusOne">
+      <EntityTypeMapping TypeName="EventHubModel.PlusOne">
         <MappingFragment StoreEntitySet="PlusOnes">
           <ScalarProperty Name="PlusOneId" ColumnName="PlusOneId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -57,7 +57,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="EventHub1Model.User">
+      <EntityTypeMapping TypeName="EventHubModel.User">
         <MappingFragment StoreEntitySet="Users">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Username" ColumnName="Username" />
@@ -68,7 +68,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="UserEvent" TypeName="EventHub1Model.UserEvent" StoreEntitySet="UserEvent">
+    <AssociationSetMapping Name="UserEvent" TypeName="EventHubModel.UserEvent" StoreEntitySet="UserEvent">
       <EndProperty Name="Events">
         <ScalarProperty Name="EventId" ColumnName="Events_EventId" />
       </EndProperty>

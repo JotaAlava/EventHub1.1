@@ -4,9 +4,11 @@ using System.Net.Http;
 using System.Web.Http;
 using EventHub1._1.DAL.Services;
 using EventHub1._1.Models;
+using EventHub1._1.Filters;
 
 namespace EventHub1._1.Controllers
 {
+    [AutomaticEventGeneration]
     public class UserController : ApiController
     {
         private IUserService userService;

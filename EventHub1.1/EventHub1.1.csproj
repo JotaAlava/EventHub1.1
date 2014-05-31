@@ -186,37 +186,37 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Activity.cs">
-      <DependentUpon>EventHubModel.tt</DependentUpon>
+      <DependentUpon>NewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Event.cs">
-      <DependentUpon>EventHubModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventHubModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EventHubModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventHubModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EventHubModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventHubModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EventHubModel.edmx</DependentUpon>
+      <DependentUpon>NewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Location.cs">
-      <DependentUpon>EventHubModel.tt</DependentUpon>
+      <DependentUpon>NewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Message.cs">
-      <DependentUpon>EventHubModel.tt</DependentUpon>
+      <DependentUpon>NewModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NewModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NewModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NewModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NewModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NewModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NewModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\PlusOne.cs">
-      <DependentUpon>EventHubModel.tt</DependentUpon>
+      <DependentUpon>NewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>EventHubModel.tt</DependentUpon>
+      <DependentUpon>NewModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\bootstrap-timepicker.min.css" />
@@ -264,22 +264,22 @@
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />
     <Content Include="Scripts\bootstrap-timepicker.min.js" />
-    <EntityDeploy Include="Models\EventHubModel.edmx">
+    <EntityDeploy Include="Models\NewModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EventHubModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>NewModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\EventHubModel.Context.tt">
+    <Content Include="Models\NewModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EventHubModel.edmx</DependentUpon>
-      <LastGenOutput>EventHubModel.Context.cs</LastGenOutput>
+      <DependentUpon>NewModel.edmx</DependentUpon>
+      <LastGenOutput>NewModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\EventHubModel.edmx.diagram">
-      <DependentUpon>EventHubModel.edmx</DependentUpon>
+    <Content Include="Models\NewModel.edmx.diagram">
+      <DependentUpon>NewModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\EventHubModel.tt">
+    <Content Include="Models\NewModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EventHubModel.edmx</DependentUpon>
-      <LastGenOutput>EventHubModel.cs</LastGenOutput>
+      <DependentUpon>NewModel.edmx</DependentUpon>
+      <LastGenOutput>NewModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />

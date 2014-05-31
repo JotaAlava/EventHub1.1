@@ -25,6 +25,7 @@ namespace EventHubModel
         public string Name { get; set; }
         public int ActivityId { get; set; }
         public bool Active { get; set; }
+        public System.DateTime DateCreated { get; set; }
     
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<PlusOne> PlusOnes { get; set; }

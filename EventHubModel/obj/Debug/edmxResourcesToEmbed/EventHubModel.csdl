@@ -85,6 +85,7 @@
     <NavigationProperty Name="Activity" Relationship="EventHubModel.ActivityEvent" FromRole="Event" ToRole="Activity" />
     <Property Name="ActivityId" Type="Int32" Nullable="false" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" />
   </EntityType>
   <EntityType Name="User">
     <Key>

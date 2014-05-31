@@ -32,6 +32,7 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
           <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

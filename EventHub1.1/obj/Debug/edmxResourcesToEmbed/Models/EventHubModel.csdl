@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="EventHub1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="EventHubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="Activity">
     <Key>
       <PropertyRef Name="ActivityId" />
@@ -151,7 +151,7 @@
     <End Role="Events" Type="Self.Event" Multiplicity="*" />
     <End Role="Users" Type="Self.User" Multiplicity="*" />
   </Association>
-  <EntityContainer Name="EventHub1Entities2" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="EventHubEntities3" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Activities" EntityType="Self.Activity" />
     <EntitySet Name="Events" EntityType="Self.Event" />
     <EntitySet Name="Locations" EntityType="Self.Location" />

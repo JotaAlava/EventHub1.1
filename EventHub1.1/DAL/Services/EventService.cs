@@ -104,11 +104,17 @@ namespace EventHub1._1.DAL.Services
             }
 
             return usersForEventInQuestion;
-        }        
+        }
+
+        public IEnumerable<Event> GetAllEvents()
+        {
+            return uow.EventRepository.Get(null, null, "Activity");
+        }
     }
 
     public interface IEventService
     {
+        IEnumerable<Models.Event> GetAllEvents();
 
         IEnumerable<Models.Event> GetAllActiveEvents();
 

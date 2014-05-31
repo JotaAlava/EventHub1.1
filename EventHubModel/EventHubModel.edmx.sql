@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/28/2014 12:55:11
--- Generated from EDMX file: C:\Users\joseal\Documents\GitHub\EventHub1.1\EventHubModel\EventHubModel.edmx
+-- Date Created: 05/31/2014 16:19:20
+-- Generated from EDMX file: C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHubModel\EventHubModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [EventHub1];
+USE [EventHub];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -99,7 +99,8 @@ CREATE TABLE [dbo].[Events] (
     [EventId] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [ActivityId] int  NOT NULL,
-    [Active] bit  NOT NULL
+    [Active] bit  NOT NULL,
+    [DateCreated] datetime  NOT NULL
 );
 GO
 

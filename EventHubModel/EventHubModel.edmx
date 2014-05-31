@@ -76,6 +76,7 @@
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ActivityId" Type="int" Nullable="false" />
     <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="DateCreated" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -300,6 +301,7 @@
           <NavigationProperty Name="Activity" Relationship="EventHubModel.ActivityEvent" FromRole="Event" ToRole="Activity" />
           <Property Name="ActivityId" Type="Int32" Nullable="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -439,6 +441,7 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
           <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

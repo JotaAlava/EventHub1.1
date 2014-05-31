@@ -1,17 +1,13 @@
 ﻿using System.Collections.Generic;
 using EventHub1._1.Models;
 using EventHub1._1.DTO;
+using System.Linq;
 
 namespace EventHub1._1.DAL.Services
 {
     public class ActivityService : IActivityService
     {
         private UnitOfWork uow = new UnitOfWork();
-        public ActivityService(UnitOfWork uow)
-        {
-            this.uow = uow;
-        }
-
         public IEnumerable<ActivityDTO> GetActiveActivities()
         {
             var allTheActiveActivitiesFromTheDatabase = uow.ActivityRepository.Get(location => location.Active);
@@ -43,9 +39,12 @@ namespace EventHub1._1.DAL.Services
             return uow.ActivityRepository.GetByID(id);
         }
 
-        public void CreateActivity(Activity locationToAdd)
+        public void CreateActivity(Activity activityToAdd)
         {
-            uow.ActivityRepository.Insert(locationToAdd);
+            activityToAdd.Time = activityToAdd.Time.ToUniversalTime();
+            activityToAdd.Location = uow.LocationRepository.GetByID(activityToAdd.LocationId);
+
+            uow.ActivityRepository.Insert(activityToAdd);
             uow.Commit();
         }
 
@@ -71,10 +70,21 @@ namespace EventHub1._1.DAL.Services
             uow.ActivityRepository.Update(locationToUpdate);
             uow.Commit();
         }
+
+        public IEnumerable<Activity> GetAllActivities()
+        {
+            var activeActivities = uow.ActivityRepository.Get(activity => activity.Active).ToList();
+            var inActiveActivities = uow.ActivityRepository.Get(activity => activity.Active == false).ToList();
+
+            var allActivities = activeActivities.Union(inActiveActivities).ToList();
+
+            return allActivities;
+        }
     }
 
     public interface IActivityService
     {
+        IEnumerable<Activity> GetAllActivities();
         IEnumerable<ActivityDTO> GetActiveActivities();
                             
         IEnumerable<ActivityDTO> GetInactiveActivities();

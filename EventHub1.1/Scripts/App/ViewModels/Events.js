@@ -29,20 +29,8 @@
                 type: 'POST',
                 data: message,
                 statusCode: {
-                    200: function (result) {
-                        //$.ajax({
-                        //    dataType: "json",
-                        //    url: "http://localhost:29196/event/getParticipantsByEventId/" + result.substring(31),
-                        //    context: this,
-                        //    type: 'GET'
-                        //}).success(function (result) {
-                        //    // Here I am reconstructing the entire list of participants for this event.
-                        //    // Until I figure out a better way.
-                        //    this.users.removeAll()
-                        //    for (var i = 0; i < result.length; i++) {
-                        //        this.users.push(result[i])
-                        //    }
-                        //})
+                    201: function (result) {
+                        clickedEvent.messages.push(result);
                     },
                     400: function (result) {
                         alert(result.responseJSON)

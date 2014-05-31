@@ -7,9 +7,11 @@ using System.Web.Http;
 using EventHub1._1.DAL.Services;
 using EventHub1._1.Models;
 using EventHub1._1.DTO;
+using EventHub1._1.Filters;
 
 namespace EventHub1._1.Controllers
 {
+    [AutomaticEventGeneration]
     public class ActivityController : ApiController
     {
         private ILocationService locationService;
@@ -45,10 +47,7 @@ namespace EventHub1._1.Controllers
         [HttpPost]
         [Route("activity")]
         public HttpResponseMessage CreateActivity(Activity activityToAdd)
-        {
-            activityToAdd.Time = activityToAdd.Time.ToUniversalTime();
-
-            activityToAdd.Location = locationService.GetLegitLocationById(activityToAdd.LocationId);
+        {            
             activityService.CreateActivity(activityToAdd);
             var responnse = Request.CreateResponse(HttpStatusCode.Created, activityToAdd);
 

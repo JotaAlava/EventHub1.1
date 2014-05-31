@@ -71,6 +71,7 @@
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ActivityId" Type="int" Nullable="false" />
     <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="DateCreated" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
