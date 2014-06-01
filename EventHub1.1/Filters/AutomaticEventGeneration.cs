@@ -38,21 +38,6 @@ namespace EventHub1._1.Filters
                     eventService.CreateEvent(newEvent);
                     continue;
                 }
-
-                // For all the existing events, make sure that the activity's Active property
-                // matches the event's Active property. That is, if the activity is inactive
-                // then make the event inactive.
-                foreach (var ev in currentlyExistingEvents)
-                {
-                    if (ev.Activity.Name == activity.Name)
-                    {
-                        if (ev.Active != activity.Active)
-                        {
-                            ev.Active = activity.Active;
-                            eventService.UpdateEvent(ev);
-                        }
-                    }
-                }
             }
         }
 
@@ -65,7 +50,7 @@ namespace EventHub1._1.Filters
         /// <returns></returns>
         private bool IsAlreadyEventForToday(Activity activity, IEnumerable<Event> currentlyExistingEvents)
         {
-            var result = true;
+            var result = false;
             var listOfEvents = currentlyExistingEvents as List<Event>;
 
             if (listOfEvents.Count == 0)
@@ -75,11 +60,24 @@ namespace EventHub1._1.Filters
 
             foreach (var ev in currentlyExistingEvents)
             {
-                if (ev.Activity.Name == activity.Name)
+                // Weird ass error where eager loading fails...
+                try
                 {
-                    result = true;
-                    return result;
+                    if (ev.Activity.Name == activity.Name && ev.DateCreated.Date == DateTime.Today.Date && ev.Activity.DayOfWeek == DateTime.Today.DayOfWeek.ToString())
+                    {
+                        result = true;
+                        return result;
+                    }
                 }
+                catch(Exception e)
+                {
+                    ev.Activity = activityService.GetActivityById(ev.ActivityId);
+                    if (ev.Activity.Name == activity.Name)
+                    {
+                        result = true;
+                        return result;
+                    }
+                }                
             }
 
             return result;

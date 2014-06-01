@@ -41,7 +41,8 @@ namespace EventHub1._1.DAL.Services
 
         public void UpdateEvent(Models.Event eventToUpdate)
         {
-            uow.EventRepository.Delete(eventToUpdate);
+            uow.EventRepository.Update(eventToUpdate);
+            uow.Commit();
         }
 
 

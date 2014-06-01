@@ -73,12 +73,7 @@ namespace EventHub1._1.DAL.Services
 
         public IEnumerable<Activity> GetAllActivities()
         {
-            var activeActivities = uow.ActivityRepository.Get(activity => activity.Active).ToList();
-            var inActiveActivities = uow.ActivityRepository.Get(activity => activity.Active == false).ToList();
-
-            var allActivities = activeActivities.Union(inActiveActivities).ToList();
-
-            return allActivities;
+            return uow.ActivityRepository.context.Activities;
         }
     }
 

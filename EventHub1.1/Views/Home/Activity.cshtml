@@ -4,7 +4,13 @@
 
         <form data-bind="submit: addActivity" style="text-align:right">
             Name:<br /> <input id="activityNameInputBox" type="text" name="Name"><br>
-            Day Of Week:<br /> <input id="dayOfWeekInputBox" type="text" name="DayOfWeek"><br>
+            Day Of Week:<br /> <select id="dayOfWeekInputBox" name="DayOfWeek" style="width: 215px">
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+            </select><br>
             Time:<br /> <input class="input-small add-on" id="activityDatePicker" type="text" name="Time"><br>
             Select Location:<br /> <select style="color: black; width: 215px" id="locationsDropdown" name="LocationId"></select><br>
             Active:<br /> <input id="activityActiveFlag" type="checkbox" name="Active" value="off"><br>
