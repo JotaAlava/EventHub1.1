@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/31/2014 16:19:20
+-- Date Created: 06/01/2014 12:57:11
 -- Generated from EDMX file: C:\Users\Jose\Documents\GitHub\EventHub1.1\EventHubModel\EventHubModel.edmx
 -- --------------------------------------------------
 

@@ -1,7 +1,7 @@
 ﻿define(["ViewModels/Activity"], function (Activity) {
 
     var activities = function (activityDTO) {
-        var self = this;        
+        var self = this;
 
         self.activeLocationsToSelectFrom = [];
         self.populateActivityDropdown = function () {
@@ -21,7 +21,7 @@
                 }
                 // Overall viewmodel for this screen, along with initial state
                 //activeLocations = new locationsViewModel(data);
-                
+
                 //for (location in data) {
                 //    alert("Adding: " + location.name)
                 //    self.activeLocationsToSelectFrom.push(location);
@@ -132,7 +132,7 @@
         }
 
         self.updateActivityModal = function (formData) {
-            
+
             var result = (function (formData) {
                 var result = {
                     ActivityId: formData[0].value,
@@ -210,26 +210,24 @@
 
             $('#modalActivityNameInputBox').val(clickedLocationInsideObservableArrayOfActivities.name())
             $('#modalDayOfWeekInputBox').val(clickedLocationInsideObservableArrayOfActivities.dayOfWeek())
-            $('#modalActivityDatePicker').val(clickedLocationInsideObservableArrayOfActivities.time())
+
+            // TODO: Make the update date same as current date of event to update
+            //$('#modalActivityDatePicker').val(clickedLocationInsideObservableArrayOfActivities.time())
 
             $('#updateActivityDetailsModal').on('shown.bs.modal', function () {
                 $('#modalActivityNameInputBox').focus();
             })
 
-            if (clickedLocationInsideObservableArrayOfActivities.active())
-            {
+            if (clickedLocationInsideObservableArrayOfActivities.active()) {
                 $('#modalActivityActiveFlag').prop("checked", true)
                 $('#modalActivityActiveFlag').val("on")
             }
-            else if (!clickedLocationInsideObservableArrayOfActivities.active())
-            {
+            else if (!clickedLocationInsideObservableArrayOfActivities.active()) {
                 $('#modalActivityActiveFlag').val("off")
-            }            
+            }
 
-            for(var i = 0; i < $('#modalLocationsDropdown option').length; i++)
-            {
-                if (clickedLocationInsideObservableArrayOfActivities.locationId() == $('#modalLocationsDropdown option').eq(i).val())
-                {
+            for (var i = 0; i < $('#modalLocationsDropdown option').length; i++) {
+                if (clickedLocationInsideObservableArrayOfActivities.locationId() == $('#modalLocationsDropdown option').eq(i).val()) {
                     $('#modalLocationsDropdown option').eq(i).attr("selected", true)
                 }
             }
@@ -254,8 +252,7 @@
                 dataType: 'json',
                 type: 'DELETE',
                 statusCode: {
-                    200: function ()
-                    {
+                    200: function () {
                         self.activities.remove(clickedActivityInsideObservableArrayOfActivities);
                     },
                     400: function () {

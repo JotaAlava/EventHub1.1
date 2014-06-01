@@ -22,21 +22,24 @@ namespace EventHub1._1.Filters
             {
                 if (!IsAlreadyEventForToday(activity, currentlyExistingEvents))
                 {
-                    // Create New Event
-                    var newEvent = new Event()
+                    if (activity.DayOfWeek == DateTime.Today.DayOfWeek.ToString())
                     {
-                        Activity = activity,
-                        ActivityId = activity.ActivityId,
-                        Active = true,
-                        DateCreated = DateTime.Now,
-                        Messages = new List<Message>(),
-                        Name = activity.Name,
-                        PlusOnes = new List<PlusOne>(),
-                        Users = new List<User>()
-                    };
+                        // Create New Event
+                        var newEvent = new Event()
+                        {
+                            Activity = activity,
+                            ActivityId = activity.ActivityId,
+                            Active = true,
+                            DateCreated = DateTime.Now,
+                            Messages = new List<Message>(),
+                            Name = activity.Name,
+                            PlusOnes = new List<PlusOne>(),
+                            Users = new List<User>()
+                        };
 
-                    eventService.CreateEvent(newEvent);
-                    continue;
+                        eventService.CreateEvent(newEvent);
+                        continue;
+                    }
                 }
             }
         }
@@ -63,13 +66,15 @@ namespace EventHub1._1.Filters
                 // Weird ass error where eager loading fails...
                 try
                 {
-                    if (ev.Activity.Name == activity.Name && ev.DateCreated.Date == DateTime.Today.Date && ev.Activity.DayOfWeek == DateTime.Today.DayOfWeek.ToString())
+                    // If there is an event of such name that was created today
+                    if (ev.Activity.Name == activity.Name &&
+                        ev.DateCreated.Date == DateTime.Today.Date)
                     {
                         result = true;
                         return result;
                     }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     ev.Activity = activityService.GetActivityById(ev.ActivityId);
                     if (ev.Activity.Name == activity.Name)
@@ -77,7 +82,7 @@ namespace EventHub1._1.Filters
                         result = true;
                         return result;
                     }
-                }                
+                }
             }
 
             return result;

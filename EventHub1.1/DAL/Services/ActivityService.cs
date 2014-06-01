@@ -65,9 +65,11 @@ namespace EventHub1._1.DAL.Services
         }
 
 
-        public void UpdateActivity(Activity locationToUpdate)
+        public void UpdateActivity(Activity activityToUpdate)
         {
-            uow.ActivityRepository.Update(locationToUpdate);
+            activityToUpdate.Location = uow.LocationRepository.GetByID(activityToUpdate.LocationId);
+
+            uow.ActivityRepository.Update(activityToUpdate);
             uow.Commit();
         }
 

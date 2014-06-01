@@ -88,9 +88,8 @@ namespace EventHub1._1.Controllers
         [Route("activity")]
         public HttpResponseMessage UpdateActivity(Activity activityToUpdate)
         {
-            activityToUpdate.Time = activityToUpdate.Time.ToUniversalTime();
+            //activityToUpdate.Time = activityToUpdate.Time.ToUniversalTime();
 
-            activityToUpdate.Location = locationService.GetLegitLocationById(activityToUpdate.LocationId);
             activityService.UpdateActivity(activityToUpdate);
             var responnse = Request.CreateResponse(HttpStatusCode.OK);
 

@@ -11,7 +11,21 @@
                 <option value="Thursday">Thursday</option>
                 <option value="Friday">Friday</option>
             </select><br>
-            Time:<br /> <input class="input-small add-on" id="activityDatePicker" type="text" name="Time"><br>
+            Time:<br />
+            <select id="activityDatePicker" name="Time" style="width: 215px">
+                <option value="5:00 PM">5:00 PM</option>
+                <option value="5:15 PM">5:15 PM</option>
+                <option value="5:30 PM">5:30 PM</option>
+                <option value="5:45 PM">5:45 PM</option>
+                <option value="6:00 PM">6:00 PM</option>
+                <option value="6:15 PM">6:15 PM</option>
+                <option value="6:30 PM">6:30 PM</option>
+                <option value="6:45 PM">6:45 PM</option>
+                <option value="7:00 PM">7:00 PM</option>
+                <option value="7:15 PM">7:15 PM</option>
+                <option value="7:30 PM">7:30 PM</option>
+                <option value="7:45 PM">7:45 PM</option>
+            </select><br>
             Select Location:<br /> <select style="color: black; width: 215px" id="locationsDropdown" name="LocationId"></select><br>
             Active:<br /> <input id="activityActiveFlag" type="checkbox" name="Active" value="off"><br>
             Preferred Players:<br /> <input id="preferredPlayersInputBox" type="text" name="PreferredNumberOfPlayers1"><br>
@@ -22,10 +36,6 @@
             <button class="btn btn-primary btn" id="toggleBetweenActivitiesButton" data-bind="click: $root.showInactiveActivities" style="color:blue;">See Inactive</button>
             <br><br>
         </form>
-
-        <script>
-            $(document).ready(function () { $("#locationsDropdown").select2(); });
-        </script>
     </div>
     <div id="Canvas" class="col-md-7" style="margin-top:5%;">
         <div data-bind="template: { name: 'activitiesTempl' }"></div>
@@ -67,8 +77,21 @@
                         <input id="modalActivityIdHiddenInputBox" type="hidden" name="ActivityId">
                         Name:<br /> <input id="modalActivityNameInputBox" type="text" name="Name"><br>
                         Day Of Week:<br /> <input id="modalDayOfWeekInputBox" type="text" name="DayOfWeek"><br>
-                        Time:<br /> <input class="input-small add-on" id="modalActivityDatePicker" type="text" name="Time"><br>
-                        Select Location:<br /> <select style="color: black; width: 174px" id="modalLocationsDropdown" name="LocationId"></select><br>
+                        Time:<br /> <select id="modalActivityDatePicker" name="Time" style="width: 215px">
+                            <option value="5:00 PM">5:00 PM</option>
+                            <option value="5:15 PM">5:15 PM</option>
+                            <option value="5:30 PM">5:30 PM</option>
+                            <option value="5:45 PM">5:45 PM</option>
+                            <option value="6:00 PM">6:00 PM</option>
+                            <option value="6:15 PM">6:15 PM</option>
+                            <option value="6:30 PM">6:30 PM</option>
+                            <option value="6:45 PM">6:45 PM</option>
+                            <option value="7:00 PM">7:00 PM</option>
+                            <option value="7:15 PM">7:15 PM</option>
+                            <option value="7:30 PM">7:30 PM</option>
+                            <option value="7:45 PM">7:45 PM</option>
+                        </select><br>
+                        Select Location:<br /> <select style="color: black; width: 215px" id="modalLocationsDropdown" name="LocationId"></select><br>
                         Active:<br /> <input id="modalActivityActiveFlag" type="checkbox" name="Active" value="off"><br>
                         Preferred Players:<br /> <input id="modalPreferredPlayersInputBox" type="text" name="PreferredNumberOfPlayers1"><br>
                         Required Players:<br /> <input id="modalRequiredPlayersInputBox" type="text" name="RequiredNumberOfPlayers1"><br>
@@ -114,12 +137,12 @@
                     ko.applyBindings(activities, document.getElementById("activitiesPage"));
                     sessionStorage.setItem("viewingActiveActivities", true)
 
-                    $('#activityDatePicker').timepicker({
-                        defaultTime: 'current',
-                        minuteStep: 1,
-                        disableFocus: true,
-                        template: 'dropdown'
-                    });
+                    //$('#activityDatePicker').timepicker({
+                    //    defaultTime: 'current',
+                    //    minuteStep: 1,
+                    //    disableFocus: true,
+                    //    template: 'dropdown'
+                    //});
 
                     setTimeout($.unblockUI, 500);
 
