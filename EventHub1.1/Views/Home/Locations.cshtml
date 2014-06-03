@@ -6,7 +6,7 @@
         <form data-bind="submit: addLocation" style="text-align:right">
             Name:<br /> <input id="nameInputBox" type="text" name="name"><br>
             Address:<br /> <input id="addressInputBox" type="text" name="address"><br>
-            Active<br /><input type="checkbox" name="active" value="off">
+            Active<br /><input id="locationActiveFlag" type="checkbox" name="Active" value="off">
             <br /><br />
             <button class="btn btn-primary btn" type="submit" style="color:blue;">Submit</button>
             <br /><br />
@@ -126,7 +126,23 @@
                 });
             });
 
+            $('#locationActiveFlag').click(function () {
+                var isChecked = $(this).prop("checked")
 
+                if (isChecked)
+                    $(this).attr("value", "on")
+                else
+                    $(this).attr("value", "off")
+            })
+
+            $('#modalActiveStatusHiddenInputBox').click(function () {
+                var isChecked = $(this).prop("checked")
+
+                if (isChecked)
+                    $(this).attr("value", "on")
+                else
+                    $(this).attr("value", "off")
+            })
 
             //$('div[id^="sportDetails_"]').click(function () {
             //    alert('a')
