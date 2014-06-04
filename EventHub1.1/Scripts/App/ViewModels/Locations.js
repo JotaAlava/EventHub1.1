@@ -48,6 +48,26 @@
 
         // Probably should find a better way of doing this - Workaround for Circular Reference error
         self.addLocation = function (formData) {
+            var nameDidNotPassValidation = $('#UpdateLocationName').hasClass("invalid")
+            var addressDidNotPassValidation = $('#UpdateLocationAddress').hasClass("invalid")
+            var nameEmpty = $('#nameInputBox').val() == "" ? true : false;
+            var addressEmpty = $('#addressInputBox').val() == "" ? true : false;
+
+            if (nameDidNotPassValidation || addressDidNotPassValidation) {
+                $('#UpdateLocationFormLabel').removeClass("invalid")
+                $('#UpdateLocationAddressFormLabel').removeClass("invalid")
+                return;
+            }
+
+            else (nameEmpty || addressEmpty)
+            {
+                $('#UpdateLocationName').addClass("invalid")
+                $('#nameInputBox').addClass("error")
+                $('#UpdateLocationAddress').addClass("invalid")
+                $('#addressInputBox').addClass("error")
+                return;
+            }
+
             var result = (function (formData) {
                 var result = {
                     name: formData[0].value,
@@ -77,12 +97,22 @@
 
         // This can definitely be made better....
         self.updateLocation = function (formData, clickedLocationInsideObservableArrayOfLocations) {
+            var nameDidNotPassValidation = $('#UpdateLocationFormLabel').hasClass("invalid")
+            var addressDidNotPassValidation = $('#UpdateLocationAddressFormLabel').hasClass("invalid")
+
+            if (nameDidNotPassValidation || addressDidNotPassValidation)
+            {
+                $('#UpdateLocationFormLabel').removeClass("invalid")
+                $('#UpdateLocationAddressFormLabel').removeClass("invalid")
+                return;
+            }
+
             var result = (function (formData) {
                 var result = {
                     LocationId: formData[0].value,
                     name: formData[1].value,
                     address: formData[2].value,
-                    Active: formData[3].value
+                    Active: formData[3].value == "on" ? true : false
                 }
 
                 return result;
@@ -145,7 +175,7 @@
             if (sessionStorage.getItem("viewingActiveLocations") == "true") {
                 sessionStorage.setItem("viewingActiveLocations", false)
                 self.locations.removeAll();
-                $('#toggleBetweenLocationsButton').html("See Active")
+                $('#toggleBetweenLocationsButton').html("\nSee Active")
                 $.ajax({
                     dataType: "json",
                     url: "http://localhost:29196/location/GetInactive",
@@ -163,7 +193,7 @@
             else if (sessionStorage.getItem("viewingActiveLocations") == "false") {
                 sessionStorage.setItem("viewingActiveLocations", true)
                 self.locations.removeAll();
-                $('#toggleBetweenLocationsButton').html("See Inactive")
+                $('#toggleBetweenLocationsButton').html("\nSee Inactive")
                 $.ajax({
                     dataType: "json",
                     url: "http://localhost:29196/location/",

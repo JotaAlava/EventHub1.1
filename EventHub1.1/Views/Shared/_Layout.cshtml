@@ -27,7 +27,6 @@
     </div>
     <div class="container body-content">
         <div class="row">
-
             @Html.Partial("_SideNavBar")
             @RenderBody()
         </div>
@@ -62,6 +61,7 @@
     @Scripts.Render("~/bundles/underscore")
     @Scripts.Render("~/bundles/App")
     @Scripts.Render("~/bundles/require")
+    @Scripts.Render("~/bundles/validate")
 
     @RenderSection("scripts", required: true)
     <script>
@@ -92,6 +92,15 @@
             $('li[id^="LocationsSubMenu_"]').toggle();
         })
         //***************************************************************************
+
+        $(function () {
+            validize.validate_ini(".form_wrap form [data-validate]");
+
+            //$("form button").click(function (e) {
+            //    e.preventDefault();
+            //    $(this).closest("form").find("[data-validate]").blur();
+            //});
+        });
     </script>
 </body>
 </html>

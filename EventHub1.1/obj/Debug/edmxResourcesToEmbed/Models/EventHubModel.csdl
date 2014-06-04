@@ -23,6 +23,7 @@
     <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="ActivityId" Type="Int32" Nullable="false" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="Activity" Relationship="Self.FK_ActivityEvent" FromRole="Events" ToRole="Activities" />
     <NavigationProperty Name="Messages" Relationship="Self.FK_EventMessage" FromRole="Events" ToRole="Messages" />
     <NavigationProperty Name="PlusOnes" Relationship="Self.FK_EventPlusOne" FromRole="Events" ToRole="PlusOnes" />
@@ -151,7 +152,7 @@
     <End Role="Events" Type="Self.Event" Multiplicity="*" />
     <End Role="Users" Type="Self.User" Multiplicity="*" />
   </Association>
-  <EntityContainer Name="EventHubEntities3" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="EventHubEntities8" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Activities" EntityType="Self.Activity" />
     <EntitySet Name="Events" EntityType="Self.Event" />
     <EntitySet Name="Locations" EntityType="Self.Location" />

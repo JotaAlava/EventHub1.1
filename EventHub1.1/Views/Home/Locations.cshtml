@@ -2,16 +2,26 @@
 <div id="locationsPage">
     <div class="col-md-3" style="margin-top:3%">
         <h2 style="text-align:right;">Add Location</h2>
+        <div class="form_wrap">
+            <form data-bind="submit: addLocation" style="text-align:right">
 
-        <form data-bind="submit: addLocation" style="text-align:right">
-            Name:<br /> <input id="nameInputBox" type="text" name="name"><br>
-            Address:<br /> <input id="addressInputBox" type="text" name="address"><br>
-            Active<br /><input id="locationActiveFlag" type="checkbox" name="Active" value="off">
-            <br /><br />
-            <button class="btn btn-primary btn-lg glyphicon glyphicon-plus" type="submit"></button>
-            <button class="btn btn-primary btn-lg glyphicon glyphicon-list-alt" id="toggleBetweenLocationsButton" data-bind="click: $root.showInactiveLocations"></button>
-            <br><br>
-        </form>
+                <label id="UpdateLocationName">Location Name<em>*</em></label>
+                <div class="i">
+                    <input id="nameInputBox" type="text" data-validate="full" placeholder="New Location Name..." name="name">
+                </div>
+
+                <label id="UpdateLocationAddress">Location Address<em>*</em></label>
+                <div class="i">
+                    <input id="addressInputBox" type="text" name="address" data-validate="full" placeholder="New Location Address...">
+                </div>
+
+                Active<br /><input id="locationActiveFlag" type="checkbox" name="Active" value="off">
+                <br /><br />
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-plus" type="submit"></button>
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-list-alt" id="toggleBetweenLocationsButton" data-bind="click: $root.showInactiveLocations"> See Inactive</button>
+                <br><br>
+            </form>
+        </div>
     </div>
     <div id="Canvas" class="col-md-6" style="margin-top:5%;">
         <div data-bind="template: { name: 'locationsTempl' }"></div>
@@ -20,8 +30,8 @@
         <div data-bind="foreach: locations">
             <div class="well">
                 <!--TODO: Make these two buttons sexy looking-->
-                <button class="btn btn-primary btn-lg glyphicon glyphicon-info-sign" data-bind="attr: { id : 'sportName_' + id() }, click: $root.hideDetails " ></button>
-                <button class="btn btn-primary btn-lg glyphicon glyphicon-flag" data-bind="attr: { id : id }, click: $root.toggleActive" ></button>
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-info-sign" data-bind="attr: { id : 'sportName_' + id() }, click: $root.hideDetails "></button>
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-flag" data-bind="attr: { id : id }, click: $root.toggleActive"></button>
                 <button class="btn btn-primary btn-lg glyphicon glyphicon-pencil" data-bind="click: $root.showUpdateLocationModal" data-toggle="modal" data-target="#updateLocationDetailsModal"></button>
                 @*<button class="btn btn-primary btn-lg glyphicon glyphicon-trash" data-bind="attr: { id : id }, click: $root.deleteLocation"></button>*@
                 <h3>Name: <strong data-bind="text: name"></strong></h3>
@@ -45,119 +55,134 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="updateLocationDetailsModalLabel">Update Location</h4>
                 </div>
-                <form data-bind="submit: updateLocation">
-                    <input id="modalLocationIdHiddenInputBox" type="hidden" name="LocationId">
-                    <p style="margin:5%"> Name:    <br /><input id="modalLocationNameInputBox" type="text" name="name"><br></p>
-                    <p style="margin:5%"> Address: <br /><input id="modalLocationAddressInputBox" type="text" name="address"><br></p>
-                    <input id="modalActiveStatusHiddenInputBox" type="hidden" name="active">
-                    <div class="clear modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
+                <div class="form_wrap">
+                    <form id="UpdateLocationForm" data-bind="submit: updateLocation">
+                        <input id="modalLocationIdHiddenInputBox" type="hidden" name="LocationId">
 
+                        <label id="UpdateLocationFormLabel">Location Name<em>*</em></label>
+                        <div class="i">
+                            <input id="modalLocationNameInputBox" type="text" data-validate="full" placeholder="New Location Name..." name="name">
+                        </div>
+
+                        <label id="UpdateLocationAddressFormLabel">Location Address<em>*</em></label>
+                        <div class="i">
+                            <input id="modalLocationAddressInputBox" type="text" name="address" data-validate="full" placeholder="New Location Address...">
+                        </div>
+
+                        <label id="UpdateLocationFormActiveFieldLabel">Active</label>
+                        <div class="i">
+                            <input id="modalActiveStatusHiddenInputBox" type="checkbox" name="active">
+                        </div>
+
+
+                        <div class="clear modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+
+                </div>
             </div>
         </div>
     </div>
-</div>
-@section scripts
+    @section scripts
 {
-    <script>
-        require(["ViewModels/Location", "ViewModels/Locations"], function (locationViewModel, locationsViewModel) {
-            var data;
-            // Call to get one location
-            //$('#locationGET').click(function () {
-            //    $.ajax({
-            //        url: "http://localhost:29196/location/1",
-            //        context: document.body
-            //    }).done(function (data) {
-            //        var location = new locationViewModel(data);
-            //        ko.applyBindings(location);
-            //    });
-            //});
+        <script>
+            require(["ViewModels/Location", "ViewModels/Locations"], function (locationViewModel, locationsViewModel) {
+                var data;
+                // Call to get one location
+                //$('#locationGET').click(function () {
+                //    $.ajax({
+                //        url: "http://localhost:29196/location/1",
+                //        context: document.body
+                //    }).done(function (data) {
+                //        var location = new locationViewModel(data);
+                //        ko.applyBindings(location);
+                //    });
+                //});
 
-            //$('#locationGETActive').click(function () {
-            //    $.ajax({
-            //        url: "http://localhost:29196/location/",
-            //        context: document.body
-            //    }).done(function (data) {
+                //$('#locationGETActive').click(function () {
+                //    $.ajax({
+                //        url: "http://localhost:29196/location/",
+                //        context: document.body
+                //    }).done(function (data) {
 
-            //        // Overall viewmodel for this screen, along with initial state
-            //        activeLocations = new locationsViewModel(data);
-            //    });
-            //});
+                //        // Overall viewmodel for this screen, along with initial state
+                //        activeLocations = new locationsViewModel(data);
+                //    });
+                //});
 
-            // Call to get all active locations
-            $(document).ready(function () {
-                $.blockUI({
-                    css: {
-                        border: 'none',
-                        padding: '15px',
-                        backgroundColor: '#000',
-                        '-webkit-border-radius': '10px',
-                        '-moz-border-radius': '10px',
-                        opacity: .5,
-                        color: '#fff'
-                    }
+                // Call to get all active locations
+                $(document).ready(function () {
+                    $.blockUI({
+                        css: {
+                            border: 'none',
+                            padding: '15px',
+                            backgroundColor: '#000',
+                            '-webkit-border-radius': '10px',
+                            '-moz-border-radius': '10px',
+                            opacity: .5,
+                            color: '#fff'
+                        }
+                    });
+
+                    $.ajax({
+                        url: "http://localhost:29196/location/",
+                        context: document.body
+                    }).done(function (data) {
+
+                        // Overall viewmodel for this screen, along with initial state
+                        activeLocations = new locationsViewModel(data);
+
+                        ko.applyBindings(activeLocations, document.getElementById("locationsPage"));
+                        sessionStorage.setItem("viewingActiveLocations", true)
+
+                        $('#activityActiveFlag').click(function () {
+                            var isChecked = $(this).prop("checked")
+
+                            if (isChecked)
+                                $(this).attr("value", "on")
+                            else
+                                $(this).attr("value", "off")
+                        })
+
+                        setTimeout($.unblockUI, 500);
+                    });
                 });
 
-                $.ajax({
-                    url: "http://localhost:29196/location/",
-                    context: document.body
-                }).done(function (data) {
+                $('#locationActiveFlag').click(function () {
+                    var isChecked = $(this).prop("checked")
 
-                    // Overall viewmodel for this screen, along with initial state
-                    activeLocations = new locationsViewModel(data);
+                    if (isChecked)
+                        $(this).attr("value", "on")
+                    else
+                        $(this).attr("value", "off")
+                })
 
-                    ko.applyBindings(activeLocations, document.getElementById("locationsPage"));
-                    sessionStorage.setItem("viewingActiveLocations", true)
+                $('#modalActiveStatusHiddenInputBox').click(function () {
+                    var isChecked = $(this).prop("checked")
 
-                    $('#activityActiveFlag').click(function () {
-                        var isChecked = $(this).prop("checked")
+                    if (isChecked)
+                        $(this).attr("value", "on")
+                    else
+                        $(this).attr("value", "off")
+                })
 
-                        if (isChecked)
-                            $(this).attr("value", "on")
-                        else
-                            $(this).attr("value", "off")
-                    })
+                //$('div[id^="sportDetails_"]').click(function () {
+                //    alert('a')
+                //    $('#sportDetails').toggle();
+                //})
 
-                    setTimeout($.unblockUI, 500);
-                });
+
+
+                //$('#postLocation').click(function () {
+                //    $.ajax({
+                //        url: "http://localhost:29196/location/",
+                //        context: document.body,
+                //        type: 'POST',
+                //        data: "name:Jota"
+                //    });
+                //})
             });
-
-            $('#locationActiveFlag').click(function () {
-                var isChecked = $(this).prop("checked")
-
-                if (isChecked)
-                    $(this).attr("value", "on")
-                else
-                    $(this).attr("value", "off")
-            })
-
-            $('#modalActiveStatusHiddenInputBox').click(function () {
-                var isChecked = $(this).prop("checked")
-
-                if (isChecked)
-                    $(this).attr("value", "on")
-                else
-                    $(this).attr("value", "off")
-            })
-
-            //$('div[id^="sportDetails_"]').click(function () {
-            //    alert('a')
-            //    $('#sportDetails').toggle();
-            //})
-
-
-
-            //$('#postLocation').click(function () {
-            //    $.ajax({
-            //        url: "http://localhost:29196/location/",
-            //        context: document.body,
-            //        type: 'POST',
-            //        data: "name:Jota"
-            //    });
-            //})
-        });
-    </script>
-}
+        </script>
+    }

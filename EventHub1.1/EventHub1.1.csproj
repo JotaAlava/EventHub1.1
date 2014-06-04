@@ -188,41 +188,42 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Activity.cs">
-      <DependentUpon>NewModel.tt</DependentUpon>
+      <DependentUpon>EventHubModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Event.cs">
-      <DependentUpon>NewModel.tt</DependentUpon>
+      <DependentUpon>EventHubModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventHubModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventHubModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventHubModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventHubModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventHubModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventHubModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Location.cs">
-      <DependentUpon>NewModel.tt</DependentUpon>
+      <DependentUpon>EventHubModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Message.cs">
-      <DependentUpon>NewModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\NewModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>NewModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\NewModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>NewModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\NewModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>NewModel.edmx</DependentUpon>
+      <DependentUpon>EventHubModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PlusOne.cs">
-      <DependentUpon>NewModel.tt</DependentUpon>
+      <DependentUpon>EventHubModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>NewModel.tt</DependentUpon>
+      <DependentUpon>EventHubModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\bootstrap-timepicker.min.css" />
     <Content Include="Content\select2-bootstrap.css" />
+    <Content Include="Scripts\App\validate.js" />
     <Content Include="Scripts\App\ViewModels\Activities.js" />
     <Content Include="Scripts\App\ViewModels\Activity.js" />
     <Content Include="Scripts\App\ViewModels\Event.js" />
@@ -266,22 +267,22 @@
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />
     <Content Include="Scripts\bootstrap-timepicker.min.js" />
-    <EntityDeploy Include="Models\NewModel.edmx">
+    <EntityDeploy Include="Models\EventHubModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>NewModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>EventHubModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\NewModel.Context.tt">
+    <Content Include="Models\EventHubModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>NewModel.edmx</DependentUpon>
-      <LastGenOutput>NewModel.Context.cs</LastGenOutput>
+      <DependentUpon>EventHubModel.edmx</DependentUpon>
+      <LastGenOutput>EventHubModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\NewModel.edmx.diagram">
-      <DependentUpon>NewModel.edmx</DependentUpon>
+    <Content Include="Models\EventHubModel.edmx.diagram">
+      <DependentUpon>EventHubModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\NewModel.tt">
+    <Content Include="Models\EventHubModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>NewModel.edmx</DependentUpon>
-      <LastGenOutput>NewModel.cs</LastGenOutput>
+      <DependentUpon>EventHubModel.edmx</DependentUpon>
+      <LastGenOutput>EventHubModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />

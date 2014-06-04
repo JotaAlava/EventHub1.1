@@ -51,6 +51,9 @@ namespace EventHub1._1
             bundles.Add(new ScriptBundle("~/bundles/select2").Include(
                       "~/Scripts/select2.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/validate").Include(
+                      "~/Scripts/validate.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/underscore").Include(
                       "~/Scripts/underscore.js"));
 
