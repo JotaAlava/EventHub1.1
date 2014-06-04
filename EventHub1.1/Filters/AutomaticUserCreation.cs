@@ -22,7 +22,7 @@ namespace EventHub1._1.Filters
             {
                 Username = currentUser.Name,
                 Name = currentUser.Name.Substring(7),
-                EMail = "No email has been assigned to this user.",
+                EMail = String.Empty,
                 IsAdmin = false,
                 Active = true
             };

@@ -26,14 +26,13 @@
                 <option value="7:30 PM">7:30 PM</option>
                 <option value="7:45 PM">7:45 PM</option>
             </select><br>
-            Select Location:<br /> <select style="color: black; width: 215px" id="locationsDropdown" name="LocationId"></select><br>
+            Select Location:<br /> <select style="color:black; width: 215px" id="locationsDropdown" name="LocationId"></select><br>
             Active:<br /> <input id="activityActiveFlag" type="checkbox" name="Active" value="off"><br>
             Preferred Players:<br /> <input id="preferredPlayersInputBox" type="text" name="PreferredNumberOfPlayers1"><br>
             Required Players:<br /> <input id="requiredPlayersInputBox" type="text" name="RequiredNumberOfPlayers1"><br>
             <br /><br />
-            <button class="btn btn-primary btn" type="submit" style="color:blue;">Submit</button>
-            <br /><br />
-            <button class="btn btn-primary btn" id="toggleBetweenActivitiesButton" data-bind="click: $root.showInactiveActivities" style="color:blue;">See Inactive</button>
+            <button class="btn btn-primary btn-lg glyphicon glyphicon-plus" type="submit"></button>
+            <button class="btn btn-primary btn-lg glyphicon glyphicon-list-alt" id="toggleBetweenActivitiesButton" data-bind="click: $root.showInactiveActivities"></button>
             <br><br>
         </form>
     </div>
@@ -44,10 +43,10 @@
         <div data-bind="foreach: activities">
             <div class="well">
                 <!--TODO: Make these two buttons sexy looking-->
-                <button class="btn btn-primary btn" data-bind="attr: { id : id }, click: $root.toggleActiveActivity" style="color:blue;">Toggle Active</button>
-                <button class="btn btn-primary btn" data-bind="click: $root.showUpdateActivityModal" data-toggle="modal" data-target="#updateActivityDetailsModal">Update</button>
-                <button class="btn btn-primary btn" data-bind="attr: { id : 'sportName_' + id() }, click: $root.hideActivityDetails" style="color:blue;">Details</button>
-                <button class="btn btn-primary btn" data-bind="attr: { id : id }, click: $root.deleteActivity" style="color:blue;">Delete</button>
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-info-sign" data-bind="attr: { id : 'sportName_' + id() }, click: $root.hideActivityDetails"></button>
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-flag" data-bind="attr: { id : id }, click: $root.toggleActiveActivity"></button>
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-pencil" data-bind="click: $root.showUpdateActivityModal" data-toggle="modal" data-target="#updateActivityDetailsModal"></button>
+                @*<button class="btn btn-primary btn-lg glyphicon glyphicon-trash" data-bind="attr: { id : id }, click: $root.deleteActivity"></button>*@
                 <h3>Name: <strong data-bind="text: name"></strong></h3>
 
                 <ul data-bind="attr: { id : 'activityDetails_' + id() }" style="display:none">

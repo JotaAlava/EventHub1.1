@@ -11,6 +11,11 @@ namespace EventHub1._1.DAL.Services
             return uow.UserRepository.Get(user => user.Active);
         }
 
+        public IEnumerable<User> GetAdmins()
+        {
+            return uow.UserRepository.Get(user => user.IsAdmin == true);
+        }
+
         public User GetUserById(int id)
         {
             return uow.UserRepository.GetByID(id);
@@ -73,10 +78,32 @@ namespace EventHub1._1.DAL.Services
         {
             return uow.UserRepository.Get(user => user.Active == false);
         }
+
+
+        public void UpdateEmailForCurrentUser(string newEmail, string currentUserUsername)
+        {
+            var allUsers = uow.UserRepository.Get();
+            var userToUpdate = new User();
+
+            foreach (var user in allUsers)
+            {
+                if(user.Username == currentUserUsername)
+                {
+                    userToUpdate = user;
+                    break;
+                }
+            }
+
+            userToUpdate.EMail = newEmail;
+
+            uow.UserRepository.Update(userToUpdate);
+            return;
+        }
     }
 
     public interface IUserService
     {
+        IEnumerable<User> GetAdmins();
 
         IEnumerable<User> GetAllActiveUsers();
 
@@ -97,5 +124,7 @@ namespace EventHub1._1.DAL.Services
         void ToggleAdminById(int id);
 
         int GetUserIdByUsername(string username);
+
+        void UpdateEmailForCurrentUser(string newEmail, string currentUserUsername);
     }
 }

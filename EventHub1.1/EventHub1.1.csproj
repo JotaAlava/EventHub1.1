@@ -180,6 +180,8 @@
     <Compile Include="DTO\ActivityDTO.cs" />
     <Compile Include="DTO\LocationDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="EMail Provider\EMail.cs" />
+    <Compile Include="EMail Provider\EmailProvider.cs" />
     <Compile Include="Filters\AutomaticEventGeneration.cs" />
     <Compile Include="Filters\AutomaticUserCreation.cs" />
     <Compile Include="Global.asax.cs">
@@ -251,7 +253,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <Content Include="Scripts\D3.js" />
+    <Content Include="Scripts\d3.js" />
     <Content Include="Scripts\infuser-amd.js" />
     <Content Include="Scripts\infuser-amd.min.gz.js" />
     <Content Include="Scripts\infuser-amd.min.js" />

@@ -52,7 +52,7 @@
             if (sessionStorage.getItem("viewingActiveUsers") == "true") {
                 sessionStorage.setItem("viewingActiveUsers", false)
                 self.listOfPlayers.removeAll();
-                $('#toggleBetweenUsersButton').html("See Active")
+                //$('#toggleBetweenUsersButton').html("See Active")
                 $.ajax({
                     dataType: "json",
                     url: "http://localhost:29196/user/GetInactive",
@@ -70,7 +70,7 @@
             else if (sessionStorage.getItem("viewingActiveUsers") == "false") {
                 sessionStorage.setItem("viewingActiveUsers", true)
                 self.listOfPlayers.removeAll();
-                $('#toggleBetweenUsersButton').html("See Inactive")
+                //$('#toggleBetweenUsersButton').html("See Inactive")
                 $.ajax({
                     dataType: "json",
                     url: "http://localhost:29196/user/",

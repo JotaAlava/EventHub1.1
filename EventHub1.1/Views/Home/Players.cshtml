@@ -1,13 +1,13 @@
 ﻿<div id="playersPage">
     <div id="Canvas" class="col-md-7" style="margin-top:5%;">
-        <button class="btn btn-primary btn" id="toggleBetweenUsersButton" data-bind="click: $root.showInactiveUsers" style="color:blue;">See Inactive</button>
+        <button class="btn btn-primary btn-lg btn btn-primary btn-lg glyphicon glyphicon-list-alt" id="toggleBetweenUsersButton" data-bind="click: $root.showInactiveUsers"></button>
         <div data-bind="template: { name: 'playersTempl' }"></div>
     </div>
     <script id="playersTempl" type="text/html">
         <div data-bind="foreach: listOfPlayers">
             <div class="well">
-                <button class="btn btn-primary btn" data-bind="attr: { id : userId() }, click: $root.toggleAdminPrivileges" style="color:blue;">Grant Admin Privileges</button>
-                <button class="btn btn-primary btn" data-bind="attr: { id : userId() }, click: $root.toggleActivePlayer" style="color:blue;">Toggle Active</button>
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-chevron-up" data-bind="attr: { id : userId() }, click: $root.toggleAdminPrivileges"></button>
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-flag" data-bind="attr: { id : userId() }, click: $root.toggleActivePlayer"></button>
                 <ul style="display:block">
                     <li>
                         <!--TODO: Make these two buttons sexy looking-->

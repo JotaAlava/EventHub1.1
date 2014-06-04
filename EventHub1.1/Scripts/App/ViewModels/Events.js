@@ -37,6 +37,8 @@
                     }
                 }
             })
+
+            $('#messageBox').val('');
         }
 
         self.joinEvent = function (clickedEventInsideObservableArrayOfEvents) {
@@ -166,6 +168,23 @@
                                 parentViewModel.listOfEvents()[i].plusones.remove(clickedPlusOne);
                             }
                         }
+                    },
+                    400: function (result) {
+                        alert(result.responseJSON)
+                    }
+                }
+            })
+        }
+
+        self.generateEmail = function (clickedPlusOne) {
+            $.ajax({
+                dataType: "json",
+                url: "http://localhost:29196/event/sendEmail",
+                context: this,
+                type: 'GET',
+                statusCode: {
+                    200: function (result) {
+                        alert(result.responseJSON)
                     },
                     400: function (result) {
                         alert(result.responseJSON)

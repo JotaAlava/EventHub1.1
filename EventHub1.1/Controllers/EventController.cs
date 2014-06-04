@@ -51,7 +51,6 @@ namespace EventHub1._1.Controllers
 
         [HttpPost]
         [Route("event/ToggleActiveById/{id}/")]
-
         public HttpResponseMessage ToggleActiveById(int id)
         {
             eventService.ToggleActiveById(id);
@@ -125,6 +124,15 @@ namespace EventHub1._1.Controllers
             var result = eventService.GetParticipantsByEventId(eventId);
 
             return result;
-        }       
+        }
+
+        [HttpGet]
+        [Route("event/sendEmail")]
+        public HttpResponseMessage SendEmail()
+        {
+            var result = eventService.SendEmail();
+
+            return Request.CreateResponse(HttpStatusCode.OK, result.ToString());
+        }
     }
 }

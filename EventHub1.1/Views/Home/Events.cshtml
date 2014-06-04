@@ -1,22 +1,8 @@
 ﻿<!--TODO: Add code such that the sizes where it is messed up (Between 480x800 and  768x1280 inclusive) then the form is rendered differently)-->
 <div id="eventsPage">
     <div class="col-md-8 bs-example" style="margin-top:10%">
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
-                <li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
-            </ol>
-            <div class="carousel-inner">
-                <div data-bind="template: { name: 'eventTempl' }" style="margin-right:2%;"></div> @* TODO: Re-writte the template such that each carousel will be generated with one of the events of the ViewModel *@
-            </div>
-            <a class="left carousel-control icon-next" href="#carousel-example-generic" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </a>
-            <a class="right carousel-control icon-next" href="#carousel-example-generic" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </a>
-        </div>
+        <div data-bind="template: { name: 'eventTempl' }" style="margin-right:2%;"></div>
+        @* TODO: Re-writte the template such that each side of a  bootstrap carousel will be generated with one of the events of the ViewModel *@
     </div>
 
     <!-- Modal -->
@@ -25,7 +11,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="updateLocationDetailsModalLabel">Update Activity</h4>
+                    <h4 class="modal-title" id="updateLocationDetailsModalLabel">Add Plus One</h4>
                 </div>
                 <form data-bind="submit: addPlusOne">
                     <div style="margin:5%">
@@ -43,47 +29,51 @@
 
     <script id="eventTempl" type="text/html">
         <div data-bind="foreach: listOfEvents">
-            <div id="Canvas" class="col-md-12" style="margin-top:5%;">
-                <div class="item">
-                    <div class="well">
-                        <!--TODO: Make these two buttons sexy looking-->
-                        <button class="btn btn-primary btn" data-bind="attr: { id : 'eventDetailsButton_' + eventId() }, click: $root.hideDetails" style="color:blue;">Details</button>
-                        <button class="btn btn-primary btn" data-bind="attr: { id : 'eventJoin_' + eventId() }, click: $root.joinEvent" style="color:blue;">Join</button>
-                        <button class="btn btn-primary btn" data-bind="attr: { id : 'eventLeave_' + eventId() }, click: $root.leaveEvent" style="color:blue;">Leave</button>
-                        <button class="btn btn-primary btn" data-bind="attr: { id : 'eventAddPlusOne_' + eventId() }, click: $root.showAddPlusOneModal" data-toggle="modal" data-target="#addPlusOneModal">Add Plus One</button>
-                        <h3>Name: <strong data-bind="text: name"></strong></h3>
+            <div id="Canvas" class="col-md-12">
+                <div class="well">
+                    <!--TODO: Make these two buttons sexy looking-->
+                    <button class="btn btn-primary btn-lg glyphicon glyphicon-info-sign" data-bind="attr: { id : 'eventDetailsButton_' + eventId() }, click: $root.hideDetails" style=""></button>
+
+                    <button class="btn btn-primary btn-lg glyphicon glyphicon-thumbs-up" data-bind="attr: { id : 'eventJoin_' + eventId() }, click: $root.joinEvent"></button>
+
+                    <button class="btn btn-primary btn-lg glyphicon glyphicon-thumbs-down" data-bind="attr: { id : 'eventLeave_' + eventId() }, click: $root.leaveEvent"></button>
+
+                    <button class="btn btn-primary btn-lg glyphicon glyphicon-user" data-bind="attr: { id : 'eventAddPlusOne_' + eventId() }, click: $root.showAddPlusOneModal" data-toggle="modal" data-target="#addPlusOneModal"></button>
+
+                    <button id="GenerateEmailButton" class="btn btn-primary btn-lg glyphicon glyphicon-envelope" data-bind="attr: { id : 'eventEmail_' + eventId() }, click: $root.generateEmail"></button>
+
+                    <h3>Name: <strong data-bind="text: name"></strong></h3>
 
 
-                        <ul data-bind="attr: { id : 'eventDetails_' + eventId() }" style="display:none">
-                            <li>
-                                <div>Id: <strong data-bind="text: eventId"></strong></div>
-                                <div>Activity Id: <strong data-bind="text: activityId"></strong></div>
-                                <div>Activity: <strong data-bind="text: activity().Name"></strong></div>
-                                <div>Active: <strong data-bind="text: active"></strong></div>
-                                <div>Current Number Of Players: <strong data-bind="text: users().length"></strong></div>
-                                <div>Prefferred Number Of Players: <strong data-bind="text: activity().PreferredNumberOfPlayers1"></strong></div>
-                                <div>Required Number Of Players: <strong data-bind="text: activity().RequiredNumberOfPlayers1"></strong></div>
-                                <h4>- List Of Players -</h4>
-                                <div data-bind="foreach: users">
-                                    <div data-bind="template: { name: 'eventPlayersTempl' }"></div>
-                                </div>
-                                <h4>- List Of Plus Ones -</h4>
-                                <div data-bind="foreach: plusones">
-                                    <div>Plus One Name: <strong data-bind="text: Name, click: $root.removePlusOne.bind($data, $root)" class="glyphicon glyphicon-remove"></strong></div>
-                                </div>
-                                <h4>- List Of Messages -</h4>
-                                <div data-bind="foreach: messages">
-                                    <div>Author: <strong data-bind="text: User.Name"></strong></div>
-                                    <div>Body: <strong data-bind="text: Body"></strong></div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <form data-bind="submit: $root.addMessage.bind($data, $rawData)" style="text-align:left;">
-                        <textarea placeholder="Enter your messages here..."></textarea>
-                        <br />
-                        <button class="btn btn-primary btn" type="submit" style="color:blue;">Submit</button>
-                    </form>
+                    <ul data-bind="attr: { id : 'eventDetails_' + eventId() }" style="display:none">
+                        <li>
+                            <div>Id: <strong data-bind="text: eventId"></strong></div>
+                            <div>Activity Id: <strong data-bind="text: activityId"></strong></div>
+                            <div>Activity: <strong data-bind="text: activity().Name"></strong></div>
+                            <div>Active: <strong data-bind="text: active"></strong></div>
+                            <div>Current Number Of Players: <strong data-bind="text: users().length"></strong></div>
+                            <div>Prefferred Number Of Players: <strong data-bind="text: activity().PreferredNumberOfPlayers1"></strong></div>
+                            <div>Required Number Of Players: <strong data-bind="text: activity().RequiredNumberOfPlayers1"></strong></div>
+                            <h4>- List Of Players -</h4>
+                            <div data-bind="foreach: users">
+                                <div data-bind="template: { name: 'eventPlayersTempl' }"></div>
+                            </div>
+                            <h4>- List Of Plus Ones -</h4>
+                            <div data-bind="foreach: plusones">
+                                <div>Plus One Name: <strong data-bind="text: Name, click: $root.removePlusOne.bind($data, $root)" class="glyphicon glyphicon-remove"></strong></div>
+                            </div>
+                            <h4>- List Of Messages -</h4>
+                            <div data-bind="foreach: messages">
+                                <div>Author: <strong data-bind="text: User.Name"></strong></div>
+                                <div>Body: <strong data-bind="text: Body"></strong></div>
+                            </div>
+                            <form data-bind="submit: $root.addMessage.bind($data, $rawData)" style="text-align:left;">
+                                <textarea id="messageBox" placeholder="Enter your messages here..."></textarea>
+                                <br />
+                                <button class="btn btn-primary btn-lg glyphicon glyphicon-comment" type="submit"></button>
+                            </form>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

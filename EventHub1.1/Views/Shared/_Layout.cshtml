@@ -19,11 +19,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Ulti Sports", "Index", "Home", null, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                    <li><a style="display:inherit;" id="UpdateMailAddressLink" data-toggle="modal" data-target="#UpdateEmailModal">Update EMail Address</a></li>
                 </ul>
             </div>
         </div>
@@ -39,22 +36,53 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-
-
-
-
+    <!-- Modal -->
+    <div class="modal fade" id="UpdateEmailModal" tabindex="-1" role="dialog" aria-labelledby="updateLocationDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="updateEmailDetailsModalLabel">Update Email</h4>
+                </div>
+                <div style="margin:5%">
+                    New EMail:<br /> <input id="modalUpdateEMailInputBox" type="text" name="Name"><br>
+                </div>
+                <div class="clear modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="UpdateEMailSaveButton" type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/blockui")
-    @Scripts.Render("~/bundles/timepicker")    
+    @Scripts.Render("~/bundles/timepicker")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/underscore")
     @Scripts.Render("~/bundles/App")
     @Scripts.Render("~/bundles/require")
 
-
     @RenderSection("scripts", required: true)
     <script>
+        $('#UpdateEMailSaveButton').click(function () {
+            //alert("update!")
+            var newEmail = $('#modalUpdateEMailInputBox').val();
+
+            $.ajax({
+                dataType: "json",
+                url: "http://localhost:29196/user/updateemail/?newEmail=" + newEmail,
+                context: this,
+                type: 'PUT',
+                statusCode: {
+                    200: function (result) {
+                    },
+                    400: function (result) {
+                    }
+                }
+            })
+        })
+
         //******************* Side Nav Bar Scripts **********************************
         $('#ActivitiesMenu').click(function () {
             $('li[id^="ActivitiesSubMenu_"]').toggle();
@@ -63,7 +91,7 @@
         $('#LocationsMenu').click(function () {
             $('li[id^="LocationsSubMenu_"]').toggle();
         })
-        //***************************************************************************        
+        //***************************************************************************
     </script>
 </body>
 </html>

@@ -8,9 +8,8 @@
             Address:<br /> <input id="addressInputBox" type="text" name="address"><br>
             Active<br /><input id="locationActiveFlag" type="checkbox" name="Active" value="off">
             <br /><br />
-            <button class="btn btn-primary btn" type="submit" style="color:blue;">Submit</button>
-            <br /><br />
-            <button class="btn btn-primary btn" id="toggleBetweenLocationsButton" data-bind="click: $root.showInactiveLocations" style="color:blue;">See Inactive</button>
+            <button class="btn btn-primary btn-lg glyphicon glyphicon-plus" type="submit"></button>
+            <button class="btn btn-primary btn-lg glyphicon glyphicon-list-alt" id="toggleBetweenLocationsButton" data-bind="click: $root.showInactiveLocations"></button>
             <br><br>
         </form>
     </div>
@@ -21,10 +20,10 @@
         <div data-bind="foreach: locations">
             <div class="well">
                 <!--TODO: Make these two buttons sexy looking-->
-                <button class="btn btn-primary btn" data-bind="attr: { id : id }, click: $root.toggleActive" style="color:blue;">Toggle Active</button>
-                <button class="btn btn-primary btn" data-bind="click: $root.showUpdateLocationModal" data-toggle="modal" data-target="#updateLocationDetailsModal">Update</button>
-                <button class="btn btn-primary btn" data-bind="attr: { id : 'sportName_' + id() }, click: $root.hideDetails " style="color:blue;">Details</button>
-                <button class="btn btn-primary btn" data-bind="attr: { id : id }, click: $root.deleteLocation" style="color:blue;">Delete</button>
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-info-sign" data-bind="attr: { id : 'sportName_' + id() }, click: $root.hideDetails " ></button>
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-flag" data-bind="attr: { id : id }, click: $root.toggleActive" ></button>
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-pencil" data-bind="click: $root.showUpdateLocationModal" data-toggle="modal" data-target="#updateLocationDetailsModal"></button>
+                @*<button class="btn btn-primary btn-lg glyphicon glyphicon-trash" data-bind="attr: { id : id }, click: $root.deleteLocation"></button>*@
                 <h3>Name: <strong data-bind="text: name"></strong></h3>
 
                 <ul data-bind="attr: { id : 'sportDetails_' + id() }" style="display:none">
@@ -64,7 +63,7 @@
 @section scripts
 {
     <script>
-        require(["ViewModels/Location", "ViewModels/Locations"], function (locationViewModel, locationsViewModel) {           
+        require(["ViewModels/Location", "ViewModels/Locations"], function (locationViewModel, locationsViewModel) {
             var data;
             // Call to get one location
             //$('#locationGET').click(function () {

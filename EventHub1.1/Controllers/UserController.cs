@@ -19,6 +19,13 @@ namespace EventHub1._1.Controllers
         }
 
         [HttpGet]
+        [Route("user/admins")]
+        public IEnumerable<User> GetAdmins()
+        {
+            return userService.GetAdmins();
+        }
+
+        [HttpGet]
         [Route("user")]
         public IEnumerable<User> GetAllActiveUsers()
         {
@@ -86,6 +93,16 @@ namespace EventHub1._1.Controllers
         public HttpResponseMessage UpdateUser(User userToUpdate)
         {
             userService.UpdateUser(userToUpdate);
+            var responnse = Request.CreateResponse(HttpStatusCode.OK);
+
+            return responnse;
+        }
+
+        [HttpPut]
+        [Route("user/updateemail")]
+        public HttpResponseMessage UpdateCurrentUserEMail(string newEmail)
+        {
+            userService.UpdateEmailForCurrentUser(newEmail, User.Identity.Name);
             var responnse = Request.CreateResponse(HttpStatusCode.OK);
 
             return responnse;

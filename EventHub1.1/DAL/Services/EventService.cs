@@ -1,6 +1,8 @@
 ﻿using EventHub1._1.DTO;
 using EventHub1._1.Models;
+using System;
 using System.Collections.Generic;
+using UltiSports.Services;
 
 namespace EventHub1._1.DAL.Services
 {
@@ -111,10 +113,27 @@ namespace EventHub1._1.DAL.Services
         {
             return uow.EventRepository.Get(null, null, "Activity");
         }
+
+        public IEnumerable<Event> GetAllEventsForToday()
+        {
+            return uow.EventRepository.context.Events;
+        }
+
+        public EventServiceResponseCodes SendEmail()
+        {
+            var result = EventServiceResponseCodes.EmailHasBeenSent;
+
+            var emailProvider = new EmailProvider();
+            emailProvider.SendFirstEmail(DateTime.Today.DayOfWeek.ToString());
+
+            return result;
+        }
     }
 
     public interface IEventService
     {
+        IEnumerable<Event> GetAllEventsForToday();
+
         IEnumerable<Models.Event> GetAllEvents();
 
         IEnumerable<Models.Event> GetAllActiveEvents();
@@ -134,6 +153,8 @@ namespace EventHub1._1.DAL.Services
         EventServiceResponseCodes LeaveEvent(int eventId, string username);
 
         List<UserDTO> GetParticipantsByEventId(int eventId);
+
+        EventServiceResponseCodes SendEmail();
     }
 
     public enum EventServiceResponseCodes
@@ -142,5 +163,6 @@ namespace EventHub1._1.DAL.Services
         CannotJoinTwice,
         CannotLeaveIfNotJoined,
         UsersFound,
+        EmailHasBeenSent
     }
 }
