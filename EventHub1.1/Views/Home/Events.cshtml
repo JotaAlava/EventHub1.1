@@ -3,29 +3,7 @@
     <div class="col-md-8 bs-example" style="margin-top:10%">
         <div data-bind="template: { name: 'eventTempl' }" style="margin-right:2%;"></div>
         @* TODO: Re-writte the template such that each side of a  bootstrap carousel will be generated with one of the events of the ViewModel *@
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="addPlusOneModal" tabindex="-1" role="dialog" aria-labelledby="updateLocationDetailsModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="updateLocationDetailsModalLabel">Add Plus One</h4>
-                </div>
-                <form data-bind="submit: addPlusOne">
-                    <div style="margin:5%">
-                        <input id="modalEventIdHiddenInputBox" type="hidden" name="EventId">
-                        Name:<br /> <input id="modalPlusOneNameInputBox" type="text" name="Name"><br>
-                    </div>
-                    <div class="clear modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    </div>    
 
     <script id="eventTempl" type="text/html">
         <div data-bind="foreach: listOfEvents">
@@ -67,8 +45,10 @@
                                 <div>Author: <strong data-bind="text: User.Name"></strong></div>
                                 <div>Body: <strong data-bind="text: Body"></strong></div>
                             </div>
-                            <form data-bind="submit: $root.addMessage.bind($data, $rawData)" style="text-align:left;">
-                                <textarea id="messageBox" placeholder="Enter your messages here..."></textarea>
+                            <h3 data-bind="attr: { id : 'AddMessageLabel_' + eventId() }" style="text-align:left;">Chime in!</h3>
+                            <span data-bind="attr: { id : 'manualErrorMessageForMessages_' + eventId() }" style="display:none; color:red;">Letters only!</span>
+                            <form data-bind="submit: $root.addMessage.bind($data, $rawData)" style="text-align:left;">                                
+                                <textarea data-bind="attr: { id : 'messageBox_' + eventId() }" placeholder="Enter your messages here..."></textarea>
                                 <br />
                                 <button class="btn btn-primary btn-lg glyphicon glyphicon-comment" type="submit"></button>
                             </form>
@@ -132,7 +112,7 @@
             var data;
 
             $.ajax({
-                url: "http://localhost:29196/event/",
+                url: window.productionURL + "/event/",
             }).done(function (data) {
 
                 // Overall viewmodel for this screen, along with initial state

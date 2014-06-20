@@ -7,11 +7,11 @@ using System.Web.Http;
 using EventHub1._1.DAL.Services;
 using EventHub1._1.Models;
 using EventHub1._1.DTO;
-using EventHub1._1.Filters;
+
 
 namespace EventHub1._1.Controllers
 {
-    [AutomaticEventGeneration]
+    
     public class MessageController : ApiController
     {
         private IMessageService messageService;
@@ -43,6 +43,7 @@ namespace EventHub1._1.Controllers
         {
             messageToAdd.UserId = userService.GetUserIdByUsername(User.Identity.Name);
             messageToAdd.Deleted = false;
+            messageToAdd.TimeCreated = DateTime.Now;
 
             messageService.CreateMessage(messageToAdd);
             messageToAdd.User = userService.GetUserById(messageToAdd.UserId);

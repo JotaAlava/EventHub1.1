@@ -1,17 +1,174 @@
-﻿<div id="Canvas" class="col-md-10" style="margin-top:5%;">
-    <h2>Sports Hub Dashboard</h2>
-    <h5>Time You've Attended Volleyball</h5>
-    <div class="chart">
-        <p style="display:inline;">On Mondays:</p><div style="width: 40px;">4</div>
-        <p style="display:inline;">On Tuedays:</p><div style="width: 80px;">8</div>
-        <p style="display:inline;">On Wednesdays:</p><div style="width: 150px;">15</div>
-        <p style="display:inline;">On Thursdays:</p><div style="width: 160px;">16</div>
-        <p style="display:inline;">On Fridays:</p><div style="width: 230px;">23</div>
+﻿<div id="noEventsBanner" style="display:none;">
+    <h1>There's nothing going on today!</h1>
 </div>
+<div id="ListOfEventRender" data-bind="foreach: listOfEvents">
+    <div data-bind="attr: { id : 'Event_' + eventId() }, if: isBeingViewed">
+        <div class="row" style="margin-top:5%;">
+            <div id="EventNameAndTime">
+                <h1 data-bind="text:name"></h1>
+                <span data-bind="text:activity().DayOfWeek"></span>
+                <span data-bind="text: getFormatedTime" style=" text-align:center;"></span>
+                <span style="display:inline;" data-bind="text: activity().Location.Name"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div id="EventParticipants" class=" col-md-5">
+                <h3>Particpants</h3>
+                <table class="table table-hover">
+                    <tbody>
+                        <!-- ko foreach: users -->
+                        <tr>
+                            <td id="ParticipantName" data-bind="text:Name" style="width:80%;"></td>
+                            <td style="width:20%;">
+                                <button class="btn btn-primary btn-sm glyphicon glyphicon-envelope"></button>
+                            </td>
+                        </tr>
+                        <!-- /ko -->
+                        <!-- ko foreach: plusones -->
+                        <tr>
+                            <td style="width:80%;" data-bind="text:Name"><i data-bind="text:$root.Name + 's Plus One'"></i></td>
+                            <td style="width:20%;">
+                                <button data-bind="click: $root.removePlusOne.bind($data, $root)" class="btn btn-danger btn-sm glyphicon glyphicon-remove"></button>
+                            </td>
+                        </tr>
+                        <!-- /ko -->
+                    </tbody>
+                </table>
+                <div id="EventActions">
+                    <button class="btn btn-primary btn-sm" data-bind="attr: { id : 'eventJoin_' + eventId() }, click: $root.joinEvent, visible: isCurrentUserNOTAttending">Join Event</button>
+
+                    <button class="btn btn-danger btn-sm" data-bind="attr: { id : 'eventLeave_' + eventId() }, click: $root.leaveEvent, visible: isCurrentUserAttending">Leave Event</button>
+
+                    <button class="btn btn-primary btn-sm" data-bind="attr: { id : 'eventAddPlusOne_' + eventId() }, click: $root.showAddPlusOneModal" data-toggle="modal" data-target="#addPlusOneModal">Add Plus One</button>
+                </div>
+            </div>
+            <div id="EventInformation" class="col-md-offset-2 col-md-5">
+                <h3>Event Information</h3>
+                <p>
+                    <div><strong>Status</strong></div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" data-bind="style: { width: currentProgress() }">
+                            <span class="sr-only">40% Complete (success)</span>
+                        </div>
+                    </div>
+                </p>
+                <p>
+                    <div><strong>Current Number Of Players:</strong></div>
+                    <div data-bind="text: getTotalNumberOfPlayers"></div>
+                </p>
+                <p>
+                    <div><strong>Required Number Of Players</strong></div>
+                    <div data-bind="text: activity().RequiredNumberOfPlayers1"></div>
+                </p>
+                <p>
+                    <div><strong>Recommended Number Of Players</strong></div>
+                    <div data-bind="text: activity().PreferredNumberOfPlayers1"></div>
+                </p>
+                @*// 0 minimum = yellow
+                    // minimum - recommende = blue
+                    // > recommended = green*@
+
+
+                @*<div class="progress">
+                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                            <span class="sr-only">20% Complete</span>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                            <span class="sr-only">60% Complete (warning)</span>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                            <span class="sr-only">80% Complete</span>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+
+        <div class="row">
+            <div id="EventChat" class="col-md-12">
+                <h3>Comments</h3>
+                <div data-bind="foreach: messages">
+                    <div>
+                        <strong data-bind="text: User.Name "></strong>
+                        <i> says:</i>
+                    </div>
+                    <p style="display:inline;" data-bind="text: Body"></p>
+                    <br />@@
+                    <p style="display:inline;" data-bind="text: $root.GetFormattedTimeOfMessage.bind($data, $context)"></p>
+                    <hr />
+                </div>
+                <form class="well" data-bind="submit: $root.addMessage.bind($data, $rawData)" style="text-align:left;">
+                    <h4>Join the conversation!</h4>
+                    <span data-bind="attr: { id : 'manualErrorMessageForMessages_' + eventId() }" style="display:none; color:red;">Letters only!</span>
+                    <textarea data-bind="attr: { id : 'messageBox_' + eventId() }" placeholder="Enter your messages here..." style="width: 100%; resize:none;"></textarea>
+                    <button class="btn btn-primary btn-sm" type="submit">Add Comment</button>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div id="EventNavigationArrows" class="col-md-12">
+                <span style="cursor:pointer; display:inline;" class="glyphicon glyphicon-chevron-left pull-left" data-bind="click: $root.scrollLeft"></span>
+                <span style="cursor: pointer; display:inline;" class="glyphicon glyphicon-chevron-right pull-right" data-bind="click: $root.scrollRight"></span>
+                <center>
+                    <span style="text-align: center; display: inline;">Previous Sport - Navigate Today's Events - Next Sport</span>
+                </center>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section scripts
 {
+    <script>
+        require(["ViewModels/Event", "ViewModels/Events"], function (eventViewModel, eventsViewModel) {
+            $.blockUI({
+                css: {
+                    border: 'none',
+                    padding: '15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                }
+            });
+
+            var data;
+
+            $.ajax({
+                url: window.productionURL + "/event/",
+            }).done(function (data) {
+
+                // Overall viewmodel for this screen, along with initial state
+                events = new eventsViewModel(data);
+                window.viewModels = {
+                };
+
+                window.viewModels.eventsViewModel = events;
+                if (window.viewModels.eventsViewModel.listOfEvents().length != 0) {
+                    window.viewModels.eventsViewModel.listOfEvents()[0].isBeingViewed(true)
+                }
+
+                if (window.viewModels.eventsViewModel.listOfEvents().length == 0) {
+                    $('#noEventsBanner').toggle();
+                }
+
+                ko.applyBindings(events, document.getElementById("ListOfEventRender"));
+                sessionStorage.setItem("viewingTodaysEvents", true)
+
+                setTimeout($.unblockUI, 500);
+                //alert(todaysEvents.events()[0].name()
+
+                //$('#ListOfEventRender').ready(function () {
+                //    //var idOfFirstEventInList = $('div[id*=Event_]').eq(0).attr("id").substring(6);
+                //    window.viewModels.eventsViewModel.listOfEvents()[0].isBeingViewed(true);
+                //})
+            });
+        });
+    </script>
     <style>
         .chart div {
             font: 10px sans-serif;

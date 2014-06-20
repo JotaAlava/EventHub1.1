@@ -6,7 +6,7 @@
         self.activeLocationsToSelectFrom = [];
         self.populateActivityDropdown = function () {
             $.ajax({
-                url: "http://localhost:29196/location/",
+                url: window.productionURL + "/location/",
                 context: document.body
             }).done(function (data) {
 
@@ -19,13 +19,6 @@
                 for (var i in data) {
                     $('#modalLocationsDropdown').append('<option value="' + data[i].LocationId + '">' + data[i].Name + '</option>')
                 }
-                // Overall viewmodel for this screen, along with initial state
-                //activeLocations = new locationsViewModel(data);
-
-                //for (location in data) {
-                //    alert("Adding: " + location.name)
-                //    self.activeLocationsToSelectFrom.push(location);
-                //}
             });
         }
 
@@ -55,7 +48,7 @@
                 $('#toggleBetweenActivitiesButton').html("See Active")
                 $.ajax({
                     dataType: "json",
-                    url: "http://localhost:29196/activity/GetInactive",
+                    url: window.productionURL + "/activity/GetInactive",
                     context: document.body,
                     type: 'GET',
                     statusCode: {
@@ -73,7 +66,7 @@
                 $('#toggleBetweenActivitiesButton').html("See Inactive")
                 $.ajax({
                     dataType: "json",
-                    url: "http://localhost:29196/activity/",
+                    url: window.productionURL + "/activity/",
                     context: document.body,
                     type: 'GET',
                     statusCode: {
@@ -106,7 +99,7 @@
 
             $.ajax({
                 dataType: "json",
-                url: "http://localhost:29196/activity/",
+                url: window.productionURL + "/activity/",
                 context: document.body,
                 type: 'POST',
                 data: result
@@ -120,7 +113,7 @@
 
         self.toggleActiveActivity = function (clickedActivityInsideObservableArrayOfActivities) {
             $.ajax({
-                url: "http://localhost:29196/activity/ToggleActiveById/" + clickedActivityInsideObservableArrayOfActivities.id(),
+                url: window.productionURL + "/activity/ToggleActiveById/" + clickedActivityInsideObservableArrayOfActivities.id(),
                 context: document.body,
                 type: 'POST',
                 statusCode: {
@@ -152,7 +145,7 @@
 
             $.ajax({
                 dataType: "json",
-                url: "http://localhost:29196/activity/",
+                url: window.productionURL + "/activity/",
                 context: document.body,
                 type: 'PUT',
                 data: result
@@ -164,7 +157,7 @@
                     $('#toggleBetweenLocationsButton').html("See Inactive")
                     $.ajax({
                         dataType: "json",
-                        url: "http://localhost:29196/activity/",
+                        url: window.productionURL + "/activity/",
                         context: document.body,
                         type: 'GET',
                         statusCode: {
@@ -181,7 +174,7 @@
                     $('#toggleBetweenLocationsButton').html("See Active")
                     $.ajax({
                         dataType: "json",
-                        url: "http://localhost:29196/activity/GetInactive",
+                        url: window.productionURL + "/activity/GetInactive",
                         context: document.body,
                         type: 'GET',
                         statusCode: {
@@ -247,7 +240,7 @@
 
             $.ajax({
                 dataType: "json",
-                url: "http://localhost:29196/activity/" + idOfActivityToDelete,
+                url: window.productionURL + "/activity/" + idOfActivityToDelete,
                 context: document.body,
                 dataType: 'json',
                 type: 'DELETE',

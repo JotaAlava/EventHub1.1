@@ -12,7 +12,7 @@
 
         self.toggleActivePlayer = function (clickedPlayerInListOfPlayers) {
             $.ajax({
-                url: "http://localhost:29196/user/ToggleActiveById/" + clickedPlayerInListOfPlayers.userId(),
+                url: window.productionURL + "/user/ToggleActiveById/" + clickedPlayerInListOfPlayers.userId(),
                 context: document.body,
                 type: 'POST',
                 statusCode: {
@@ -25,7 +25,7 @@
 
         self.toggleAdminPrivileges = function (clickedPlayerInListOfPlayers) {
             $.ajax({
-                url: "http://localhost:29196/user/ToggleAdminById/" + clickedPlayerInListOfPlayers.userId(),
+                url: window.productionURL + "/user/ToggleAdminById/" + clickedPlayerInListOfPlayers.userId(),
                 context: document.body,
                 type: 'POST',
                 statusCode: {
@@ -55,7 +55,7 @@
                 //$('#toggleBetweenUsersButton').html("See Active")
                 $.ajax({
                     dataType: "json",
-                    url: "http://localhost:29196/user/GetInactive",
+                    url: window.productionURL + "/user/GetInactive",
                     context: document.body,
                     type: 'GET',
                     statusCode: {
@@ -73,7 +73,7 @@
                 //$('#toggleBetweenUsersButton').html("See Inactive")
                 $.ajax({
                     dataType: "json",
-                    url: "http://localhost:29196/user/",
+                    url: window.productionURL + "/user/",
                     context: document.body,
                     type: 'GET',
                     statusCode: {

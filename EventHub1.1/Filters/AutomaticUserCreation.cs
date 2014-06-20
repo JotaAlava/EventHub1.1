@@ -15,20 +15,7 @@ namespace EventHub1._1.Filters
         private UserService userService = new UserService();
         void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var currentUser = filterContext.HttpContext.User.Identity;
-            var isUserAlreadyInDb = userService.UserExistsInDb(currentUser.Name);
-
-            var newUser = new User()
-            {
-                Username = currentUser.Name,
-                Name = currentUser.Name.Substring(7),
-                EMail = String.Empty,
-                IsAdmin = false,
-                Active = true
-            };
-
-            if (!isUserAlreadyInDb)
-                userService.CreateUser(newUser);
+            
         }
     }
 }

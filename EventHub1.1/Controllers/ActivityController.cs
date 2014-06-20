@@ -5,13 +5,13 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using EventHub1._1.DAL.Services;
+using EventHub1._1.Filters;
 using EventHub1._1.Models;
 using EventHub1._1.DTO;
-using EventHub1._1.Filters;
+
 
 namespace EventHub1._1.Controllers
 {
-    [AutomaticEventGeneration]
     public class ActivityController : ApiController
     {
         private ILocationService locationService;
@@ -47,7 +47,7 @@ namespace EventHub1._1.Controllers
         [HttpPost]
         [Route("activity")]
         public HttpResponseMessage CreateActivity(Activity activityToAdd)
-        {            
+        {
             activityService.CreateActivity(activityToAdd);
             var responnse = Request.CreateResponse(HttpStatusCode.Created, activityToAdd);
 
@@ -75,11 +75,11 @@ namespace EventHub1._1.Controllers
                 activityService.DeleteActivityById(id);
                 responnse = Request.CreateResponse(HttpStatusCode.OK);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 responnse = Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-            
+
 
             return responnse;
         }

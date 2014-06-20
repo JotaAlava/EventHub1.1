@@ -1,14 +1,10 @@
-﻿using EventHub1._1.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using EventHub1._1.Filters;
 
 namespace EventHub1._1.Controllers
 {
-    [AutomaticUserCreation]
-    [AutomaticEventGeneration]
+
+
     public class HomeController : Controller
     {
         //
@@ -18,24 +14,28 @@ namespace EventHub1._1.Controllers
             return View();
         }
 
+        [AdminAuth]
         public ActionResult Locations()
         {
             return View("Locations");
         }
 
+        [AdminAuth]
         public ActionResult Activities()
         {
             return View("Activity");
         }
 
+        [AdminAuth]
         public ActionResult Players()
         {
             return View("Players");
         }
 
+        [AdminAuth]
         public ActionResult Events()
         {
             return View("Events");
         }
-	}
+    }
 }

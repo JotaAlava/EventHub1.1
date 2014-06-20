@@ -5,11 +5,13 @@ using System.Web.Http;
 using EventHub1._1.DAL.Services;
 using EventHub1._1.Models;
 using EventHub1._1.DTO;
-using EventHub1._1.Filters;
+using System.Linq;
+using System;
+
 
 namespace EventHub1._1.Controllers
 {
-    [AutomaticEventGeneration]
+    
     public class EventController : ApiController
     {
         private IEventService eventService;
@@ -133,6 +135,90 @@ namespace EventHub1._1.Controllers
             var result = eventService.SendEmail();
 
             return Request.CreateResponse(HttpStatusCode.OK, result.ToString());
+        }
+
+        [HttpGet]
+        [Route("event/generate")]
+        public IEnumerable<Event> GenerateEvents()
+        {
+            var result = new List<Event>();
+            var allActivities = activityService.GetAllActivities();
+            var activeActivitiesInDb = from act in allActivities
+                                       where act.Active == true
+                                       select act;
+            var currentlyExistingEvents = eventService.GetAllEvents();
+
+            foreach (var activity in activeActivitiesInDb)
+            {
+                if (!IsAlreadyEventForToday(activity, currentlyExistingEvents))
+                {
+                    if (activity.DayOfWeek == DateTime.Today.DayOfWeek.ToString())
+                    {
+                        // Create New Event
+                        var newEvent = new Event()
+                        {
+                            Activity = activity,
+                            ActivityId = activity.ActivityId,
+                            Active = true,
+                            DateCreated = DateTime.Now,
+                            Messages = new List<Message>(),
+                            Name = activity.Name,
+                            PlusOnes = new List<PlusOne>(),
+                            Users = new List<User>()
+                        };
+
+                        eventService.CreateEvent(newEvent);
+                        result.Add(newEvent);
+                        continue;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Checks in the second parameter if there exists an event that was created out of the activity
+        /// passed in as a first parameter
+        /// </summary>
+        /// <param name="activity"> Parameter whose existance we want to confirm </param>
+        /// <param name="currentlyExistingEvents"> List of events where we will check for existing events </param>
+        /// <returns></returns>
+        private bool IsAlreadyEventForToday(Activity activity, IEnumerable<Event> currentlyExistingEvents)
+        {
+            var result = false;
+            var listOfEvents = currentlyExistingEvents as List<Event>;
+
+            if (listOfEvents.Count == 0)
+            {
+                return result = false;
+            }
+
+            foreach (var ev in currentlyExistingEvents)
+            {
+                // Weird ass error where eager loading fails...
+                try
+                {
+                    // If there is an event of such name that was created today
+                    if (ev.Activity.Name == activity.Name &&
+                        ev.DateCreated.Date == DateTime.Today.Date)
+                    {
+                        result = true;
+                        return result;
+                    }
+                }
+                catch (Exception e)
+                {
+                    ev.Activity = activityService.GetActivityById(ev.ActivityId);
+                    if (ev.Activity.Name == activity.Name)
+                    {
+                        result = true;
+                        return result;
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

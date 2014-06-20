@@ -1,5 +1,7 @@
 ﻿using EventHub1._1.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EventHub1._1.DAL.Services
 {
@@ -80,23 +82,14 @@ namespace EventHub1._1.DAL.Services
         }
 
 
-        public void UpdateEmailForCurrentUser(string newEmail, string currentUserUsername)
+        public void UpdateEmailForCurrentUser(string currentUserUsername, string newEmail = "")
         {
-            var allUsers = uow.UserRepository.Get();
-            var userToUpdate = new User();
+            var userToUpdate = uow.UserRepository.context.Users.FirstOrDefault(user => user.Username == currentUserUsername);
 
-            foreach (var user in allUsers)
-            {
-                if(user.Username == currentUserUsername)
-                {
-                    userToUpdate = user;
-                    break;
-                }
-            }
-
-            userToUpdate.EMail = newEmail;
-
+            userToUpdate.EMail = newEmail == null ? String.Empty : newEmail;
             uow.UserRepository.Update(userToUpdate);
+            uow.Commit();
+
             return;
         }
     }

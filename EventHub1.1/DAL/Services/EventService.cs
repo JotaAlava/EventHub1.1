@@ -1,6 +1,7 @@
 ﻿using EventHub1._1.DTO;
 using EventHub1._1.Models;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using UltiSports.Services;
 
@@ -12,7 +13,12 @@ namespace EventHub1._1.DAL.Services
 
         public IEnumerable<Models.Event> GetAllActiveEvents()
         {
-            return uow.EventRepository.Get(ev => ev.Active);
+            var allActive = uow.EventRepository.Get(ev => ev.Active);
+            var result = from ev in allActive
+                         where ev.DateCreated.Date == DateTime.Today.Date
+                         select ev;
+
+            return result.AsEnumerable();
         }
 
         public Models.Event GetEventById(int id)
@@ -111,7 +117,7 @@ namespace EventHub1._1.DAL.Services
 
         public IEnumerable<Event> GetAllEvents()
         {
-            return uow.EventRepository.Get(null, null, "Activity");
+            return uow.EventRepository.Get();
         }
 
         public IEnumerable<Event> GetAllEventsForToday()

@@ -3,12 +3,14 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using EventHub1._1.DAL.Services;
+using EventHub1._1.DTO;
 using EventHub1._1.Models;
-using EventHub1._1.Filters;
+using System;
+
 
 namespace EventHub1._1.Controllers
 {
-    [AutomaticEventGeneration]
+    
     public class UserController : ApiController
     {
         private IUserService userService;
@@ -102,10 +104,40 @@ namespace EventHub1._1.Controllers
         [Route("user/updateemail")]
         public HttpResponseMessage UpdateCurrentUserEMail(string newEmail)
         {
-            userService.UpdateEmailForCurrentUser(newEmail, User.Identity.Name);
+            userService.UpdateEmailForCurrentUser(User.Identity.Name, newEmail);
             var responnse = Request.CreateResponse(HttpStatusCode.OK);
 
             return responnse;
+        }
+
+        [HttpGet]
+        [Route("user/getcurrentuser")]
+        public UserDTO GetCurrentUserByUserName()
+        {
+            var userId = userService.GetUserIdByUsername(User.Identity.Name);
+            return new UserDTO(userService.GetUserById(userId));
+        }
+
+        [HttpGet]
+        [Route("user/generate")]
+        public User GenerateUser()
+        {
+            var currentUser = User.Identity;
+            var isUserAlreadyInDb = userService.UserExistsInDb(currentUser.Name);
+
+            var newUser = new User()
+            {
+                Username = currentUser.Name,
+                Name = currentUser.Name.Substring(7),
+                EMail = String.Empty,
+                IsAdmin = false,
+                Active = true
+            };
+
+            if (!isUserAlreadyInDb)
+                userService.CreateUser(newUser);
+
+            return newUser;
         }
     }
 }

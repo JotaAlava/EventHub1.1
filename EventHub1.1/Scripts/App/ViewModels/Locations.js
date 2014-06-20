@@ -1,7 +1,7 @@
 ﻿define(["ViewModels/Location"], function (Location) {
 
     var locations = function (locationsDTO) {
-        var self = this;        
+        var self = this;
 
         self.locations = ko.observableArray();
 
@@ -17,7 +17,7 @@
         self.toggleActive = function (clickedLocationInsideObservableArrayOfLocations) {
 
             $.ajax({
-                url: "http://localhost:29196/location/ToggleActiveById/" + clickedLocationInsideObservableArrayOfLocations.id(),
+                url: window.productionURL + "/location/ToggleActiveById/" + clickedLocationInsideObservableArrayOfLocations.id(),
                 context: document.body,
                 type: 'POST',
                 statusCode: {
@@ -34,7 +34,7 @@
 
             $.ajax({
                 dataType: "json",
-                url: "http://localhost:29196/location/" + idOfLocationToDelete,
+                url: window.productionURL + "/location/" + idOfLocationToDelete,
                 context: document.body,
                 dataType: 'json',
                 type: 'DELETE',
@@ -48,26 +48,6 @@
 
         // Probably should find a better way of doing this - Workaround for Circular Reference error
         self.addLocation = function (formData) {
-            var nameDidNotPassValidation = $('#UpdateLocationName').hasClass("invalid")
-            var addressDidNotPassValidation = $('#UpdateLocationAddress').hasClass("invalid")
-            var nameEmpty = $('#nameInputBox').val() == "" ? true : false;
-            var addressEmpty = $('#addressInputBox').val() == "" ? true : false;
-
-            if (nameDidNotPassValidation || addressDidNotPassValidation) {
-                $('#UpdateLocationFormLabel').removeClass("invalid")
-                $('#UpdateLocationAddressFormLabel').removeClass("invalid")
-                return;
-            }
-
-            else (nameEmpty || addressEmpty)
-            {
-                $('#UpdateLocationName').addClass("invalid")
-                $('#nameInputBox').addClass("error")
-                $('#UpdateLocationAddress').addClass("invalid")
-                $('#addressInputBox').addClass("error")
-                return;
-            }
-
             var result = (function (formData) {
                 var result = {
                     name: formData[0].value,
@@ -81,7 +61,7 @@
 
             $.ajax({
                 dataType: "json",
-                url: "http://localhost:29196/location/",
+                url: window.productionURL + "/location/",
                 context: document.body,
                 type: 'POST',
                 data: result
@@ -100,8 +80,7 @@
             var nameDidNotPassValidation = $('#UpdateLocationFormLabel').hasClass("invalid")
             var addressDidNotPassValidation = $('#UpdateLocationAddressFormLabel').hasClass("invalid")
 
-            if (nameDidNotPassValidation || addressDidNotPassValidation)
-            {
+            if (nameDidNotPassValidation || addressDidNotPassValidation) {
                 $('#UpdateLocationFormLabel').removeClass("invalid")
                 $('#UpdateLocationAddressFormLabel').removeClass("invalid")
                 return;
@@ -122,7 +101,7 @@
 
             $.ajax({
                 dataType: "json",
-                url: "http://localhost:29196/location/",
+                url: window.productionURL + "/location/",
                 context: document.body,
                 type: 'PUT',
                 data: result
@@ -134,7 +113,7 @@
                     $('#toggleBetweenLocationsButton').html("See Inactive")
                     $.ajax({
                         dataType: "json",
-                        url: "http://localhost:29196/location/",
+                        url: window.productionURL + "/location/",
                         context: document.body,
                         type: 'GET',
                         statusCode: {
@@ -151,7 +130,7 @@
                     $('#toggleBetweenLocationsButton').html("See Active")
                     $.ajax({
                         dataType: "json",
-                        url: "http://localhost:29196/location/GetInactive",
+                        url: window.productionURL + "/location/GetInactive",
                         context: document.body,
                         type: 'GET',
                         statusCode: {
@@ -178,7 +157,7 @@
                 $('#toggleBetweenLocationsButton').html("\nSee Active")
                 $.ajax({
                     dataType: "json",
-                    url: "http://localhost:29196/location/GetInactive",
+                    url: window.productionURL + "/location/GetInactive",
                     context: document.body,
                     type: 'GET',
                     statusCode: {
@@ -196,7 +175,7 @@
                 $('#toggleBetweenLocationsButton').html("\nSee Inactive")
                 $.ajax({
                     dataType: "json",
-                    url: "http://localhost:29196/location/",
+                    url: window.productionURL + "/location/",
                     context: document.body,
                     type: 'GET',
                     statusCode: {

@@ -9,7 +9,7 @@
         // Constructor
         for (var i = 0; i < eventDTO.length; i++) {
             self.listOfEvents.push(new Event(eventDTO[i]));
-        }
+        }       
 
         self.hideDetails = function (clickedEventInsideObservableArrayOfEvents) {
             $('ul[id^="eventDetails_' + clickedEventInsideObservableArrayOfEvents.eventId() + '"]').toggle()
@@ -24,7 +24,7 @@
 
             $.ajax({
                 dataType: "json",
-                url: "http://localhost:29196/message/",
+                url: window.productionURL + "/message/",
                 context: this,
                 type: 'POST',
                 data: message,
@@ -38,20 +38,20 @@
                 }
             })
 
-            $('#messageBox').val('');
+            $('#messageBox_' + clickedEvent.eventId()).val('');
         }
 
         self.joinEvent = function (clickedEventInsideObservableArrayOfEvents) {
             $.ajax({
                 dataType: "json",
-                url: "http://localhost:29196/event/attend/" + clickedEventInsideObservableArrayOfEvents.eventId(),
+                url: window.productionURL + "/event/attend/" + clickedEventInsideObservableArrayOfEvents.eventId(),
                 context: clickedEventInsideObservableArrayOfEvents,
                 type: 'PUT',
                 statusCode: {
                     200: function (result) {
                         $.ajax({
                             dataType: "json",
-                            url: "http://localhost:29196/event/getParticipantsByEventId/" + result.substring(31),
+                            url: window.productionURL + "/event/getParticipantsByEventId/" + result.substring(31),
                             context: this,
                             type: 'GET'
                         }).success(function (result) {
@@ -73,7 +73,7 @@
         self.leaveEvent = function (clickedEventInsideObservableArrayOfEvents) {
             $.ajax({
                 dataType: "json",
-                url: "http://localhost:29196/event/leave/" + clickedEventInsideObservableArrayOfEvents.eventId(),
+                url: window.productionURL + "/event/leave/" + clickedEventInsideObservableArrayOfEvents.eventId(),
                 context: this,
                 type: 'PUT',
                 statusCode: {
@@ -82,7 +82,7 @@
 
                         $.ajax({
                             dataType: "json",
-                            url: "http://localhost:29196/event/getParticipantsByEventId/" + result.substring(31),
+                            url: window.productionURL + "/event/getParticipantsByEventId/" + result.substring(31),
                             context: this,
                             type: 'GET'
                         }).success(function (result) {
@@ -101,10 +101,18 @@
             })
         }
 
-        self.addPlusOne = function (formData) {
+        self.addPlusOne = function (formData, jQueryEvent) {
+            jQueryEvent.preventDefault();
+            var nameDidNotPassValidation = $('#AddPlusOneNameFormLabel').hasClass("invalid")
+
+            if (nameDidNotPassValidation) {
+                $('#AddPlusOneNameFormLabel').removeClass("invalid")
+                return;
+            }
+
             $.ajax({
                 dataType: "json",
-                url: "http://localhost:29196/plusone/" + formData[0].value + "?nameForPlusOne=" + formData[1].value,
+                url: window.productionURL + "/plusone/" + formData[0].value + "?nameForPlusOne=" + formData[1].value,
                 context: this,
                 type: 'POST',
                 statusCode: {
@@ -113,7 +121,7 @@
 
                         $.ajax({
                             dataType: "json",
-                            url: "http://localhost:29196/plusone/byeventid/" + eventId,
+                            url: window.productionURL + "/plusone/byeventid/" + eventId,
                             context: this,
                             type: 'GET'
                         }).success(function (result) {
@@ -158,7 +166,7 @@
 
             $.ajax({
                 dataType: "json",
-                url: "http://localhost:29196/plusone/" + plusOneId,
+                url: window.productionURL + "/plusone/" + plusOneId,
                 context: this,
                 type: 'PUT',
                 statusCode: {
@@ -179,7 +187,7 @@
         self.generateEmail = function (clickedPlusOne) {
             $.ajax({
                 dataType: "json",
-                url: "http://localhost:29196/event/sendEmail",
+                url: window.productionURL + "/event/sendEmail",
                 context: this,
                 type: 'GET',
                 statusCode: {
@@ -191,6 +199,43 @@
                     }
                 }
             })
+        }
+
+        self.scrollLeft = function (event) {
+            var sizeOfListOfEvents = window.viewModels.eventsViewModel.listOfEvents().length;
+            for (var i = 0; i < sizeOfListOfEvents; i++) {
+                if(window.viewModels.eventsViewModel.listOfEvents()[i].eventId() == event.eventId())
+                {
+                    event.isBeingViewed(false);
+
+                    if (i == 0) {
+                        window.viewModels.eventsViewModel.listOfEvents()[sizeOfListOfEvents - 1].isBeingViewed(true);
+                    }
+                    else {
+                        window.viewModels.eventsViewModel.listOfEvents()[i - 1].isBeingViewed(true);
+                    }
+                }
+            }
+        }
+
+        self.scrollRight = function (event) {
+            var sizeOfListOfEvents = window.viewModels.eventsViewModel.listOfEvents().length;
+            for (var i = 0; i < sizeOfListOfEvents; i++) {
+                if (window.viewModels.eventsViewModel.listOfEvents()[i].eventId() == event.eventId()) {
+                    event.isBeingViewed(false);
+
+                    if (i == sizeOfListOfEvents - 1) {
+                        window.viewModels.eventsViewModel.listOfEvents()[sizeOfListOfEvents - sizeOfListOfEvents].isBeingViewed(true);
+                    }
+                    else {
+                        window.viewModels.eventsViewModel.listOfEvents()[i + 1].isBeingViewed(true);
+                    }
+                }
+            }
+        }
+
+        self.areThereAnyEvents = function () {
+            return self.listOfEvents().length == 0 ? true : false;
         }
 
         return self;

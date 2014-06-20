@@ -7,35 +7,17 @@
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
 </head>
-<body class="container">
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Ulti Sports", "Index", "Home", null, new { @class = "navbar-brand" })
-                <ul class="nav navbar-nav">
-                    <li><a style="display:inherit;" id="UpdateMailAddressLink" data-toggle="modal" data-target="#UpdateEmailModal">Update EMail Address</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        <div class="row">
-            @Html.Partial("_SideNavBar")
-            @RenderBody()
-        </div>
+<body>
+    @Html.Partial("_NavBar")
+    <div class="container">
+        @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Ulti-Sports Hub</p>
         </footer>
     </div>
-    <!-- Modal -->
+    <!-- Update Email Modal -->
     <div class="modal fade" id="UpdateEmailModal" tabindex="-1" role="dialog" aria-labelledby="updateLocationDetailsModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -43,16 +25,53 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="updateEmailDetailsModalLabel">Update Email</h4>
                 </div>
-                <div style="margin:5%">
-                    New EMail:<br /> <input id="modalUpdateEMailInputBox" type="text" name="Name"><br>
-                </div>
-                <div class="clear modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="UpdateEMailSaveButton" type="submit" class="btn btn-primary">Save changes</button>
+                <div class="form_wrap">
+                    <form id="UpdateEMailForm">
+                        <div style="margin:5%">
+                            <label id="UpdateEMailFormLabel">New EMail<em>*</em></label>
+                            <div class="i">
+                                <input id="modalUpdateEMailInputBox" type="text" placeholder="New Plus One Name..." name="Name">
+                            </div>
+                        </div>
+
+                        <div class="clear modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="UpdateEMailSaveButton" type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Plus Ones Modal -->
+    <div class="modal fade" id="addPlusOneModal" tabindex="-1" role="dialog" aria-labelledby="updateLocationDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="updateLocationDetailsModalLabel">Add Plus One</h4>
+                </div>
+                <div class="form_wrap">
+                    <form id="PlusOneForm" data-bind="submit: $root.addPlusOne">
+                        <div style="margin:5%">
+                            <label id="AddPlusOneNameFormLabel">Plus One Name<em>*</em></label>
+                            <div class="i">
+                                <input id="modalEventIdHiddenInputBox" type="hidden" name="EventId">
+                                <input id="modalPlusOneNameInputBox" type="text" placeholder="New Plus One Name..." name="Name">
+                            </div>
+                        </div>
+
+                        <div class="clear modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/blockui")
     @Scripts.Render("~/bundles/timepicker")
@@ -65,13 +84,159 @@
 
     @RenderSection("scripts", required: true)
     <script>
-        $('#UpdateEMailSaveButton').click(function () {
-            //alert("update!")
-            var newEmail = $('#modalUpdateEMailInputBox').val();
+        window.devURL = "http://localhost:29196/";
+        window.deployURL = "http://josealw7x6530:8080/";
+        window.deployIP = "http://10.58.12.75:8080";
+        window.productionURL = devURL;
+        window.usersUsername = '@User.Identity.Name';
+
+        $.ajax({
+            dataType: "json",
+            url: window.productionURL + "user/getcurrentuser/",
+            context: this,
+            type: 'GET',
+            statusCode: {
+                200: function (result) {
+                    window.currentSignedInUser = result;
+                    if (!currentSignedInUser.IsAdmin) {
+                        $('#adminNavOptions').toggle();
+                    }
+                    if (currentSignedInUser.Email != "") {
+                        $('#hasEMailBadge').toggle()
+                    }
+                },
+                400: function (result) {
+                    alert(result.responseJSON)
+                }
+            }
+        })
+
+        $('#addPlusOneModal').submit(function (jQueryEvent) {
+            jQueryEvent.preventDefault();
+            var nameDidNotPassValidation = $('#modalPlusOneNameInputBox').hasClass("error")
+
+            if (nameDidNotPassValidation) {
+                $('#AddPlusOneNameFormLabel').removeClass("error")
+                $('#modalPlusOneNameInputBox').focus();
+                return;
+            }
+
+            var plusOneName = $('#modalPlusOneNameInputBox').val()
+            var plusOneId = $('#modalEventIdHiddenInputBox').val()
+
+            $('#addPlusOneModal').modal('hide');
 
             $.ajax({
                 dataType: "json",
-                url: "http://localhost:29196/user/updateemail/?newEmail=" + newEmail,
+                url: window.productionURL + "/plusone/" + plusOneId + "?nameForPlusOne=" + plusOneName,
+                context: this,
+                type: 'POST',
+                statusCode: {
+                    200: function (result) {
+                        var eventId = result.substring(31);
+
+                        $.ajax({
+                            dataType: "json",
+                            url: window.productionURL + "/plusone/byeventid/" + eventId,
+                            context: this,
+                            type: 'GET'
+                        }).success(function (result) {
+                            // Here I am reconstructing the entire list of plusones for this event.
+                            // Until I figure out a better way.
+                            //this.listOfEvents()[0].plusones.removeAll()
+
+                            for (var i = 0; i < window.viewModels.eventsViewModel.listOfEvents().length; i++) {
+                                if (window.viewModels.eventsViewModel.listOfEvents()[i].eventId() == eventId) {
+                                    window.viewModels.eventsViewModel.listOfEvents()[i].plusones.removeAll();
+
+                                    for (var k = 0; k < result.length; k++) {
+                                        window.viewModels.eventsViewModel.listOfEvents()[i].plusones.push(result[k])
+                                    }
+                                }
+                            }
+
+
+                        })
+                    },
+                    400: function (result) {
+                        alert(result.responseJSON)
+                    }
+                }
+            })
+
+            $('#modalPlusOneNameInputBox').val("")
+            $('#addPlusOneModal').modal('hide');
+        })
+
+        $('#addPlusOneModal').click(function (jQueryEvent) {
+            jQueryEvent.preventDefault();
+            var nameDidNotPassValidation = $('#modalPlusOneNameInputBox').hasClass("error")
+
+            if (nameDidNotPassValidation) {
+                $('#AddPlusOneNameFormLabel').removeClass("error")
+                $('#modalPlusOneNameInputBox').focus();
+                return;
+            }
+
+            var plusOneName = $('#modalPlusOneNameInputBox').val()
+            var plusOneId = $('#modalEventIdHiddenInputBox').val()
+
+            $('#addPlusOneModal').modal('hide');
+
+            $.ajax({
+                dataType: "json",
+                url: window.productionURL + "/plusone/" + plusOneId + "?nameForPlusOne=" + plusOneName,
+                context: this,
+                type: 'POST',
+                statusCode: {
+                    200: function (result) {
+                        var eventId = result.substring(31);
+
+                        $.ajax({
+                            dataType: "json",
+                            url: window.productionURL + "/plusone/byeventid/" + eventId,
+                            context: this,
+                            type: 'GET'
+                        }).success(function (result) {
+                            // Here I am reconstructing the entire list of plusones for this event.
+                            // Until I figure out a better way.
+                            //this.listOfEvents()[0].plusones.removeAll()
+
+                            for (var i = 0; i < window.viewModels.eventsViewModel.listOfEvents().length; i++) {
+                                if (window.viewModels.eventsViewModel.listOfEvents()[i].eventId() == eventId) {
+                                    window.viewModels.eventsViewModel.listOfEvents()[i].plusones.removeAll();
+
+                                    for (var k = 0; k < result.length; k++) {
+                                        window.viewModels.eventsViewModel.listOfEvents()[i].plusones.push(result[k])
+                                    }
+                                }
+                            }
+
+
+                        })
+                    },
+                    400: function (result) {
+                        alert(result.responseJSON)
+                    }
+                }
+            })
+
+            $('#modalPlusOneNameInputBox').val("")
+            $('#addPlusOneModal').modal('hide');
+        })
+
+        $('#UpdateEMailSaveButton').click(function (e) {
+
+            var newEmail = $('#modalUpdateEMailInputBox').val();
+
+            if ($('#modalUpdateEMailInputBox').hasClass("error")) {
+                e.preventDefault();
+                return;
+            }
+
+            $.ajax({
+                dataType: "json",
+                url: window.productionURL + "/user/updateemail/?newEmail=" + newEmail,
                 context: this,
                 type: 'PUT',
                 statusCode: {
@@ -93,13 +258,34 @@
         })
         //***************************************************************************
 
-        $(function () {
-            validize.validate_ini(".form_wrap form [data-validate]");
+        $(document).ready(function () {
+            // Call event generation
+            $.ajax({
+                dataType: "json",
+                url: window.productionURL + "/event/generate",
+                context: this,
+                type: 'GET',
+                statusCode: {
+                    200: function (result) {
+                    },
+                    400: function (result) {
+                    }
+                }
+            })
 
-            //$("form button").click(function (e) {
-            //    e.preventDefault();
-            //    $(this).closest("form").find("[data-validate]").blur();
-            //});
+            // Call user generation
+            $.ajax({
+                dataType: "json",
+                url: window.productionURL + "/user/generate",
+                context: this,
+                type: 'GET',
+                statusCode: {
+                    200: function (result) {
+                    },
+                    400: function (result) {
+                    }
+                }
+            })
         });
     </script>
 </body>

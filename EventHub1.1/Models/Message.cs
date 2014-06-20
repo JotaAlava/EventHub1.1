@@ -19,6 +19,7 @@ namespace EventHub1._1.Models
         public int UserId { get; set; }
         public int EventId { get; set; }
         public bool Deleted { get; set; }
+        public System.DateTime TimeCreated { get; set; }
     
         public virtual Event Event { get; set; }
         public virtual User User { get; set; }

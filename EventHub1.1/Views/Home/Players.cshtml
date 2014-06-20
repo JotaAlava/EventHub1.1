@@ -40,7 +40,7 @@
                     }
                 });
                 $.ajax({
-                    url: "http://localhost:29196/user/",
+                    url: window.productionURL + "/user/",
                     context: document.body
                 }).done(function (data) {
 
