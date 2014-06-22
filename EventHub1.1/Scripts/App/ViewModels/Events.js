@@ -16,29 +16,13 @@
         }
 
         self.addMessage = function (clickedEvent, formData) {
-            var message = {
+            var newMessage = {
                 Body: formData[0].value,
                 UserId: 1,
                 EventId: clickedEvent.eventId()
             }
 
-            $.ajax({
-                dataType: "json",
-                url: window.productionURL + "/message/",
-                context: this,
-                type: 'POST',
-                data: message,
-                statusCode: {
-                    201: function (result) {
-                        clickedEvent.messages.push(result);
-                    },
-                    400: function (result) {
-                        alert(result.responseJSON)
-                    }
-                }
-            })
-
-            $('#messageBox_' + clickedEvent.eventId()).val('');
+            window.UltiSports.DAL.MessageService.AddNewMessage(clickedEvent, newMessage, window.UltiSports.DAL.SucessFunctions.NewMessage, window.UltiSports.DAL.ErrorFunctions.NewMessage);
         }
 
         self.joinEvent = function (clickedEventInsideObservableArrayOfEvents) {
@@ -149,7 +133,7 @@
             })
 
             $('#modalPlusOneNameInputBox').val("")
-            $('#addPlusOneModal').modal('hide');
+            //$('#addPlusOneModal').modal('hide');
         }
 
         self.showAddPlusOneModal = function (clickedEventInsideObservableArrayOfEvents) {
@@ -236,6 +220,10 @@
 
         self.areThereAnyEvents = function () {
             return self.listOfEvents().length == 0 ? true : false;
+        }
+
+        self.updateEMail = function (clickedViewModel) {
+            window.UltiSports.DAL.EMailService.UpdateEMail(clickedViewModel, window.UltiSports.DAL.SucessFunctions.UpdateEMail, window.UltiSports.DAL.ErrorFunctions.UpdateEMail);
         }
 
         return self;

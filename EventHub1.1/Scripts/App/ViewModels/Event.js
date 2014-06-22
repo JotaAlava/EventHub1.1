@@ -12,20 +12,7 @@
         self.plusones = ko.observableArray(eventDTO.PlusOnes)
         self.isBeingViewed = ko.observable(false)
 
-        self.getFormatedTime = ko.computed(function () {
-            var activityTime = self.activity().Time
-            var hours = activityTime.substring(11, 13);
-            var minutes = activityTime.substring(14, 16);
-            
-            var result = new Date();
-            result.setHours(hours)
-            result.setMinutes(minutes)
-            result.setSeconds(0)
-
-            return result.toLocaleTimeString().substring(0,4) + " PM";
-        })
-
-        self.GetFormattedTimeOfMessage = ko.computed(function (one, two, three) {
+        self.getFormatedTime = ko.computed(function() {
             var activityTime = self.activity().Time
             var hours = activityTime.substring(11, 13);
             var minutes = activityTime.substring(14, 16);
@@ -36,7 +23,7 @@
             result.setSeconds(0)
 
             return result.toLocaleTimeString().substring(0, 4) + " PM";
-        })
+        });
 
         self.getTotalNumberOfPlayers = ko.computed(function () {
             return self.users().length + self.plusones().length;

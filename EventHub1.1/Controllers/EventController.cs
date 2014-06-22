@@ -29,7 +29,9 @@ namespace EventHub1._1.Controllers
         [Route("event")]
         public IEnumerable<Event> GetAllActiveEvents()
         {
-            return eventService.GetAllActiveEvents();
+            var result = eventService.GetAllActiveEvents();
+            var test = result.First().Messages.First().TimeCreated;
+            return result;
         }
 
         [HttpGet]

@@ -100,12 +100,12 @@ namespace EventHub1._1.Controllers
             return responnse;
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("user/updateemail")]
         public HttpResponseMessage UpdateCurrentUserEMail(string newEmail)
         {
             userService.UpdateEmailForCurrentUser(User.Identity.Name, newEmail);
-            var responnse = Request.CreateResponse(HttpStatusCode.OK);
+            var responnse = Request.CreateResponse(HttpStatusCode.Created, newEmail);
 
             return responnse;
         }

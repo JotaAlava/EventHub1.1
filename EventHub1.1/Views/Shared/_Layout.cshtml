@@ -7,6 +7,7 @@
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     @Styles.Render("~/Content/css")
+    <script src="~/Scripts/App/UltiSports.js"></script>
 </head>
 <body>
     @Html.Partial("_NavBar")
@@ -16,32 +17,6 @@
         <footer>
             <p>&copy; @DateTime.Now.Year - Ulti-Sports Hub</p>
         </footer>
-    </div>
-    <!-- Update Email Modal -->
-    <div class="modal fade" id="UpdateEmailModal" tabindex="-1" role="dialog" aria-labelledby="updateLocationDetailsModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="updateEmailDetailsModalLabel">Update Email</h4>
-                </div>
-                <div class="form_wrap">
-                    <form id="UpdateEMailForm">
-                        <div style="margin:5%">
-                            <label id="UpdateEMailFormLabel">New EMail<em>*</em></label>
-                            <div class="i">
-                                <input id="modalUpdateEMailInputBox" type="text" placeholder="New Plus One Name..." name="Name">
-                            </div>
-                        </div>
-
-                        <div class="clear modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button id="UpdateEMailSaveButton" type="submit" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Plus Ones Modal -->
@@ -82,6 +57,14 @@
     @Scripts.Render("~/bundles/require")
     @Scripts.Render("~/bundles/validate")
 
+    <script src="~/Scripts/App/DAL/DAL.js"></script>
+    <script src="~/Scripts/App/Settings.js"></script>
+    <script src="~/Scripts/App/ErrorFeedback.js"></script>
+    <script src="~/Scripts/App/InputValidation.js"></script>
+    <script src="~/Scripts/App/DAL/ErrorFunctions.js"></script>
+    <script src="~/Scripts/App/DAL/SuccessFunctions.js"></script>
+    <script src="~/Scripts/App/DAL/Services/MessageService.js"></script>
+    <script src="~/Scripts/App/DAL/Services/EMailService.js"></script>
     @RenderSection("scripts", required: true)
     <script>
         window.devURL = "http://localhost:29196/";
@@ -101,8 +84,8 @@
                     if (!currentSignedInUser.IsAdmin) {
                         $('#adminNavOptions').toggle();
                     }
-                    if (currentSignedInUser.Email != "") {
-                        $('#hasEMailBadge').toggle()
+                    if (currentSignedInUser.Email == "") {
+                        window.UltiSports.ErrorFeedback.WarnAbouhtHavingNoEMail();
                     }
                 },
                 400: function (result) {
@@ -166,86 +149,6 @@
 
             $('#modalPlusOneNameInputBox').val("")
             $('#addPlusOneModal').modal('hide');
-        })
-
-        $('#addPlusOneModal').click(function (jQueryEvent) {
-            jQueryEvent.preventDefault();
-            var nameDidNotPassValidation = $('#modalPlusOneNameInputBox').hasClass("error")
-
-            if (nameDidNotPassValidation) {
-                $('#AddPlusOneNameFormLabel').removeClass("error")
-                $('#modalPlusOneNameInputBox').focus();
-                return;
-            }
-
-            var plusOneName = $('#modalPlusOneNameInputBox').val()
-            var plusOneId = $('#modalEventIdHiddenInputBox').val()
-
-            $('#addPlusOneModal').modal('hide');
-
-            $.ajax({
-                dataType: "json",
-                url: window.productionURL + "/plusone/" + plusOneId + "?nameForPlusOne=" + plusOneName,
-                context: this,
-                type: 'POST',
-                statusCode: {
-                    200: function (result) {
-                        var eventId = result.substring(31);
-
-                        $.ajax({
-                            dataType: "json",
-                            url: window.productionURL + "/plusone/byeventid/" + eventId,
-                            context: this,
-                            type: 'GET'
-                        }).success(function (result) {
-                            // Here I am reconstructing the entire list of plusones for this event.
-                            // Until I figure out a better way.
-                            //this.listOfEvents()[0].plusones.removeAll()
-
-                            for (var i = 0; i < window.viewModels.eventsViewModel.listOfEvents().length; i++) {
-                                if (window.viewModels.eventsViewModel.listOfEvents()[i].eventId() == eventId) {
-                                    window.viewModels.eventsViewModel.listOfEvents()[i].plusones.removeAll();
-
-                                    for (var k = 0; k < result.length; k++) {
-                                        window.viewModels.eventsViewModel.listOfEvents()[i].plusones.push(result[k])
-                                    }
-                                }
-                            }
-
-
-                        })
-                    },
-                    400: function (result) {
-                        alert(result.responseJSON)
-                    }
-                }
-            })
-
-            $('#modalPlusOneNameInputBox').val("")
-            $('#addPlusOneModal').modal('hide');
-        })
-
-        $('#UpdateEMailSaveButton').click(function (e) {
-
-            var newEmail = $('#modalUpdateEMailInputBox').val();
-
-            if ($('#modalUpdateEMailInputBox').hasClass("error")) {
-                e.preventDefault();
-                return;
-            }
-
-            $.ajax({
-                dataType: "json",
-                url: window.productionURL + "/user/updateemail/?newEmail=" + newEmail,
-                context: this,
-                type: 'PUT',
-                statusCode: {
-                    200: function (result) {
-                    },
-                    400: function (result) {
-                    }
-                }
-            })
         })
 
         //******************* Side Nav Bar Scripts **********************************
