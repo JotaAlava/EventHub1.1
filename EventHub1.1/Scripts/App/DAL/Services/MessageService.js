@@ -10,7 +10,7 @@
 
         if (!isEmptyString && !isLongerThan255Chars) {
             window.UltiSports.ErrorFeedback.ResetErrorBox();
-            window.UltiSports.DAL.Ajaxer(clickedEvent, window.productionURL + "/message/", "json", "POST", newMessage, successFunc, errorFunc);
+            window.UltiSports.DAL.Ajaxer(clickedEvent, "/message/", "json", "POST", newMessage, successFunc, errorFunc);
         }
         else {
             window.UltiSports.ErrorFeedback.InvalidMessageInput();

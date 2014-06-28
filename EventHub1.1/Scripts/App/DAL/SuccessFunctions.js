@@ -17,8 +17,20 @@
     }
 
     SucessFunctions.UpdateEMail = function (result, serviceResultCode, serviceResponseHeader) {
-
         $.growlUI('EMail Updated!');
+    }
+
+    SucessFunctions.SendInviteEMail = function(result, serviceResultCode, serviceResponseHeader) {
+        $.growlUI('EMail has been sent!');
+    }
+
+    SucessFunctions.GetAllLocations = function (result, serviceResultCode, serviceResponseHeader) {
+        if (window.viewModels.locationViewModel.locations().length == 1) {
+            window.viewModels.locationViewModel.locations()[0].name(result[0].Name);
+            window.viewModels.locationViewModel.locations()[0].address(result[0].Address);
+            window.viewModels.locationViewModel.locations()[0].active(result[0].Active);
+        }
+        //window.viewModels.locationViewModel.locations(new window.UltiSports.Models.LocationModel.GetNewLocation(result));
     }
 
     // private method

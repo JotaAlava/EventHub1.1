@@ -7,6 +7,7 @@ using EventHub1._1.Models;
 using EventHub1._1.DTO;
 using System.Linq;
 using System;
+using UltiSports.Services;
 
 
 namespace EventHub1._1.Controllers
@@ -17,12 +18,14 @@ namespace EventHub1._1.Controllers
         private IEventService eventService;
         private IActivityService activityService;
         private IUserService userService;
+        private IEmailService emailService;
 
-        public EventController(IEventService eventService, IActivityService activityService, IUserService userService)
+        public EventController(IEventService eventService, IActivityService activityService, IUserService userService, IEmailService emailService)
         {
             this.eventService = eventService;
             this.activityService = activityService;
             this.userService = userService;
+            this.emailService = emailService;
         }
 
         [HttpGet]
@@ -30,7 +33,6 @@ namespace EventHub1._1.Controllers
         public IEnumerable<Event> GetAllActiveEvents()
         {
             var result = eventService.GetAllActiveEvents();
-            var test = result.First().Messages.First().TimeCreated;
             return result;
         }
 
@@ -177,6 +179,27 @@ namespace EventHub1._1.Controllers
             }
 
             return result;
+        }
+
+        [HttpGet]
+        [Route("event/sendInviteEmail")]
+        public void SendInviteEmail()
+        {
+            emailService.SendFirstEmail(DateTime.Today.DayOfWeek.ToString());
+        }
+
+        [HttpGet]
+        [Route("event/sendFinalEmail")]
+        public void SendFinalEmail()
+        {
+            emailService.SendFinalEmail(DateTime.Today.DayOfWeek.ToString());
+        }
+
+        [HttpGet]
+        [Route("event/sendCancelationEmail")]
+        public void SendCancelationEmail()
+        {
+            emailService.SendCancellationEmail(DateTime.Today.DayOfWeek.ToString());
         }
 
         /// <summary>

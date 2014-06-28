@@ -4,6 +4,7 @@
         var self = this;
 
         self.locations = ko.observableArray();
+        self.createLocation = ko.observable(false);
 
         // Constructor
         for (var i = 0; i < locationsDTO.length; i++) {
@@ -17,7 +18,7 @@
         self.toggleActive = function (clickedLocationInsideObservableArrayOfLocations) {
 
             $.ajax({
-                url: window.productionURL + "/location/ToggleActiveById/" + clickedLocationInsideObservableArrayOfLocations.id(),
+                url: window.appWideServiceURL + "location/ToggleActiveById/" + clickedLocationInsideObservableArrayOfLocations.id(),
                 context: document.body,
                 type: 'POST',
                 statusCode: {
@@ -34,7 +35,7 @@
 
             $.ajax({
                 dataType: "json",
-                url: window.productionURL + "/location/" + idOfLocationToDelete,
+                url: window.appWideServiceURL + "location/" + idOfLocationToDelete,
                 context: document.body,
                 dataType: 'json',
                 type: 'DELETE',
@@ -61,7 +62,7 @@
 
             $.ajax({
                 dataType: "json",
-                url: window.productionURL + "/location/",
+                url: window.appWideServiceURL + "location/",
                 context: document.body,
                 type: 'POST',
                 data: result
@@ -77,77 +78,26 @@
 
         // This can definitely be made better....
         self.updateLocation = function (formData, clickedLocationInsideObservableArrayOfLocations) {
-            var nameDidNotPassValidation = $('#UpdateLocationFormLabel').hasClass("invalid")
-            var addressDidNotPassValidation = $('#UpdateLocationAddressFormLabel').hasClass("invalid")
-
-            if (nameDidNotPassValidation || addressDidNotPassValidation) {
-                $('#UpdateLocationFormLabel').removeClass("invalid")
-                $('#UpdateLocationAddressFormLabel').removeClass("invalid")
-                return;
-            }
-
             var result = (function (formData) {
                 var result = {
                     LocationId: formData[0].value,
                     name: formData[1].value,
                     address: formData[2].value,
-                    Active: formData[3].value == "on" ? true : false
+                    Active: formData[3].checked == true ? true : false
                 }
 
                 return result;
             })(formData);
 
-            var allLocationsAreActive = result.Active == "true" ? true : false;
-
             $.ajax({
                 dataType: "json",
-                url: window.productionURL + "/location/",
+                url: window.appWideServiceURL + "location/",
                 context: document.body,
                 type: 'PUT',
                 data: result
             }).complete(function (result) {
-                var currentStateOfTheActivePropertyOfAllTheDisplayedLocations = allLocationsAreActive;
-
-                if (currentStateOfTheActivePropertyOfAllTheDisplayedLocations) {
-                    self.locations.removeAll();
-                    $('#toggleBetweenLocationsButton').html("See Inactive")
-                    $.ajax({
-                        dataType: "json",
-                        url: window.productionURL + "/location/",
-                        context: document.body,
-                        type: 'GET',
-                        statusCode: {
-                            200: function (arrayOfActiveLocations) {
-                                for (var i = 0; i < arrayOfActiveLocations.length; i++) {
-                                    self.locations.push(new Location(arrayOfActiveLocations[i]));
-                                }
-                            }
-                        }
-                    })
-                }
-                else if (!currentStateOfTheActivePropertyOfAllTheDisplayedLocations) {
-                    self.locations.removeAll();
-                    $('#toggleBetweenLocationsButton').html("See Active")
-                    $.ajax({
-                        dataType: "json",
-                        url: window.productionURL + "/location/GetInactive",
-                        context: document.body,
-                        type: 'GET',
-                        statusCode: {
-                            200: function (arrayOfInactiveLocations) {
-                                for (var i = 0; i < arrayOfInactiveLocations.length; i++) {
-                                    self.locations.push(new Location(arrayOfInactiveLocations[i]));
-                                }
-                            }
-                        }
-                    })
-                }
-
+                window.UltiSports.DAL.LocationService.GetAllLocations();
             });
-
-            $('#modalLocationNameInputBox').val("")
-            $('#modalLocationAddressInputBox').val("")
-            $('#updateLocationDetailsModal').modal('hide');
         }
 
         self.showInactiveLocations = function (clickedLocationInsideObservableArrayOfLocations) {
@@ -157,7 +107,7 @@
                 $('#toggleBetweenLocationsButton').html("\nSee Active")
                 $.ajax({
                     dataType: "json",
-                    url: window.productionURL + "/location/GetInactive",
+                    url: window.appWideServiceURL + "location/GetInactive",
                     context: document.body,
                     type: 'GET',
                     statusCode: {
@@ -175,7 +125,7 @@
                 $('#toggleBetweenLocationsButton').html("\nSee Inactive")
                 $.ajax({
                     dataType: "json",
-                    url: window.productionURL + "/location/",
+                    url: window.appWideServiceURL + "location/",
                     context: document.body,
                     type: 'GET',
                     statusCode: {
@@ -198,6 +148,27 @@
             $('#updateLocationDetailsModal').on('shown.bs.modal', function () {
                 $('#modalLocationNameInputBox').focus();
             })
+        }
+
+        self.NoneBeingViewed = ko.computed(function () {
+            for (var i = 0; i < self.locations().length; i++) {
+                if (self.locations()[i].isBeingViewed()) {
+                    return false;
+                }
+            }
+
+            if (self.createLocation()) {
+                return false;
+            }
+            return true;
+        });
+
+        self.CreateLocation = function () {
+            for (var i = 0; i < window.viewModels.locationViewModel.locations().length; i++) {
+                window.viewModels.locationViewModel.locations()[i].isBeingViewed(false);
+            }
+
+            self.createLocation(!self.createLocation());
         }
 
         return self;

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using EventHub1._1.DAL.Services;
-using EventHub1._1.Filters;
 using EventHub1._1.Models;
 using EventHub1._1.DTO;
 
@@ -21,6 +19,13 @@ namespace EventHub1._1.Controllers
         {
             this.locationService = locationService;
             this.activityService = activityService;
+        }
+
+        [HttpGet]
+        [Route("activity/all")]
+        public IEnumerable<ActivityDTO> GetAllActivities()
+        {
+            return activityService.GetAllActivitiesAsDto();
         }
 
         [HttpGet]

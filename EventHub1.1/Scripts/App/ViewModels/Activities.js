@@ -3,21 +3,16 @@
     var activities = function (activityDTO) {
         var self = this;
 
-        self.activeLocationsToSelectFrom = [];
+        self.createActivity = ko.observable(false);
+        self.activeLocationsToSelectFrom = ko.observableArray();
         self.populateActivityDropdown = function () {
             $.ajax({
-                url: window.productionURL + "/location/",
+                url: window.appWideServiceURL + "location/",
                 context: document.body
             }).done(function (data) {
 
-                self.activeLocationsToSelectFrom = data
-                for (var i in data) {
-                    $('#locationsDropdown').append('<option value="' + data[i].LocationId + '">' + data[i].Name + '</option>')
-                }
-
-                self.activeLocationsToSelectFrom = data
-                for (var i in data) {
-                    $('#modalLocationsDropdown').append('<option value="' + data[i].LocationId + '">' + data[i].Name + '</option>')
+                for (var i = 0; i < data.length; i++) {
+                    self.activeLocationsToSelectFrom(data);
                 }
             });
         }
@@ -48,7 +43,7 @@
                 $('#toggleBetweenActivitiesButton').html("See Active")
                 $.ajax({
                     dataType: "json",
-                    url: window.productionURL + "/activity/GetInactive",
+                    url: window.appWideServiceURL + "activityGetInactive",
                     context: document.body,
                     type: 'GET',
                     statusCode: {
@@ -66,7 +61,7 @@
                 $('#toggleBetweenActivitiesButton').html("See Inactive")
                 $.ajax({
                     dataType: "json",
-                    url: window.productionURL + "/activity/",
+                    url: window.appWideServiceURL + "activity",
                     context: document.body,
                     type: 'GET',
                     statusCode: {
@@ -86,12 +81,12 @@
             var result = (function (formData) {
                 var result = {
                     Name: formData[0].value,
-                    DayOfWeek: formData[1].value,
-                    Time: formData[2].value,
-                    LocationId: formData[3].value,
-                    Active: formData[4].value == "on" ? true : false,
+                    DayOfWeek: formData[2].value,
+                    Time: formData[3].value,
+                    LocationId: formData[1].value,
+                    Active: formData[6].checked == true ? true : false,
                     PreferredNumberOfPlayers1: formData[5].value,
-                    RequiredNumberOfPlayers1: formData[6].value
+                    RequiredNumberOfPlayers1: formData[4].value
                 }
 
                 return result;
@@ -99,7 +94,7 @@
 
             $.ajax({
                 dataType: "json",
-                url: window.productionURL + "/activity/",
+                url: window.appWideServiceURL + "activity",
                 context: document.body,
                 type: 'POST',
                 data: result
@@ -108,12 +103,13 @@
 
                 newActivity.time = new Date(result.Time).toLocaleTimeString();
                 self.activities.push(newActivity);
+                $.growlUI('Activity was created!');
             });
         }
 
         self.toggleActiveActivity = function (clickedActivityInsideObservableArrayOfActivities) {
             $.ajax({
-                url: window.productionURL + "/activity/ToggleActiveById/" + clickedActivityInsideObservableArrayOfActivities.id(),
+                url: window.appWideServiceURL + "activityToggleActiveById/" + clickedActivityInsideObservableArrayOfActivities.id(),
                 context: document.body,
                 type: 'POST',
                 statusCode: {
@@ -130,72 +126,40 @@
                 var result = {
                     ActivityId: formData[0].value,
                     Name: formData[1].value,
-                    DayOfWeek: formData[2].value,
-                    Time: formData[3].value,
-                    LocationId: formData[4].value,
-                    Active: formData[5].value == "on" ? true : false,
-                    PreferredNumberOfPlayers1: formData[6].value,
-                    RequiredNumberOfPlayers1: formData[7].value
+                    DayOfWeek: formData[3].value,
+                    Time: formData[4].value,
+                    LocationId: formData[2].value,
+                    Active: formData[7].checked == true ? true : false,
+                    PreferredNumberOfPlayers1: formData[5].value,
+                    RequiredNumberOfPlayers1: formData[6].value
                 }
 
                 return result;
             })(formData);
 
-            var allActivitiesAreActive = result.Active == true ? true : false;
-
             $.ajax({
                 dataType: "json",
-                url: window.productionURL + "/activity/",
+                url: window.appWideServiceURL + "activity",
                 context: document.body,
                 type: 'PUT',
                 data: result
             }).complete(function (result) {
-                var currentStateOfTheActivePropertyOfAllTheDisplayedActivities = allActivitiesAreActive;
-
-                if (currentStateOfTheActivePropertyOfAllTheDisplayedActivities) {
                     self.activities.removeAll();
-                    $('#toggleBetweenLocationsButton').html("See Inactive")
-                    $.ajax({
-                        dataType: "json",
-                        url: window.productionURL + "/activity/",
-                        context: document.body,
-                        type: 'GET',
-                        statusCode: {
-                            200: function (arrayOfActiveActivities) {
-                                for (var i = 0; i < arrayOfActiveActivities.length; i++) {
-                                    self.activities.push(new Activity(arrayOfActiveActivities[i]));
-                                }
+                $.ajax({
+                    dataType: "json",
+                    url: window.appWideServiceURL + "activity/all",
+                    context: document.body,
+                    type: 'GET',
+                    statusCode: {
+                        200: function(arrayOfActiveActivities) {
+                            for (var i = 0; i < arrayOfActiveActivities.length; i++) {
+                                self.activities.push(new Activity(arrayOfActiveActivities[i]));
                             }
+                            $.growlUI('Activity was updated!');
                         }
-                    })
-                }
-                else if (!currentStateOfTheActivePropertyOfAllTheDisplayedActivities) {
-                    self.activities.removeAll();
-                    $('#toggleBetweenLocationsButton').html("See Active")
-                    $.ajax({
-                        dataType: "json",
-                        url: window.productionURL + "/activity/GetInactive",
-                        context: document.body,
-                        type: 'GET',
-                        statusCode: {
-                            200: function (arrayOfInactiveActivities) {
-                                for (var i = 0; i < arrayOfInactiveActivities.length; i++) {
-                                    self.activities.push(new Activity(arrayOfInactiveActivities[i]));
-                                }
-                            }
-                        }
-                    })
-                }
-
+                    }
+                });
             });
-
-            $('#activityNameInputBox').val("")
-            $('#dayOfWeekInputBox').val("")
-            $('#activityDatePicker').val("")
-
-            $('#preferredPlayersInputBox').val("")
-            $('#requiredPlayersInputBox').val("")
-            $('#updateActivityDetailsModal').modal('hide');
         }
 
         self.showUpdateActivityModal = function (clickedLocationInsideObservableArrayOfActivities) {
@@ -240,7 +204,7 @@
 
             $.ajax({
                 dataType: "json",
-                url: window.productionURL + "/activity/" + idOfActivityToDelete,
+                url: window.appWideServiceURL + "activity" + idOfActivityToDelete,
                 context: document.body,
                 dataType: 'json',
                 type: 'DELETE',
@@ -253,6 +217,27 @@
                     }
                 }
             })
+        }
+
+        self.NoneBeingViewed = ko.computed(function() {
+            for (var i = 0; i < self.activities().length; i++) {
+                if (self.activities()[i].isBeingViewed()) {
+                    return false;
+                }
+            }
+
+            if (self.createActivity()) {
+                return false;
+            }
+            return true;
+        });
+
+        self.CreateActivity = function () {
+            for (var i = 0; i < window.viewModels.activitiesViewModel.activities().length; i++) {
+                window.viewModels.activitiesViewModel.activities()[i].isBeingViewed(false);
+            }
+
+            self.createActivity(!self.createActivity());
         }
 
         return self;

@@ -77,11 +77,27 @@ namespace EventHub1._1.DAL.Services
         {
             return uow.ActivityRepository.context.Activities;
         }
+
+        public IEnumerable<ActivityDTO> GetAllActivitiesAsDto()
+        {
+            var allTheActiveActivitiesFromTheDatabase = uow.ActivityRepository.Get();
+            var resultsFromDbConvertedIntoDTOs = new List<ActivityDTO>();
+
+            foreach (var activity in allTheActiveActivitiesFromTheDatabase)
+            {
+                resultsFromDbConvertedIntoDTOs.Add(new ActivityDTO(activity));
+            }
+
+            return resultsFromDbConvertedIntoDTOs;
+        }
     }
 
     public interface IActivityService
     {
         IEnumerable<Activity> GetAllActivities();
+
+        IEnumerable<ActivityDTO> GetAllActivitiesAsDto();
+
         IEnumerable<ActivityDTO> GetActiveActivities();
                             
         IEnumerable<ActivityDTO> GetInactiveActivities();

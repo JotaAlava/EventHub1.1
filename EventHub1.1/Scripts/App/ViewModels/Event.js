@@ -17,6 +17,8 @@
             var hours = activityTime.substring(11, 13);
             var minutes = activityTime.substring(14, 16);
 
+            hours = hours - 4;
+
             var result = new Date();
             result.setHours(hours)
             result.setMinutes(minutes)
@@ -50,6 +52,13 @@
 
         self.currentProgress = function () {
             return ((this.users().length + this.plusones().length) / this.activity().RequiredNumberOfPlayers1 * 100) + '%';
+        }
+
+        self.isThereAnEmail = function() {
+            if (window.currentSignedInUser.Email == "") {
+                return false;
+            }
+            return true;
         }
 
         return self;

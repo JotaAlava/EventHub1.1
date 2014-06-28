@@ -47,9 +47,11 @@
                         <!-- ko foreach: users -->
                         <tr>
                             <td id="ParticipantName" data-bind="text:Name" style="width:80%;"></td>
-                            <td style="width:20%;">
-                                <button class="btn btn-primary btn-sm glyphicon glyphicon-envelope"></button>
-                            </td>
+                            <!-- ko ifnot: $root.isThereAnEmail -->
+                            @*<td style="width:20%;">
+                                <a class="btn btn-primary btn-sm glyphicon glyphicon-envelope" data-bind="attr: {href: 'mailto:'+ window.currentSignedInUser.Email}"></a>
+                            </td>*@
+                            <!-- /ko -->
                         </tr>
                         <!-- /ko -->
                         <!-- ko foreach: plusones -->
@@ -147,7 +149,7 @@
             var data;
 
             $.ajax({
-                url: window.productionURL + "/event/",
+                url: "event/",
             }).done(function (data) {
 
                 // Overall viewmodel for this screen, along with initial state

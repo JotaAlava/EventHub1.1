@@ -15,6 +15,11 @@
         $.growlUI('EMail Updated!');
     }
 
+    // TODO: Figure out why this is always called after sending out the email instead of success!
+    ErrorFunctions.SendInviteEMail = function (result, serviceResultCode, serviceResponseHeader) {
+        $.growlUI('EMail has been sent!');
+    }
+
     // private method
     function speak(msg) {
         console.log("You said: " + msg);

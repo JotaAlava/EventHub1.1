@@ -1,5 +1,5 @@
 ﻿<!--TODO: Add code such that the sizes where it is messed up (Between 480x800 and  768x1280 inclusive) then the form is rendered differently)-->
-<div id="locationsPage">
+@*<div id="locationsPage">
     <div class="col-md-3" style="margin-top:3%">
         <h2 style="text-align:right;">Add Location</h2>
         <div class="form_wrap">
@@ -33,7 +33,7 @@
                 <button class="btn btn-primary btn-lg glyphicon glyphicon-info-sign" data-bind="attr: { id : 'sportName_' + id() }, click: $root.hideDetails "></button>
                 <button class="btn btn-primary btn-lg glyphicon glyphicon-flag" data-bind="attr: { id : id }, click: $root.toggleActive"></button>
                 <button class="btn btn-primary btn-lg glyphicon glyphicon-pencil" data-bind="click: $root.showUpdateLocationModal" data-toggle="modal" data-target="#updateLocationDetailsModal"></button>
-                @*<button class="btn btn-primary btn-lg glyphicon glyphicon-trash" data-bind="attr: { id : id }, click: $root.deleteLocation"></button>*@
+                @*<button class="btn btn-primary btn-lg glyphicon glyphicon-trash" data-bind="attr: { id : id }, click: $root.deleteLocation"></button>
                 <h3>Name: <strong data-bind="text: name"></strong></h3>
 
                 <ul data-bind="attr: { id : 'sportDetails_' + id() }" style="display:none">
@@ -84,68 +84,225 @@
                 </div>
             </div>
         </div>
+    </div>*@
+
+<div id="locationsPage">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 item-list">
+                <h3>
+                    Locations
+                </h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Location Name (Address)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: locations">
+                        <!-- ko if: isBeingViewed -->
+                        <tr class="info" data-bind="click: ToggleBeingViewed">
+                            <td data-bind="text: namePlace"></td>
+                            <!-- ko if: active -->
+                            <td class="text-success">Active</td>
+                            <!-- /ko -->
+                            <!-- ko ifnot: active -->
+                            <td class="text-muted">Inactive</td>
+                            <!-- /ko -->
+                        </tr>
+                        <!-- /ko -->
+                        <!-- ko ifnot: isBeingViewed -->
+                        <tr data-bind="click: ToggleBeingViewed">
+                            <td data-bind="text: namePlace"></td>
+                            <!-- ko if: active -->
+                            <td class="text-success">Active</td>
+                            <!-- /ko -->
+                            <!-- ko ifnot: active -->
+                            <td class="text-muted">Inactive</td>
+                            <!-- /ko -->
+                        </tr>
+                        <!-- /ko -->
+
+                    </tbody>
+                </table>
+                <button class="btn btn-default" data-bind="click: CreateLocation">Create Location</button>
+            </div>
+            <!-- ko if: NoneBeingViewed -->
+            <div class="col-md-8">
+                <h3>No Location Selected</h3>
+                <p>Select a location from the list on the left to view or modify it's details or click on Create Location to add a new location.</p>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: createLocation -->
+            <form data-bind="submit: $root.updateLocation">
+                <div class="col-md-8">
+                    <input id="locationIdHiddenInputBox" type="hidden" name="ActivityId" data-bind="value: id">
+                    <h3>(new location)</h3>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Activity name</label>
+                                <input class="form-control" data-bind="value: name" />
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <input class="form-control" data-bind="value: address" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <div>
+                                    <div class="radio-inline">
+                                        <span>
+                                            <input type="radio" value="on" checked name="optionsRadios">
+                                            Active
+                                        </span>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <span>
+                                            <input type="radio" value="off" name="optionsradios">
+                                            Inactive
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+            <!-- /ko -->
+            <!-- ko foreach: locations -->
+            <!-- ko if: isBeingViewed -->
+            <form data-bind="submit: $root.updateLocation">
+                <div class="col-md-8">
+                    <input id="locationIdHiddenInputBox" type="hidden" name="ActivityId" data-bind="value: id">
+                    <h3 data-bind="text: name"></h3>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Location name</label>
+                                <input class="form-control" data-bind="value: name" />
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <input class="form-control" data-bind="value: address" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <div>
+                                    <!-- ko if: active -->
+                                    <div class="radio-inline">
+                                        <span>
+                                            <input type="radio" value="on" checked name="optionsRadios">
+                                            Active
+                                        </span>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <span>
+                                            <input type="radio" value="off" name="optionsradios">
+                                            Inactive
+                                        </span>
+                                    </div>
+                                    <!-- /ko -->
+                                    <!-- ko ifnot: active -->
+                                    <div class="radio-inline">
+                                        <span>
+                                            <input type="radio" value="on" name="optionsRadios2">
+                                            Active
+                                        </span>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <span>
+                                            <input type="radio" value="off" checked name="optionsradios2">
+                                            Inactive
+                                        </span>
+                                    </div>
+                                    <!-- /ko -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+            <!-- /ko -->
+            <!-- /ko -->
+        </div>
     </div>
-    @section scripts
+</div>
+@section scripts
 {
-        <script>
-            require(["ViewModels/Location", "ViewModels/Locations"], function (locationViewModel, locationsViewModel) {
-                var data;
+    <script>
+        require(["ViewModels/Location", "ViewModels/Locations"], function (locationViewModel, locationsViewModel) {
+            var data;
 
-                // Call to get all active locations
-                $(document).ready(function () {
-                    $.blockUI({
-                        css: {
-                            border: 'none',
-                            padding: '15px',
-                            backgroundColor: '#000',
-                            '-webkit-border-radius': '10px',
-                            '-moz-border-radius': '10px',
-                            opacity: .5,
-                            color: '#fff'
-                        }
-                    });
-
-                    $.ajax({
-                        url: window.productionURL + "/location/",
-                        context: document.body
-                    }).done(function (data) {
-
-                        // Overall viewmodel for this screen, along with initial state
-                        activeLocations = new locationsViewModel(data);
-
-                        ko.applyBindings(activeLocations, document.getElementById("locationsPage"));
-                        sessionStorage.setItem("viewingActiveLocations", true)
-
-                        $('#activityActiveFlag').click(function () {
-                            var isChecked = $(this).prop("checked")
-
-                            if (isChecked)
-                                $(this).attr("value", "on")
-                            else
-                                $(this).attr("value", "off")
-                        })
-
-                        setTimeout($.unblockUI, 500);
-                    });
+            // Call to get all active locations
+            $(document).ready(function () {
+                $.blockUI({
+                    css: {
+                        border: 'none',
+                        padding: '15px',
+                        backgroundColor: '#000',
+                        '-webkit-border-radius': '10px',
+                        '-moz-border-radius': '10px',
+                        opacity: .5,
+                        color: '#fff'
+                    }
                 });
 
-                $('#locationActiveFlag').click(function () {
-                    var isChecked = $(this).prop("checked")
+                $.ajax({
+                    url: window.appWideServiceURL + "location/all",
+                    context: document.body
+                }).done(function (data) {
 
-                    if (isChecked)
-                        $(this).attr("value", "on")
-                    else
-                        $(this).attr("value", "off")
-                })
+                    // Overall viewmodel for this screen, along with initial state
+                    activeLocations = new locationsViewModel(data);
 
-                $('#modalActiveStatusHiddenInputBox').click(function () {
-                    var isChecked = $(this).prop("checked")
+                    window.viewModels = {
+                    };
 
-                    if (isChecked)
-                        $(this).attr("value", "on")
-                    else
-                        $(this).attr("value", "off")
-                })
+                    window.viewModels.locationViewModel = activeLocations;
+
+                    ko.applyBindings(window.viewModels.locationViewModel, document.getElementById("locationsPage"));
+                    sessionStorage.setItem("viewingActiveLocations", true)
+
+                    $('#activityActiveFlag').click(function () {
+                        var isChecked = $(this).prop("checked")
+
+                        if (isChecked)
+                            $(this).attr("value", "on")
+                        else
+                            $(this).attr("value", "off")
+                    })
+
+                    setTimeout($.unblockUI, 500);
+                });
             });
-        </script>
-    }
+
+            $('#locationActiveFlag').click(function () {
+                var isChecked = $(this).prop("checked")
+
+                if (isChecked)
+                    $(this).attr("value", "on")
+                else
+                    $(this).attr("value", "off")
+            })
+
+            $('#modalActiveStatusHiddenInputBox').click(function () {
+                var isChecked = $(this).prop("checked")
+
+                if (isChecked)
+                    $(this).attr("value", "on")
+                else
+                    $(this).attr("value", "off")
+            })
+        });
+    </script>
+}

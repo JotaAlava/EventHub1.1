@@ -1,6 +1,6 @@
-﻿define([/* Scripts that I deepend on - so other "modules" */], function () {
-    var location = function (locationDTO) {
-        var self = this;
+﻿(function (LocationModel) {
+    LocationModel.GetNewLocation = function (locationDTO) {
+        var self = {};
         self.name = ko.observable(locationDTO.Name);
         self.address = ko.observable(locationDTO.Address);
 
@@ -8,7 +8,7 @@
         self.id = ko.observable(locationDTO.LocationId);
         self.isBeingViewed = ko.observable(false);
 
-        self.ToggleBeingViewed = function() {
+        self.ToggleBeingViewed = function () {
             for (var i = 0; i < window.viewModels.locationViewModel.locations().length; i++) {
                 window.viewModels.locationViewModel.locations()[i].isBeingViewed(false);
             }
@@ -18,9 +18,14 @@
         }
 
         self.namePlace = ko.computed(function () {
-                return self.name() + " (" + self.address() + ")";
-            });
-        }
+            return self.name() + " (" + self.address() + ")";
+        });
 
-        return location;
-    })
+        return self;
+    }
+
+
+    // check to evaluate whether 'LocationModel' exists in the 
+    // global LocationModel - if not, assign window.LocationModel an 
+    // object literal
+})(window.UltiSports.Models.LocationModel = window.UltiSports.Models.LocationModel || {});

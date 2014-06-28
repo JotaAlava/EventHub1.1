@@ -57,6 +57,7 @@
     @Scripts.Render("~/bundles/require")
     @Scripts.Render("~/bundles/validate")
 
+    <script src="~/Scripts/App/Models/Models.js"></script>
     <script src="~/Scripts/App/DAL/DAL.js"></script>
     <script src="~/Scripts/App/Settings.js"></script>
     <script src="~/Scripts/App/ErrorFeedback.js"></script>
@@ -65,17 +66,18 @@
     <script src="~/Scripts/App/DAL/SuccessFunctions.js"></script>
     <script src="~/Scripts/App/DAL/Services/MessageService.js"></script>
     <script src="~/Scripts/App/DAL/Services/EMailService.js"></script>
+    <script src="~/Scripts/App/DAL/Services/LocationService.js"></script>
+    <script src="~/Scripts/App/Models/LocationModel.js"></script>
     @RenderSection("scripts", required: true)
     <script>
         window.devURL = "http://localhost:29196/";
         window.deployURL = "http://josealw7x6530:8080/";
-        window.deployIP = "http://10.58.12.75:8080";
-        window.productionURL = devURL;
+        window.appWideServiceURL = "http://10.58.12.75:8080/";
         window.usersUsername = '@User.Identity.Name';
 
         $.ajax({
             dataType: "json",
-            url: window.productionURL + "user/getcurrentuser/",
+            url: window.appWideServiceURL + "user/getcurrentuser/",
             context: this,
             type: 'GET',
             statusCode: {
@@ -111,7 +113,7 @@
 
             $.ajax({
                 dataType: "json",
-                url: window.productionURL + "/plusone/" + plusOneId + "?nameForPlusOne=" + plusOneName,
+                url: "plusone/" + plusOneId + "?nameForPlusOne=" + plusOneName,
                 context: this,
                 type: 'POST',
                 statusCode: {
@@ -120,7 +122,7 @@
 
                         $.ajax({
                             dataType: "json",
-                            url: window.productionURL + "/plusone/byeventid/" + eventId,
+                            url: "plusone/byeventid/" + eventId,
                             context: this,
                             type: 'GET'
                         }).success(function (result) {
@@ -165,7 +167,7 @@
             // Call event generation
             $.ajax({
                 dataType: "json",
-                url: window.productionURL + "/event/generate",
+                url: window.appWideServiceURL + "event/generate",
                 context: this,
                 type: 'GET',
                 statusCode: {
@@ -179,7 +181,7 @@
             // Call user generation
             $.ajax({
                 dataType: "json",
-                url: window.productionURL + "/user/generate",
+                url: window.appWideServiceURL + "user/generate",
                 context: this,
                 type: 'GET',
                 statusCode: {
@@ -188,7 +190,21 @@
                     400: function (result) {
                     }
                 }
-            })
+            });
+
+            // Bind Send EMail click
+            $("#SendInviteEMail").click(function () {
+                window.UltiSports.DAL.EMailService.SendInviteEMail();
+            });
+
+            $("#SendFinalEMail").click(function () {
+                window.UltiSports.DAL.EMailService.SendFinalEMail();
+            });
+
+            $("#SendCancelationEMail").click(function () {
+                window.UltiSports.DAL.EMailService.SendCancelationEMail();
+            });
+
         });
     </script>
 </body>

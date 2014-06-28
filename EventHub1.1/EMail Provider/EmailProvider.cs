@@ -19,6 +19,8 @@ namespace UltiSports.Services
 
             foreach (var r in receipents)
             {
+                if (r.EMail == "")
+                    continue;
                 mail.To.Add(r.EMail);
             }
 
@@ -46,13 +48,13 @@ namespace UltiSports.Services
             var subject = "Ultimate Software - You're invited!";
 
             string body = String.Format("Hello,\n\nThis is a message from Ultimate Software's event hub. You have been invited to an after hour event today," +
-                          " go to {0} to stay updated on the event's status and talk with the other guests!\n\nSee you on the field!\n\nToday's Events:\n\n", _webAddress);
+                          " go to http://josealw7x6530:8080/ to stay updated on the event's status and talk with the other guests!\n\nSee you on the field!\n\nToday's Events:\n\n");
 
             foreach (var ev in allEvents)
             {
                 if (ev.DateCreated.Date == DateTime.Today.Date)
                 {
-                    body += ev.Activity.Name + String.Format(" Join: {0}/Attendance/AddPlayer/{1}", _webAddress, ev.EventId);
+                    //body += ev.Activity.Name + String.Format(" Join: {0}/Attendance/AddPlayer/{1}", _webAddress, ev.EventId);
                     body += "\n";
                 }
             }
@@ -62,7 +64,7 @@ namespace UltiSports.Services
 
         public void SendFinalEmail(string dayOfWeek)
         {
-            var allEvents = _eventService.GetAllEventsForToday();
+            var allEvents = _eventService.GetAllActiveEvents();
             List<User> players;
             foreach (var ev in allEvents)
             {
@@ -82,7 +84,7 @@ namespace UltiSports.Services
 
         public void SendCancellationEmail(string dayOfWeek)
         {
-            var allEvents = _eventService.GetAllEventsForToday();
+            var allEvents = _eventService.GetAllActiveEvents();
             List<User> players;
             foreach (var ev in allEvents)
             {

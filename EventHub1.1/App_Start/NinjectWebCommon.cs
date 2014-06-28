@@ -1,6 +1,7 @@
 using System.Web.Http;
 using EventHub1._1.Controllers;
 using EventHub1._1.DAL.Services;
+using UltiSports.Services;
 using WebApiContrib.IoC.Ninject;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(EventHub1._1.App_Start.NinjectWebCommon), "Start")]
@@ -77,6 +78,7 @@ namespace EventHub1._1.App_Start
             kernel.Bind<IEventService>().To<EventService>();
             kernel.Bind<IUserService>().To<UserService>();
 
+            kernel.Bind<IEmailService>().To<EmailProvider>();
         }        
     }
 }

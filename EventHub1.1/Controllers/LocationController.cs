@@ -9,13 +9,19 @@ using System.Net;
 
 namespace EventHub1._1.Controllers
 {
-    
     public class LocationController : ApiController
     {
         private ILocationService locationService;
         public LocationController(ILocationService locationService)
         {
             this.locationService = locationService;
+        }
+
+        [HttpGet]
+        [Route("location/all")]
+        public IEnumerable<LocationDTO> GetAll()
+        {
+            return locationService.GetAllLocationsAsDtos();
         }
 
         [HttpGet]

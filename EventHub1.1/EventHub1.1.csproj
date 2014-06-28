@@ -225,10 +225,13 @@
     <Content Include="Models\NewModel.edmx.sql" />
     <Content Include="Scripts\App\DAL\ErrorFunctions.js" />
     <Content Include="Scripts\App\DAL\Services\EMailService.js" />
+    <Content Include="Scripts\App\DAL\Services\LocationService.js" />
     <Content Include="Scripts\App\DAL\Services\MessageService.js" />
     <Content Include="Scripts\App\DAL\SuccessFunctions.js" />
     <Content Include="Scripts\App\ErrorFeedback.js" />
     <Content Include="Scripts\App\InputValidation.js" />
+    <Content Include="Scripts\App\Models\LocationModel.js" />
+    <Content Include="Scripts\App\Models\Models.js" />
     <Content Include="Scripts\App\Settings.js" />
     <Content Include="Scripts\App\UltiSports.js" />
     <Content Include="Scripts\App\validate.js" />

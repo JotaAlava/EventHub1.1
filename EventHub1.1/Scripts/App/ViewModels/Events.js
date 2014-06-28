@@ -28,14 +28,14 @@
         self.joinEvent = function (clickedEventInsideObservableArrayOfEvents) {
             $.ajax({
                 dataType: "json",
-                url: window.productionURL + "/event/attend/" + clickedEventInsideObservableArrayOfEvents.eventId(),
+                url: "event/attend/" + clickedEventInsideObservableArrayOfEvents.eventId(),
                 context: clickedEventInsideObservableArrayOfEvents,
                 type: 'PUT',
                 statusCode: {
                     200: function (result) {
                         $.ajax({
                             dataType: "json",
-                            url: window.productionURL + "/event/getParticipantsByEventId/" + result.substring(31),
+                            url: "event/getParticipantsByEventId/" + result.substring(31),
                             context: this,
                             type: 'GET'
                         }).success(function (result) {
@@ -57,7 +57,7 @@
         self.leaveEvent = function (clickedEventInsideObservableArrayOfEvents) {
             $.ajax({
                 dataType: "json",
-                url: window.productionURL + "/event/leave/" + clickedEventInsideObservableArrayOfEvents.eventId(),
+                url: "event/leave/" + clickedEventInsideObservableArrayOfEvents.eventId(),
                 context: this,
                 type: 'PUT',
                 statusCode: {
@@ -66,7 +66,7 @@
 
                         $.ajax({
                             dataType: "json",
-                            url: window.productionURL + "/event/getParticipantsByEventId/" + result.substring(31),
+                            url: "event/getParticipantsByEventId/" + result.substring(31),
                             context: this,
                             type: 'GET'
                         }).success(function (result) {
@@ -96,7 +96,7 @@
 
             $.ajax({
                 dataType: "json",
-                url: window.productionURL + "/plusone/" + formData[0].value + "?nameForPlusOne=" + formData[1].value,
+                url: "plusone/" + formData[0].value + "?nameForPlusOne=" + formData[1].value,
                 context: this,
                 type: 'POST',
                 statusCode: {
@@ -105,7 +105,7 @@
 
                         $.ajax({
                             dataType: "json",
-                            url: window.productionURL + "/plusone/byeventid/" + eventId,
+                            url: "plusone/byeventid/" + eventId,
                             context: this,
                             type: 'GET'
                         }).success(function (result) {
@@ -150,7 +150,7 @@
 
             $.ajax({
                 dataType: "json",
-                url: window.productionURL + "/plusone/" + plusOneId,
+                url: "plusone/" + plusOneId,
                 context: this,
                 type: 'PUT',
                 statusCode: {
@@ -171,7 +171,7 @@
         self.generateEmail = function (clickedPlusOne) {
             $.ajax({
                 dataType: "json",
-                url: window.productionURL + "/event/sendEmail",
+                url: "event/sendEmail",
                 context: this,
                 type: 'GET',
                 statusCode: {
